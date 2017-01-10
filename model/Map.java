@@ -36,6 +36,5 @@ public class Map extends Observable {
 	public void setRoutes(LinkedList<Route> routes) {
 		this.routes = routes;
 	}
-
     
 }

@@ -13,6 +13,9 @@ public class CarteDestination {
     	this.villeB = new Ville();
     }
     
+    /*
+     * Algorithme du plus court chemin entre la ville A et la ville B
+     */
     public void calculerValeur() {
     	
     }

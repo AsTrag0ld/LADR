@@ -11,9 +11,6 @@ public class Partie {
     private DefausseWagon defausseWagon;
     private PiocheDestination piocheDestination;
 
-    /*
-     * Revoir le constructeur
-     */
     public Partie() {
     	this.vainqueur = null;
     	this.joueurs = new ArrayList<Joueur>();
@@ -21,6 +18,15 @@ public class Partie {
     	this.piocheDestination = new PiocheDestination();
     	this.map.getInstance();
     	this.defausseWagon = new DefausseWagon();
+    }
+    
+    public Partie(ArrayList<Joueur> joueurs, PiocheWagon piocheWagon, PiocheDestination piocheDestination, DefausseWagon defausseWagon) {
+    	this.vainqueur = null;
+    	this.joueurs = joueurs;
+    	this.piocheWagon = piocheWagon;
+    	this.piocheDestination = piocheDestination;
+    	this.map.getInstance();
+    	this.defausseWagon = defausseWagon;
     }
       
     public Joueur getVainqueur() {
@@ -72,7 +78,7 @@ public class Partie {
 	}
 
 	/*
-     * Retourne le vainqueur de la partie ie celui qui a le plus grand score
+     * Retourne le vainqueur de la partie i.e. celui qui a le plus grand score
      */
     public Joueur determinerVainqueur() {
     	Joueur vainqueur = this.joueurs.get(0);

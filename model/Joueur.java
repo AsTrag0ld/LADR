@@ -117,6 +117,7 @@ public class Joueur extends Observable {
 	 * Prend possession d'une route en plaçant des wagons sur le plateau et en décrémentant le nombre de wagons du joueur
 	 */
 	public void prendreRoute(Route r) {
+		//this.map
 		this.score += r.getTaille();
 		this.nbWagons -= r.getTaille();
     }
@@ -134,14 +135,14 @@ public class Joueur extends Observable {
      * Ajoute dans la main la première carte de la pioche de CarteWagon (la retire de la pioche)
      */
     public void piocherCarteWagon() throws OutOfCardsException {
-    	this.cartesWagon.add(this.piocheWagon.piocher());
+    	this.cartesWagon.addAll(this.piocheWagon.piocher());
     }
     
     /*
-     * Ajoute aux CarteDestination du joueur la première carte de la pioche de CarteDestination (la retire de la pioche)
+     * Ajoute aux CarteDestination du joueur les cartes qu'il a choisi de garder de la pioche de CarteDestination (les retire de la pioche)
      */
     public void piocherCarteDestination() throws OutOfCardsException {
-    	this.cartesDestination.add(this.piocheDestination.piocher());
+    	this.cartesDestination.addAll(this.piocheDestination.piocher());
     }
 
     public void consulterStatistiques() {

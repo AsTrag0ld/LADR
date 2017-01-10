@@ -1,7 +1,10 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class PiocheDestination {
     private int nbCartes;
@@ -29,16 +32,41 @@ public class PiocheDestination {
 	}
 
 	/*
-	 * Retourne et retire la première carte de la pioche
+	 * Retourne et retire les 3 premières cartes de la pioche
 	 */
-	public CarteDestination piocher() throws OutOfCardsException {
+	public List<CarteDestination> piocher() throws OutOfCardsException {
+		List<CarteDestination> piochees = new ArrayList<CarteDestination>();
 		if (!(this.carteDestination.isEmpty())) {
-			return this.carteDestination.pollFirst();
+			for (int i = 0; i < 3; i++) {
+				piochees.add(this.carteDestination.pollFirst());
+			}
+			for (CarteDestination c : piochees) {
+				if (!conserverCarte(c)) {
+					piochees.remove(c);
+				}
+			}
+			return piochees;
 		}
 		else throw new OutOfCardsException();
 	}
 	
+	/*
+	 * Demande au joueur pour chaque carte piochée s'il souhaite la conserver
+	 */
+	public boolean conserverCarte(CarteDestination carte) {
+		System.out.println("Voulez-vous conserver cette carte ? (O/N)");
+		System.out.println(carte);
+		Scanner sc = new Scanner(System.in);
+		String s = sc.nextLine();
+		sc.close();
+		return (s == "O");
+	}
+	
+	/*
+	 * Mélange le paquet de CarteDestination
+	 */
 	public void melanger() {
+		Collections.shuffle(this.carteDestination);
     }
 
 }
