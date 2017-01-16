@@ -7,19 +7,12 @@ public class CarteDestination {
     private Ville villeA;
     private Ville villeB;
 
-    public CarteDestination() {
-    	this.valeur = 0;
-    	this.villeA = new Ville();
-    	this.villeB = new Ville();
+    public CarteDestination(int valeur, Ville villeA, Ville villeB) {
+    	this.valeur = valeur;
+    	this.villeA = villeA;
+    	this.villeB = villeB;
     }
     
-    /*
-     * Algorithme du plus court chemin entre la ville A et la ville B
-     */
-    public void calculerValeur() {
-    	
-    }
-
 	public int getValeur() {
 		return valeur;
 	}
@@ -43,7 +36,11 @@ public class CarteDestination {
 	public void setVilleB(Ville villeB) {
 		this.villeB = villeB;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "CarteDestination [valeur=" + valeur + ", villeA=" + villeA + ", villeB=" + villeB + "]";
+	}  
     
 
 }

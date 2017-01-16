@@ -9,19 +9,17 @@ import java.util.Scanner;
 public class PiocheWagon {
     private int nbCartes;
     private LinkedList<CarteWagon> carteWagon;
-    private Partie partie;
 
     public PiocheWagon() {
     	this.carteWagon = new LinkedList<CarteWagon>();
     	this.nbCartes = this.carteWagon.size();    	
     }
     
-    public PiocheWagon(Partie p) {
-    	this.carteWagon = new LinkedList<CarteWagon>();
+    public PiocheWagon(LinkedList<CarteWagon> cartes) {
+    	this.carteWagon = cartes;
     	this.nbCartes = this.carteWagon.size();   
-    	this.partie = p;
     }
-        
+           
     public int getNbCartes() {
 		return nbCartes;
 	}
@@ -41,24 +39,26 @@ public class PiocheWagon {
 	/*
 	 * Retourne et retire la première carte de la pioche
 	 */
-	public CarteWagon piocher1Carte() {
+	public CarteWagon piocher1Carte(DefausseWagon defausse) {
 		if (!(this.carteWagon.isEmpty())) {
+			this.nbCartes -= 1;
 			return this.carteWagon.pollFirst();
 		}
 		else {
-			LinkedList<CarteWagon> nouvellePioche = this.partie.getDefausseWagon().getCarteWagon();
+			LinkedList<CarteWagon> nouvellePioche = defausse.getCarteWagon();
+			defausse.vider();
 			Collections.shuffle(nouvellePioche);
 			this.carteWagon = nouvellePioche;
-			return this.piocher1Carte();
+			return this.piocher1Carte(defausse);
 		}
 	}
 	
 	/*
 	 * Effectue le tour de pioche d'un joueur selon les règles du jeu
 	 */
-	public List<CarteWagon> piocher() {
+	public List<CarteWagon> piocher(DefausseWagon defausse) {
 		List<CarteWagon> piochees = new ArrayList<CarteWagon>();
-		CarteWagon c = piocher1Carte();
+		CarteWagon c = piocher1Carte(defausse);
 		piochees.add(c);
 		if (c.getCouleur() == "Locomotive") {
 			return piochees;
@@ -69,7 +69,7 @@ public class PiocheWagon {
 			String s = sc.nextLine();
 			sc.close();
 			if (s == "O") {
-				c = piocher1Carte();
+				c = piocher1Carte(defausse);
 				piochees.add(c);
 			}
 			return piochees;
@@ -82,5 +82,15 @@ public class PiocheWagon {
 	public void melanger() {
 		Collections.shuffle(this.carteWagon);
     }
-
+	
+	/*
+	 * Distribue à l'initialisation d'une partie
+	 */
+	public LinkedList<CarteWagon> distribuer() {
+		LinkedList<CarteWagon> cartes = new LinkedList<CarteWagon>();
+		for (int i=0; i < 4; i++) {
+			cartes.add(this.carteWagon.pollFirst());
+		}
+		return cartes;
+	}
 }

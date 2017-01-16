@@ -9,8 +9,12 @@ public class Route {
     public Ville villeA;
     public Ville villeB;
 
-    public Route() {
-    	
+    public Route(boolean doubleRoute, int taille, Ville villeA, Ville villeB) {
+    	this.doubleRoute = doubleRoute;
+    	this.taille = taille;
+    	this.disponible = true;
+    	this.villeA = villeA;
+    	this.villeB = villeB;
     }
     
     public boolean estDisponible() {

@@ -18,6 +18,11 @@ public class CarteWagon {
 	public void setCouleur(String couleur) {
 		this.couleur = couleur;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "CarteWagon [couleur=" + couleur + "]";
+	}
+   
     
 }
