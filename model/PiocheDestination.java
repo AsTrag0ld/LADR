@@ -32,22 +32,32 @@ public class PiocheDestination {
 	}
 
 	/*
-	 * Retourne et retire les 3 premières cartes de la pioche
+	 * Retire les 3 premières cartes de la pioche puis retourne celles que le joueur a choisi de conserver (au moins 1)
 	 */
 	public List<CarteDestination> piocher() throws OutOfCardsException {
 		List<CarteDestination> piochees = new ArrayList<CarteDestination>();
 		if (!(this.carteDestination.isEmpty())) {
 			for (int i = 0; i < 3; i++) {
-				piochees.add(this.carteDestination.pollFirst());
+				piochees.add(this.carteDestination.peekFirst());
 			}
 			for (CarteDestination c : piochees) {
 				if (!conserverCarte(c)) {
 					piochees.remove(c);
+					this.carteDestination.addLast(c);
 				}
 			}
-			return piochees;
+			if (piochees.size() < 1) {
+				System.out.println("Vous devez conserver au moins 1 carte !");
+				piocher();
+			} else {
+				for (int i = 0; i < piochees.size(); i++) {
+					this.carteDestination.removeFirst();
+				}
+			}
+		} else {
+			throw new OutOfCardsException();
 		}
-		else throw new OutOfCardsException();
+		return piochees;
 	}
 	
 	/*
@@ -68,5 +78,30 @@ public class PiocheDestination {
 	public void melanger() {
 		Collections.shuffle(this.carteDestination);
     }
+	
+	/*
+	 * Retire les 3 premières cartes de la pioche puis retourne celles que le joueur a choisi de conserver (au moins 2)
+	 */
+	public LinkedList<CarteDestination> distribuer()  {
+		LinkedList<CarteDestination> piochees = new LinkedList<CarteDestination>();
+		for (int i = 0; i < 3; i++) {
+			piochees.add(this.carteDestination.peekFirst());
+		}
+		for (CarteDestination c : piochees) {
+			if (!conserverCarte(c)) {
+				piochees.remove(c);
+				this.carteDestination.addLast(c);
+			}
+		}
+		if (piochees.size() < 2) {
+			System.out.println("Vous devez conserver au moins 2 cartes !");
+			distribuer();
+		} else {
+			for (int i = 0; i < piochees.size(); i++) {
+				this.carteDestination.removeFirst();
+			}
+		}
+		return piochees;	
+	}
 
 }

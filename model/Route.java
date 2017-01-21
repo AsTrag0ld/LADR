@@ -5,13 +5,15 @@ import model.Ville;
 public class Route {
     private boolean doubleRoute;
     private int taille;
+    private String couleur;
     private boolean disponible;
     public Ville villeA;
     public Ville villeB;
 
-    public Route(boolean doubleRoute, int taille, Ville villeA, Ville villeB) {
+    public Route(boolean doubleRoute, int taille, String couleur, Ville villeA, Ville villeB) {
     	this.doubleRoute = doubleRoute;
     	this.taille = taille;
+    	this.couleur = couleur;
     	this.disponible = true;
     	this.villeA = villeA;
     	this.villeB = villeB;
@@ -35,6 +37,14 @@ public class Route {
 
 	public void setTaille(int taille) {
 		this.taille = taille;
+	}
+	
+	public String getCouleur() {
+		return couleur;
+	}
+
+	public void setCouleur(String couleur) {
+		this.couleur = couleur;
 	}
 
 	public boolean isDisponible() {

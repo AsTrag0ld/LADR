@@ -14,7 +14,8 @@ public class Partie {
     private Map map;
     private DefausseWagon defausseWagon;
     private PiocheDestination piocheDestination;
-
+    private String[] couleurs = {"Blanc", "Bleu", "Jaune", "Vert", "Rouge", "Violet", "Noir", "Marron"};
+    
     public Partie() {
     	this.vainqueur = null;
     	this.joueurs = new ArrayList<Joueur>();
@@ -139,33 +140,15 @@ public class Partie {
      * Initialise toutes les composantes d'une partie
      */
     public void initialiserPartie() {
-    	ArrayList<String> lesCouleurs = créerCouleurs();
-    	initialiserCartesWagon(lesCouleurs);
-    	initialiserCartesDestination();
     	distribuerCartesWagon();
     	distribuerWagons();
+    	distribuerCartesDestination();
     }
-    
-    /*
-     * Crée la liste des couleurs du jeu
-     */
-    public ArrayList<String> créerCouleurs() {
-    	ArrayList<String> couleurs = new ArrayList<String>();
-    	couleurs.add("Blanc");
-    	couleurs.add("Bleu");
-    	couleurs.add("Jaune");
-    	couleurs.add("Vert");
-    	couleurs.add("Rouge");
-    	couleurs.add("Violet");
-    	couleurs.add("Noir");
-    	couleurs.add("Marron");
-    	return couleurs;
-    }
-    
+        
     /*
      * Crée les 110 cartes wagons (12 par couleur + 14 locomotives)
      */
-    public void initialiserCartesWagon(ArrayList<String> couleurs) {
+    private void initialiserCartesWagon(String[] couleurs) {
     	LinkedList<CarteWagon> cartesWagon = new LinkedList<CarteWagon>();
     	for (String s : couleurs) {
     		for (int j = 0; j < 12; j++) {
@@ -178,17 +161,17 @@ public class Partie {
     	this.piocheWagon.setCarteWagon(cartesWagon);
     }
     
-    /*
+    /* !!!!!! PAS TERMINE !!!!! (Besoin de choisir quelle ville seront reliées par les cartes destinations)
      * Crée les 30 cartes destination
      */
-    public void initialiserCartesDestination() {
+    private void initialiserCartesDestination() {
     	
     }
     
     /*
      * Crée 45 wagons pour la couleur passée en argument
      */
-    public LinkedList<Wagon> initialiserWagons(String couleur) {
+    private LinkedList<Wagon> initialiserWagons(String couleur) {
     	LinkedList<Wagon> lesWagons = new LinkedList<Wagon>();
     		for (int j = 0; j < 45; j++) {
     			lesWagons.add(new Wagon(couleur));
@@ -200,6 +183,7 @@ public class Partie {
      * Distribue 4 cartes wagon à chaque joueur après avoir mélanger le paquet
      */
     public void distribuerCartesWagon() {
+    	initialiserCartesWagon(this.couleurs);
     	this.piocheWagon.melanger();
     	for (Joueur j : this.joueurs) {
     		j.setCartesWagon(this.piocheWagon.distribuer());
@@ -215,6 +199,15 @@ public class Partie {
     	}
     }
     
+    /*
+     * Distribue à chaque joueur au moins 2 cartes destinations parmi 3
+     */
+    public void distribuerCartesDestination() {
+    	initialiserCartesDestination();
+    	for (Joueur j : this.joueurs) {
+    		j.setCartesDestination(this.piocheDestination.distribuer());
+    	}
+    }
     
 
 }

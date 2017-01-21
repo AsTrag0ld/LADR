@@ -118,13 +118,60 @@ public class Joueur extends Observable {
 		this.defausseWagon = defausseWagon;
 	}
 	
-	/* !!!!!!!!!!! PAS TERMINE !!!!!!!!!!!
+	/* !!!!!!!!!!! PAS TERMINE !!!!!!!!!! (Il faut modéliser le placement des wagons de la couleur du joueur sur le plateau)
 	 * Prend possession d'une route en plaçant des wagons sur le plateau et en décrémentant le nombre de wagons du joueur
 	 */
 	public void prendreRoute(Route r) {
-		this.score += r.getTaille();
-		this.nbWagons -= r.getTaille();
+		if (verificationWagonsRoute(r)) {
+			if (verificationCartesRoute(r)) {
+				int taille = r.getTaille();
+				switch (taille) {
+					case 1 : this.score += 1;
+						break;
+					case 2 : this.score += 2;
+						break;
+					case 3 : this.score += 4;
+						break;
+					case 4 : this.score += 7;
+						break;
+					case 5 : this.score += 10;
+						break;
+					case 6 : this.score += 15;
+						break;
+					default : this.score += 0;
+						break;
+				}
+				this.nbWagons -= r.getTaille();
+				r.prendre();
+			} else {
+				System.out.println("Vous n'avez pas assez de cartes" + r.getCouleur() + "pour prendre possession de cette route");
+			}
+		} else {
+			System.out.println("Vous n'avez pas assez de wagons restants pour prendre possession de cette route");
+		}
+		
     }
+	
+	/*
+	 * Vérifie si le joueur a suffisament de carte de la même couleur que la route en main
+	 */
+	private boolean verificationCartesRoute(Route r) {
+		int cmp = 0;
+		for (CarteWagon c : this.cartesWagon) {
+			if ((c.getCouleur() == r.getCouleur()) || (c.getCouleur() == "Locomotive")) {
+				cmp++;
+			}
+		}
+		return (cmp >= r.getTaille());
+	}
+	
+	/*
+	 * Vérifie si le joueur a suffisament de wagons pour prendre possession de la route
+	 */
+	private boolean verificationWagonsRoute(Route r) {
+		return (this.getNbWagons() >= r.getTaille());
+	}
+	
 
     public void passerSonTour() {
     }
@@ -165,65 +212,6 @@ public class Joueur extends Observable {
     	for (CarteDestination c : this.cartesDestination) {
     		System.out.println(c);
     	}
-    }
-
-    /* !!!!!!!!!!! PAS TERMINE !!!!!!!!!!!
-     * Appelle les différentes méthodes de consultation des statisques et affiche l'ensemble
-     */
-    public void consulterStatistiques() {
-    	consulterNbVictoires();
-    	consulterScoresTotaux();
-    }
-    
-    /*
-     * Récupère le nombre de victoires de chaque joueur présent dans la base de donnée
-     */
-    public void consulterNbVictoires() {
-    	Connection con = Service.getConnection();
-    	try (PreparedStatement stmt = con.prepareStatement("SELECT idJoueur, nbVictoires FROM Joueur GROUP BY idJoueur")) {
-			stmt.execute();
-		} catch (Exception e) {
-			throw new RuntimeException("Impossible de récupérer le nombre de victoires des joueurs");
-		}
-    }
-    
-    /*
-     * Récupère la somme de tous les points à chaque partie pour chaque joueur de la base de donnée
-     */
-    public void consulterScoresTotaux() {
-    	Connection con = Service.getConnection();
-    	try (PreparedStatement stmt = con.prepareStatement("SELECT idJoueur, sum(score) FROM Classement GROUP BY idJoueur")) {
-			stmt.execute();
-		} catch (Exception e) {
-			throw new RuntimeException("Erreur dans la récupération des scores des joueurs");
-		}
-    }
-    
-    /* !!!!!!!!!!! PAS TERMINE !!!!!!!!!!!
-     * Récupère les informations du joueur depuis la base de données
-     */
-    public void getJoueurBDD() {
-    	Connection con = Service.getConnection();
-    	try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM Joueur WHERE nom = ?")) {
-    		stmt.setString(1, this.getNom());
-			stmt.execute();
-		} catch (Exception e) {
-			throw new RuntimeException("Erreur dans la récupération du joueur" + this.getNom());
-		}
-    }
-    
-    /* !!!!!!!!!!! PAS TERMINE !!!!!!!!!!!
-     * Ajoute un joueur dans la base de données
-     */
-    public void ajouterJoueurBDD() {
-    	Connection con = Service.getConnection();
-    	try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Joueur(nom) VALUES (?)")) {
-    		stmt.setString(1, this.getNom());
-			stmt.execute();
-		} catch (Exception e) {
-			throw new RuntimeException("Erreur dans la récupération du joueur" + this.getNom());
-		}
-    }
-    
+    }  
 
 }
