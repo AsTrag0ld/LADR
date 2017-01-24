@@ -15,6 +15,11 @@ public class PiocheDestination {
     	this.nbCartes = this.carteDestination.size();
     }
     
+    public PiocheDestination(LinkedList<CarteDestination> lesCartes) {
+    	this.carteDestination = lesCartes;
+    	this.nbCartes = this.carteDestination.size();
+    }
+    
     public int getNbCartes() {
 		return nbCartes;
 	}
@@ -36,28 +41,35 @@ public class PiocheDestination {
 	 */
 	public List<CarteDestination> piocher() throws OutOfCardsException {
 		List<CarteDestination> piochees = new ArrayList<CarteDestination>();
+		List<CarteDestination> conservees = new ArrayList<CarteDestination>();
+		List<CarteDestination> jetees = new ArrayList<CarteDestination>();
 		if (!(this.carteDestination.isEmpty())) {
 			for (int i = 0; i < 3; i++) {
-				piochees.add(this.carteDestination.peekFirst());
+				piochees.add(this.carteDestination.pollFirst());
 			}
 			for (CarteDestination c : piochees) {
-				if (!conserverCarte(c)) {
-					piochees.remove(c);
-					this.carteDestination.addLast(c);
+				if (conserverCarte(c)) {
+					conservees.add(c);
+					System.out.println("------------> Carte conservée");
+				} else {
+					jetees.add(c);
 				}
 			}
-			if (piochees.size() < 1) {
+			if (conservees.size() < 1) {
 				System.out.println("Vous devez conserver au moins 1 carte !");
+				for (CarteDestination c : piochees) {
+					this.carteDestination.addFirst(c);
+				}
 				piocher();
 			} else {
-				for (int i = 0; i < piochees.size(); i++) {
-					this.carteDestination.removeFirst();
+				for (CarteDestination c : jetees) {
+					this.carteDestination.addLast(c);
 				}
 			}
 		} else {
 			throw new OutOfCardsException();
 		}
-		return piochees;
+		return conservees;
 	}
 	
 	/*
@@ -67,9 +79,9 @@ public class PiocheDestination {
 		System.out.println("Voulez-vous conserver cette carte ? (O/N)");
 		System.out.println(carte);
 		Scanner sc = new Scanner(System.in);
-		String s = sc.nextLine();
-		sc.close();
-		return (s == "O");
+		String s = sc.next();
+		System.out.println(s);
+		return (s == "O" || s == "o");
 	}
 	
 	/*
@@ -84,24 +96,31 @@ public class PiocheDestination {
 	 */
 	public LinkedList<CarteDestination> distribuer()  {
 		LinkedList<CarteDestination> piochees = new LinkedList<CarteDestination>();
+		LinkedList<CarteDestination> conservees = new LinkedList<CarteDestination>();
+		List<CarteDestination> jetees = new ArrayList<CarteDestination>();
 		for (int i = 0; i < 3; i++) {
-			piochees.add(this.carteDestination.peekFirst());
+			piochees.add(this.carteDestination.pollFirst());
 		}
 		for (CarteDestination c : piochees) {
-			if (!conserverCarte(c)) {
-				piochees.remove(c);
+			if (conserverCarte(c)) {
+				conservees.add(c);
+				System.out.println("------------> Carte conservée");
+			} else {
+				jetees.add(c);
+			}
+		}
+		if (conservees.size() < 2) {
+			System.out.println("Vous devez conserver au moins 2 carte !");
+			for (CarteDestination c : piochees) {
+				this.carteDestination.addFirst(c);
+			}
+			distribuer();
+		} else {
+			for (CarteDestination c : jetees) {
 				this.carteDestination.addLast(c);
 			}
 		}
-		if (piochees.size() < 2) {
-			System.out.println("Vous devez conserver au moins 2 cartes !");
-			distribuer();
-		} else {
-			for (int i = 0; i < piochees.size(); i++) {
-				this.carteDestination.removeFirst();
-			}
-		}
-		return piochees;	
+		return conservees;	
 	}
 
 }

@@ -67,7 +67,6 @@ public class PiocheWagon {
 			System.out.println("Voulez-vous pioche une autre carte ? (O/N)");
 			Scanner sc = new Scanner(System.in);
 			String s = sc.nextLine();
-			sc.close();
 			if (s == "O") {
 				c = piocher1Carte(defausse);
 				piochees.add(c);

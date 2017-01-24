@@ -19,8 +19,8 @@ public class Partie {
     public Partie() {
     	this.vainqueur = null;
     	this.joueurs = new ArrayList<Joueur>();
-    	this.piocheWagon = new PiocheWagon();
-    	this.piocheDestination = new PiocheDestination();
+    	this.piocheWagon = null;
+    	this.piocheDestination = null;
     	this.map.getInstance();
     	this.defausseWagon = new DefausseWagon();
     }
@@ -142,7 +142,7 @@ public class Partie {
     public void initialiserPartie() {
     	distribuerCartesWagon();
     	distribuerWagons();
-    	distribuerCartesDestination();
+    	//distribuerCartesDestination();
     }
         
     /*
@@ -158,20 +158,22 @@ public class Partie {
     	for (int i = 0; i < 14; i++) {
     		cartesWagon.add(new CarteWagon("Locomotive"));
     	}
-    	this.piocheWagon.setCarteWagon(cartesWagon);
+    	this.piocheWagon = new PiocheWagon(cartesWagon);
     }
     
     /* !!!!!! PAS TERMINE !!!!! (Besoin de choisir quelle ville seront reliées par les cartes destinations)
      * Crée les 30 cartes destination
      */
     private void initialiserCartesDestination() {
+    	LinkedList<CarteDestination> cartesDestination = new LinkedList<CarteDestination>();
     	
+    	this.piocheDestination = new PiocheDestination(cartesDestination);
     }
     
     /*
      * Crée 45 wagons pour la couleur passée en argument
      */
-    private LinkedList<Wagon> initialiserWagons(String couleur) {
+    LinkedList<Wagon> initialiserWagons(String couleur) {
     	LinkedList<Wagon> lesWagons = new LinkedList<Wagon>();
     		for (int j = 0; j < 45; j++) {
     			lesWagons.add(new Wagon(couleur));

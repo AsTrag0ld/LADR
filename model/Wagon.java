@@ -6,5 +6,9 @@ public class Wagon {
     public Wagon(String couleur) {
     	this.couleur = couleur;
     }
+    
+    public String getCouleur() {
+    	return this.couleur;
+    }
 
 }

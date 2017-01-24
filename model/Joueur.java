@@ -17,12 +17,22 @@ public class Joueur extends Observable {
     private PiocheWagon piocheWagon;
     private PiocheDestination piocheDestination;
     private DefausseWagon defausseWagon;
+    private boolean tourDeJeu;
 
     public Joueur() {
     	this.nom = "Nom";
     	this.couleur = "Couleur";
     	this.score = 0;
     	this.nbWagons = 40;
+    	this.tourDeJeu = false;
+    }
+    
+    public Joueur(String nom, String couleur) {
+    	this.nom = nom;
+    	this.couleur = couleur;
+    	this.score = 0;
+    	this.nbWagons = 40;
+    	this.tourDeJeu = false;
     }
     
     public Joueur(String nom, String couleur, int score, LinkedList<Wagon> wagons, LinkedList<CarteWagon> cartesWagon, LinkedList<CarteDestination> cartesDestination,
@@ -36,6 +46,7 @@ public class Joueur extends Observable {
     	this.piocheWagon = piocheWagon;
     	this.piocheDestination = piocheDestination;
     	this.defausseWagon = defausseWagon;
+    	this.tourDeJeu = false;
     }
   
     public String getNom() {
@@ -155,7 +166,7 @@ public class Joueur extends Observable {
 	/*
 	 * Vérifie si le joueur a suffisament de carte de la même couleur que la route en main
 	 */
-	private boolean verificationCartesRoute(Route r) {
+	boolean verificationCartesRoute(Route r) {
 		int cmp = 0;
 		for (CarteWagon c : this.cartesWagon) {
 			if ((c.getCouleur() == r.getCouleur()) || (c.getCouleur() == "Locomotive")) {
@@ -168,7 +179,7 @@ public class Joueur extends Observable {
 	/*
 	 * Vérifie si le joueur a suffisament de wagons pour prendre possession de la route
 	 */
-	private boolean verificationWagonsRoute(Route r) {
+	boolean verificationWagonsRoute(Route r) {
 		return (this.getNbWagons() >= r.getTaille());
 	}
 	
@@ -213,5 +224,19 @@ public class Joueur extends Observable {
     		System.out.println(c);
     	}
     }  
+    
+    /*
+     * Commence le tour de jeu de ce joueur
+     */
+    public void commencerTour() {
+    	this.tourDeJeu = true;
+    }
+    
+    /*
+     * Met fin au tour du joueur
+     */
+    public void finirTour() {
+    	this.tourDeJeu = true;
+    }
 
 }
