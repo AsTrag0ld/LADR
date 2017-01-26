@@ -407,8 +407,6 @@ public class Test {
 		//Test 22 : Classe : PiocheWagon - Méthode piocher()
 			System.out.println("Classe : PiocheWagon - Méthode piocher()");
 			
-			PiocheWagon pw2 = new PiocheWagon();
-			DefausseWagon d2 = new DefausseWagon();
 			LinkedList<CarteWagon> lw6 = new LinkedList<CarteWagon>();
 			
 			CarteWagon c11 = new CarteWagon("bleu");
@@ -427,7 +425,9 @@ public class Test {
 			lw6.add(c61);
 			lw6.add(c71);
 			
-			pw2.setCarteWagon(lw6);
+			PiocheWagon pw2 = new PiocheWagon(lw6);
+			DefausseWagon d2 = new DefausseWagon();
+			pw2.preparerPiocheVisible(d2);
 			
 			System.out.println("Attendu : Locomotive");
 			System.out.println("Obtenu : " + pw2.piocher(d2));

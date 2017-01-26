@@ -142,7 +142,8 @@ public class Partie {
     public void initialiserPartie() {
     	distribuerCartesWagon();
     	distribuerWagons();
-    	//distribuerCartesDestination();
+    	distribuerCartesDestination();
+    	initialiserMap();
     }
         
     /*
@@ -159,6 +160,7 @@ public class Partie {
     		cartesWagon.add(new CarteWagon("Locomotive"));
     	}
     	this.piocheWagon = new PiocheWagon(cartesWagon);
+    	this.piocheWagon.preparerPiocheVisible(this.defausseWagon);
     }
     
     /* !!!!!! PAS TERMINE !!!!! (Besoin de choisir quelle ville seront reliées par les cartes destinations)
@@ -206,9 +208,18 @@ public class Partie {
      */
     public void distribuerCartesDestination() {
     	initialiserCartesDestination();
+    	this.piocheDestination.melanger();
     	for (Joueur j : this.joueurs) {
     		j.setCartesDestination(this.piocheDestination.distribuer());
     	}
+    }
+    
+    /*
+     * Initialise le plateau de jeu
+     */
+    public void initialiserMap() {
+    	this.map.initialiserRoutes();
+    	this.map.initialiserVilles();
     }
     
 

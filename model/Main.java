@@ -19,9 +19,6 @@ public class Main {
 		System.out.println("Cartes Wagon : " + partie.getPiocheWagon().getNbCartes());
 		System.out.println("Cartes Destination : " + partie.getPiocheDestination().getNbCartes());
 		System.out.println("----------------------------------------------------------");
-		
-		PiocheDestination pi = new PiocheDestination();
-		System.out.println(pi.conserverCarte(new CarteDestination(9, new Ville("Bavay"), new Ville("Maubeuge"))));
-		
+			
 	}
 }
