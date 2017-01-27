@@ -18,7 +18,7 @@ public class PiocheWagon {
     
     public PiocheWagon(LinkedList<CarteWagon> cartes) {
     	this.pioche = cartes;
-    	melanger();
+    	//melanger();
     	this.cartesVisibles = new LinkedList<CarteWagon>();
     }
            
@@ -26,13 +26,20 @@ public class PiocheWagon {
 		return this.pioche.size() + this.cartesVisibles.size();
 	}
 
-
-	public List<CarteWagon> getCarteWagon() {
+	public LinkedList<CarteWagon> getPioche() {
 		return pioche;
 	}
 
-	public void setCarteWagon(LinkedList<CarteWagon> carteWagon) {
-		this.pioche = carteWagon;
+	public void setPioche(LinkedList<CarteWagon> pioche) {
+		this.pioche = pioche;
+	}
+
+	public LinkedList<CarteWagon> getCartesVisibles() {
+		return cartesVisibles;
+	}
+
+	public void setCartesVisibles(LinkedList<CarteWagon> cartesVisibles) {
+		this.cartesVisibles = cartesVisibles;
 	}
 
 	/*
@@ -40,14 +47,14 @@ public class PiocheWagon {
 	 */
 	public CarteWagon piocher1Carte(DefausseWagon defausse) {
 		if (!(this.pioche.isEmpty())) {
-			return this.pioche.pollFirst();
+			return this.pioche.pollFirst();										//retire la première carte de la pioche et la retourne
 		}
-		else {
-			LinkedList<CarteWagon> nouvellePioche = defausse.getCarteWagon();
-			defausse.vider();
-			this.pioche = nouvellePioche;
-			this.melanger();
-			return this.piocher1Carte(defausse);
+		else { 																	//Si la pioche est vide
+			LinkedList<CarteWagon> nouvellePioche = defausse.getCarteWagon(); 	//On récupère les cartes de la défausse
+			defausse.vider();													//On vide la défausse actuelle
+			Collections.shuffle(nouvellePioche);
+			this.pioche = nouvellePioche;										//La pioche est maintenant l'ancienne défausse mélangée
+			return this.piocher1Carte(defausse);								//Appel récursif de la méthode pour pouvoir piocher une carte
 		}
 	}
 	
@@ -67,7 +74,7 @@ public class PiocheWagon {
 		for (int i=0; i < 4; i++) {
 			cartes.add(this.pioche.pollFirst());
 		}
-		return cartes;
+		return cartes;															//Retourne 4 cartes prises sur le dessus du paquets
 	}
 	
 	/*
@@ -76,19 +83,19 @@ public class PiocheWagon {
 	public void preparerPiocheVisible(DefausseWagon defausse) {
 		LinkedList<CarteWagon> visibles = new LinkedList<CarteWagon>();
 		int cmpLoco = 0;
-		for (int i = 0; i < 5; i++) {
-			CarteWagon tmp = this.piocher1Carte(defausse);
-			visibles.add(tmp);
+		for (int i = 0; i < 5; i++) {											//Pioche visible composée de 5 cartes
+			CarteWagon tmp = this.piocher1Carte(defausse);						//On tire une carte du paquet principal
+			visibles.add(tmp);													//On l'ajoute à la liste des cartes visibles
 			if (tmp.getCouleur() == "Locomotive") {
-				cmpLoco++;
+				cmpLoco++;														//Si la carte tirée est une locomotive, on incrémente le compteur
 			}
 		}
-		if (cmpLoco >= 3) {
-			defausse.getCarteWagon().addAll(visibles);
+		if (cmpLoco >= 3) {														//Si il y a plus de 3 cartes locomotive dans la pioche visible
+			defausse.getCarteWagon().addAll(visibles);							//On défausse toute la pioche visible
 			for (CarteWagon c : visibles) {
 				visibles.remove();
 			}
-			preparerPiocheVisible(defausse);
+			preparerPiocheVisible(defausse);									//Et on retire 5 nouvelles cartes du paquets pour refaire la pioche visible
 		}
 		this.cartesVisibles = visibles;
 	}
@@ -98,22 +105,28 @@ public class PiocheWagon {
 	 */
 	public CarteWagon piocherVisible(DefausseWagon defausse) {
 		int cmpLoco = 0;
-		System.out.println("Choisissez une carte");
-		int indiceCarteChoisie = 0;
-		CarteWagon tmp = this.cartesVisibles.get(indiceCarteChoisie);
-		this.cartesVisibles.remove(indiceCarteChoisie);
-		this.cartesVisibles.add(indiceCarteChoisie, this.piocher1Carte(defausse));
+		int i = 0;
+		System.out.println("-->Choisissez une carte");
+		for (CarteWagon c : this.cartesVisibles) {
+			System.out.println("---->" + i + " : " + c);
+			i++;
+		}
+		Scanner sc = new Scanner(System.in);
+		int indiceCarteChoisie = sc.nextInt();
+		CarteWagon tmp = this.cartesVisibles.get(indiceCarteChoisie);				//On prend la carte que le joueur a choisi
+		this.cartesVisibles.remove(indiceCarteChoisie);								//On la retire de la pioche visible
+		this.cartesVisibles.add(indiceCarteChoisie, this.piocher1Carte(defausse));	//Et on la remplace par une autre carte que l'on pioche sur le dessus du paquet
 		for (CarteWagon c : this.cartesVisibles) {
 			if (c.getCouleur() == "Locomotive") {
-				cmpLoco++;
+				cmpLoco++;															//Si la carte tirée est une locomotive, on incrémente le compteur
 			}
 		}
-		if (cmpLoco >= 3) {
-			defausse.getCarteWagon().addAll(this.cartesVisibles);
+		if (cmpLoco >= 3) {															//Si il y a plus de 3 cartes locomotive dans la pioche visible
+			defausse.getCarteWagon().addAll(this.cartesVisibles);					//On défausse toute la pioche visible
 			for (CarteWagon c : this.cartesVisibles) {
 				this.cartesVisibles.remove();
 			}
-			preparerPiocheVisible(defausse);
+			preparerPiocheVisible(defausse);										//Et on retire 5 nouvelles cartes du paquets pour refaire la pioche visible
 		}
 		return tmp;
 	}
@@ -124,20 +137,21 @@ public class PiocheWagon {
 	public List<CarteWagon> piocher(DefausseWagon defausse) {
 		LinkedList<CarteWagon> piochees = new LinkedList<CarteWagon>();
 		int nbCartes = 0;
-		while (nbCartes < 2) {
-			System.out.println("Pioche visible ou pioche aveugle");
-			boolean piocheVisible = true;
-			if (piocheVisible) {
-				CarteWagon r = piocherVisible(defausse);
-				piochees.add(r);
-				nbCartes++;
-				if (r.getCouleur() == "Locomotive") {
+		while (nbCartes < 2) {													//La méthode s'arrête quand le joueur a tiré 2 cartes (sauf cas loco)
+			System.out.println("Pioche visible ou pioche aveugle ? (Visible = 0 / Aveugle = 1)");
+			Scanner sc = new Scanner(System.in);
+			int i = sc.nextInt();
+			if (i == 0) {														//Si le joueur a choisi de tirer dans la pioche visible
+				CarteWagon r = piocherVisible(defausse);						//Il prend une carte
+				piochees.add(r);												//On l'ajoute aux cartes piochées
+				nbCartes++;														//Et on incrémente le compteur
+				if (r.getCouleur() == "Locomotive") {							//Si la carte est une locomotive, la méthode se termine
 					return piochees;
 				}
-			} else {
-				CarteWagon c = piocher1Carte(defausse);
-				piochees.add(c);
-				nbCartes++;
+			} else {															//Si le joueur a choisi de tirer dans la pioche aveugle
+				CarteWagon c = piocher1Carte(defausse);							//Il prend une carte
+				piochees.add(c);												//On l'ajoute à ses cartes piochées
+				nbCartes++;														//Et on incrémente le compteur
 			}
 		}
 		return piochees;

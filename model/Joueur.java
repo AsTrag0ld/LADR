@@ -1,7 +1,5 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -17,6 +15,7 @@ public class Joueur extends Observable {
     private PiocheWagon piocheWagon;
     private PiocheDestination piocheDestination;
     private DefausseWagon defausseWagon;
+    private List<Route> routesPrises;
     private boolean tourDeJeu;
 
     public Joueur() {
@@ -25,6 +24,7 @@ public class Joueur extends Observable {
     	this.score = 0;
     	this.nbWagons = 40;
     	this.tourDeJeu = false;
+    	this.routesPrises = new LinkedList<Route>();
     }
     
     public Joueur(String nom, String couleur) {
@@ -33,6 +33,7 @@ public class Joueur extends Observable {
     	this.score = 0;
     	this.nbWagons = 40;
     	this.tourDeJeu = false;
+    	this.routesPrises = new LinkedList<Route>();
     }
     
     public Joueur(String nom, String couleur, int score, LinkedList<Wagon> wagons, LinkedList<CarteWagon> cartesWagon, LinkedList<CarteDestination> cartesDestination,
@@ -46,6 +47,7 @@ public class Joueur extends Observable {
     	this.piocheWagon = piocheWagon;
     	this.piocheDestination = piocheDestination;
     	this.defausseWagon = defausseWagon;
+    	this.routesPrises = new LinkedList<Route>();
     	this.tourDeJeu = false;
     }
   
@@ -129,14 +131,30 @@ public class Joueur extends Observable {
 		this.defausseWagon = defausseWagon;
 	}
 	
+	public List<Route> getRoutesPrises() {
+		return routesPrises;
+	}
+
+	public void setRoutesPrises(List<Route> routesPrises) {
+		this.routesPrises = routesPrises;
+	}
+
+	public boolean isTourDeJeu() {
+		return tourDeJeu;
+	}
+
+	public void setTourDeJeu(boolean tourDeJeu) {
+		this.tourDeJeu = tourDeJeu;
+	}
+
 	/* !!!!!!!!!!! PAS TERMINE !!!!!!!!!! (Il faut modéliser le placement des wagons de la couleur du joueur sur le plateau)
 	 * Prend possession d'une route en plaçant des wagons sur le plateau et en décrémentant le nombre de wagons du joueur
 	 */
 	public void prendreRoute(Route r) {
-		if (verificationWagonsRoute(r)) {
-			if (verificationCartesRoute(r)) {
+		if (verificationWagonsRoute(r)) {			//Si le joueur a assez de wagons pour prendre la route
+			if (verificationCartesRoute(r)) { 		//Si il a assez de cartes
 				int taille = r.getTaille();
-				switch (taille) {
+				switch (taille) {					//On augmente son score en fonction de la taille de la route prise
 					case 1 : this.score += 1;
 						break;
 					case 2 : this.score += 2;
@@ -154,6 +172,7 @@ public class Joueur extends Observable {
 				}
 				this.nbWagons -= r.getTaille();
 				r.prendre();
+				this.routesPrises.add(r);
 			} else {
 				System.out.println("Vous n'avez pas assez de cartes" + r.getCouleur() + "pour prendre possession de cette route");
 			}
@@ -170,7 +189,7 @@ public class Joueur extends Observable {
 		int cmp = 0;
 		for (CarteWagon c : this.cartesWagon) {
 			if ((c.getCouleur() == r.getCouleur()) || (c.getCouleur() == "Locomotive")) {
-				cmp++;
+				cmp++;					
 			}
 		}
 		return (cmp >= r.getTaille());
@@ -183,10 +202,6 @@ public class Joueur extends Observable {
 		return (this.getNbWagons() >= r.getTaille());
 	}
 	
-
-    public void passerSonTour() {
-    }
-
     public void modifierOptions() {
     }
 

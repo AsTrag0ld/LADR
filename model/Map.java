@@ -101,5 +101,16 @@ public class Map extends Observable {
 	public void initialiserRoutes() {
 		
 	}
+	
+	/*
+	 * Affiche les routes qui peuvent être prise par les joueurs
+	 */
+	public void afficherRoutesDisponibles() {
+		for (int i = 0; i < this.routes.size(); i++) {
+			if (this.routes.get(i).isDisponible()) {
+				System.out.println("Route " + i + " : " + this.routes.get(i));
+			}	
+		}
+	}
     
 }

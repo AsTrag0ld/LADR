@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Partie {
     private Joueur vainqueur;
@@ -15,6 +16,7 @@ public class Partie {
     private DefausseWagon defausseWagon;
     private PiocheDestination piocheDestination;
     private String[] couleurs = {"Blanc", "Bleu", "Jaune", "Vert", "Rouge", "Violet", "Noir", "Marron"};
+    private boolean enCours;
     
     public Partie() {
     	this.vainqueur = null;
@@ -23,6 +25,7 @@ public class Partie {
     	this.piocheDestination = null;
     	this.map.getInstance();
     	this.defausseWagon = new DefausseWagon();
+    	this.enCours = false;
     }
     
     public Partie(ArrayList<Joueur> joueurs, PiocheWagon piocheWagon, PiocheDestination piocheDestination, DefausseWagon defausseWagon) {
@@ -32,6 +35,7 @@ public class Partie {
     	this.piocheDestination = piocheDestination;
     	this.map.getInstance();
     	this.defausseWagon = defausseWagon;
+    	this.enCours = false;
     }
       
     public Joueur getVainqueur() {
@@ -144,6 +148,7 @@ public class Partie {
     	distribuerWagons();
     	distribuerCartesDestination();
     	initialiserMap();
+    	this.enCours = true;
     }
         
     /*
@@ -151,16 +156,16 @@ public class Partie {
      */
     private void initialiserCartesWagon(String[] couleurs) {
     	LinkedList<CarteWagon> cartesWagon = new LinkedList<CarteWagon>();
-    	for (String s : couleurs) {
+    	for (String s : couleurs) {											//Pour chaque couleur présente dans le jeu
     		for (int j = 0; j < 12; j++) {
-    			cartesWagon.add(new CarteWagon(s));
+    			cartesWagon.add(new CarteWagon(s));							//On crée 12 cartes wagon de cette couleur
     		}
     	}
-    	for (int i = 0; i < 14; i++) {
+    	for (int i = 0; i < 14; i++) {										//Ensuite on crée 14 cartes locomotives
     		cartesWagon.add(new CarteWagon("Locomotive"));
     	}
     	this.piocheWagon = new PiocheWagon(cartesWagon);
-    	this.piocheWagon.preparerPiocheVisible(this.defausseWagon);
+    	this.piocheWagon.preparerPiocheVisible(this.defausseWagon);			//On sort 5 cartes du paquets pour en faire la pioche visible
     }
     
     /* !!!!!! PAS TERMINE !!!!! (Besoin de choisir quelle ville seront reliées par les cartes destinations)
@@ -198,8 +203,8 @@ public class Partie {
      * Distribue à chaque joueur les wagons correspondants à sa couleur
      */
     public void distribuerWagons() {
-    	for (Joueur j : this.joueurs) {
-    		j.setWagons(initialiserWagons(j.getCouleur()));
+    	for (Joueur j : this.joueurs) {										//Pour chaque joueur
+    		j.setWagons(initialiserWagons(j.getCouleur()));					//On crée et on lui distibue 45 wagons de sa couleur
     	}
     }
     
@@ -207,10 +212,10 @@ public class Partie {
      * Distribue à chaque joueur au moins 2 cartes destinations parmi 3
      */
     public void distribuerCartesDestination() {
-    	initialiserCartesDestination();
-    	this.piocheDestination.melanger();
-    	for (Joueur j : this.joueurs) {
-    		j.setCartesDestination(this.piocheDestination.distribuer());
+    	initialiserCartesDestination();										//On crée les cartes Destination depuis la BDD
+    	this.piocheDestination.melanger();									//On mélange le paquet
+    	for (Joueur j : this.joueurs) {										//Et pour chaque joueur
+    		j.setCartesDestination(this.piocheDestination.distribuer());	//On lance la procédure de distribution (avec question conservation...)
     	}
     }
     
@@ -220,6 +225,36 @@ public class Partie {
     public void initialiserMap() {
     	this.map.initialiserRoutes();
     	this.map.initialiserVilles();
+    }
+    
+    /*
+     * Permet à un joueur d'effectuer son tour de jeu
+     */
+    public boolean jouerTourDeJeu(Joueur j) {
+    	j.setTourDeJeu(true);
+    	System.out.println("Quelle action souhaitez-vous faire ? (0 : piocher carte wagon, 1 : piocher carte destination, 2 : prendre une route");
+    	Scanner sc = new Scanner(System.in);
+    	int s = sc.nextInt();
+    	switch (s) {
+    		case 0 : 
+    			break;
+    		case 1 :
+    			break;
+    		case 2 : 
+    			System.out.println("Quelle route souhaitez-vous prendre ? (entrez l'indice de la route)");
+    			this.map.afficherRoutesDisponibles();
+    			int indice = sc.nextInt();
+    			for (int i = 0; i < this.map.getRoutes().size(); i++) {
+    				if (i == indice) {
+    					j.prendreRoute(this.map.getRoutes().get(i));
+    				}	
+    			}
+    			break;
+    		default : System.out.println("Veuillez choisir parmi '1', '2' ou '3'");
+    			break;
+    	}
+    	j.finirTour();
+    	return j.isTourDeJeu();
     }
     
 

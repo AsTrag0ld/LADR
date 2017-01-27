@@ -78,4 +78,11 @@ public class Route {
     	this.setDisponible(false);
     }
 
+	@Override
+	public String toString() {
+		return villeA + "-->" + villeB + ", Couleur : " + couleur + ", Taille : " + taille;
+	}
+	
+	
+
 }

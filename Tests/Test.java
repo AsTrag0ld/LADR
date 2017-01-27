@@ -212,62 +212,29 @@ public class Test {
 			System.out.println(y + " Wagons bleu / 45 Wagons");
 			System.out.println("----------------------------------------------------------");
 	
-	/*
-		//Test 12 : Classe PiocheDestination - Méthode piocher()
-		//avec pioche vide
-			System.out.println("Classe PiocheDestination - Méthode piocher() // avec pioche vide");
-			PiocheDestination pi = new PiocheDestination();
-			try {
-				pi.piocher();
-			} catch (OutOfCardsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("----------------------------------------------------------");
-	
-	
-		//Test 13 : Classe PiocheDestination - Méthode piocher()
-		//avec pioche non vide
-			System.out.println("Classe PiocheDestination - Méthode piocher() // avec pioche non vide");
-			PiocheDestination pi = new PiocheDestination();
-			LinkedList<CarteDestination> l1 = new LinkedList<CarteDestination>();
-			
-			for(int i=0; i<5; i++){
-				CarteDestination c = new CarteDestination(5, null, null);
-				l1.add(c);
-			}
-			pi.setCarteDestination(l1);
-			try {
-				pi.piocher();
-			} catch (OutOfCardsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("----------------------------------------------------------");
-			
-			
+		
 		//Test 14 : Classe PiocheDestination - Méthode conserverCarte()
 		//réponse oui
-		 	System.out.println("Classe PiocheDestination - Méthode conserverCarte()");
-			PiocheDestination p = new PiocheDestination();
-			CarteDestination c = new CarteDestination(5, null, null);
+		 	System.out.println("Classe PiocheDestination - Méthode conserverCarte() // Réponse : '1'");
+			PiocheDestination p1 = new PiocheDestination();
+			CarteDestination cd = new CarteDestination(5, null, null);
 			System.out.println("Attendu : true");
-			System.out.println("Obtenu : " + p.conserverCarte(c));
+			System.out.println("Obtenu : " + p1.conserverCarte(cd));
 			System.out.println("----------------------------------------------------------");
 	
 		
 		
 		//Test 15 : Classe PiocheDestination - Méthode conserverCarte()
 		//réponse non
-		 	System.out.println("Classe PiocheDestination - Méthode conserverCarte()");
-			PiocheDestination p = new PiocheDestination();
-			CarteDestination c = new CarteDestination(5, null, null);
+		 	System.out.println("Classe PiocheDestination - Méthode conserverCarte() // Réponse : '0'");
+			PiocheDestination p11 = new PiocheDestination();
+			CarteDestination cd2 = new CarteDestination(5, null, null);
 			System.out.println("Attendu : false");
-			System.out.println("Obtenu : " + p.conserverCarte(c));
+			System.out.println("Obtenu : " + p11.conserverCarte(cd2));
 			System.out.println("----------------------------------------------------------");
 	
 	
-	
+	/*
 		//Test 16 : Classe PiocheDestination - Méthode distribuer()
 		// le joueur conserve une carte
 		 	System.out.println("Classe PiocheDestination - Méthode distribuer()");
@@ -357,7 +324,7 @@ public class Test {
 			lw3.add(c6);
 			lw3.add(c7);
 			
-			pw.setCarteWagon(lw3);
+			pw.setPioche(lw3);
 			
 			System.out.println("Attendu : bleu");
 			System.out.println("Obtenu : " + pw.piocher1Carte(d));
@@ -377,7 +344,7 @@ public class Test {
 			lw4.add(c1);
 			lw4.add(c7);
 			
-			pw.setCarteWagon(lw4);
+			pw.setPioche(lw4);
 			
 			System.out.println("Attendu : noir");
 			System.out.println("Obtenu : " + pw.piocher1Carte(d));
@@ -397,7 +364,7 @@ public class Test {
 			lw5.add(c1);
 			lw5.add(c7);
 			
-			pw.setCarteWagon(lw5);
+			pw.setPioche(lw5);
 			
 			System.out.println("Attendu : locomotive");
 			System.out.println("Obtenu : " + pw.piocher1Carte(d));
@@ -405,7 +372,7 @@ public class Test {
 			
 			
 		//Test 22 : Classe : PiocheWagon - Méthode piocher()
-			System.out.println("Classe : PiocheWagon - Méthode piocher()");
+			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse aux questions : '0' + '1' + '1'");
 			
 			LinkedList<CarteWagon> lw6 = new LinkedList<CarteWagon>();
 			
@@ -416,58 +383,75 @@ public class Test {
 			CarteWagon c51 = new CarteWagon("Locomotive");
 			CarteWagon c61 = new CarteWagon("noir");
 			CarteWagon c71 = new CarteWagon("vert");
+			CarteWagon c81 = new CarteWagon("blouge");
 			
-			lw6.add(c51);
-			lw6.add(c21);
-			lw6.add(c31);
-			lw6.add(c41);
-			lw6.add(c11);
-			lw6.add(c61);
-			lw6.add(c71);
-			
+			lw6.add(c51);	//Locomotive
+			lw6.add(c21);	//Rouge
+			lw6.add(c31);	//Jaune
+			lw6.add(c41);	//Orange
+			lw6.add(c11);	//Bleu
+			lw6.add(c61);	//Noir
+			lw6.add(c71);	//Vert
+			lw6.add(c81);	//Blouge
+				
 			PiocheWagon pw2 = new PiocheWagon(lw6);
 			DefausseWagon d2 = new DefausseWagon();
 			pw2.preparerPiocheVisible(d2);
+			
+			System.out.println("Attendu : Rouge + Vert");
+			System.out.println("Obtenu : " + pw2.piocher(d2));
+			System.out.println("----------------------------------------------------------");
+			
+		//Test 23 : Classe : PiocheWagon - Méthode piocher()
+			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse aux questions : '0' + '0'");
+			
+			pw2.setPioche(lw6);
 			
 			System.out.println("Attendu : Locomotive");
 			System.out.println("Obtenu : " + pw2.piocher(d2));
 			System.out.println("----------------------------------------------------------");
 			
 		//Test 23 : Classe : PiocheWagon - Méthode piocher()
-			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse à la question : 'O'");
-			
-			LinkedList<CarteWagon> lw7 = new LinkedList<CarteWagon>();
-			
-			lw7.add(c11);
-			lw7.add(c21);
-			lw7.add(c31);
-			lw7.add(c41);
-			lw7.add(c51);
-			lw7.add(c61);
-			lw7.add(c71);
-			
-			pw2.setCarteWagon(lw7);
-			
-			System.out.println("Attendu : Bleu + Rouge");
-			System.out.println("Obtenu : " + pw2.piocher(d2));
-			System.out.println("----------------------------------------------------------");
-			
-		//Test 23 : Classe : PiocheWagon - Méthode piocher()
-			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse à la question : 'N'");
+			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse à la question : '1' + '1'");
 			
 			LinkedList<CarteWagon> lw8 = new LinkedList<CarteWagon>();
 			
-			lw8.add(c21);
-			lw8.add(c11);
-			lw8.add(c31);
-			lw8.add(c41);
-			lw8.add(c51);
-			lw8.add(c61);
-			lw8.add(c71);
+			lw8.add(c21);	//Rouge
+			lw8.add(c11);	//Bleu
+			lw8.add(c31);	//Jaune
+			lw8.add(c41);	//Orange
+			lw8.add(c51);	//loco
+			lw8.add(c61);	//Noir
+			lw8.add(c71);	//vert
+			lw8.add(c81);	//Blouge
 			
-			pw2.setCarteWagon(lw8);
-			System.out.println("Attendu : Rouge");
-			System.out.println("Obtenu : " + pw2.piocher(d2));
+			PiocheWagon pw3 = new PiocheWagon(lw8);
+			DefausseWagon d3 = new DefausseWagon();
+			pw3.preparerPiocheVisible(d3);
+			
+			System.out.println("Attendu : Noir + Vert");
+			System.out.println("Obtenu : " + pw3.piocher(d3));
+			System.out.println("----------------------------------------------------------");
+			
+		//Test 24 : Classe : PiocheWagon - Méthode piocher()
+			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse à la question : '0' + '3' + '0' + '2'");
+			
+			LinkedList<CarteWagon> lw9 = new LinkedList<CarteWagon>();
+			
+			lw9.add(c21);	//Rouge
+			lw9.add(c11);	//Bleu
+			lw9.add(c31);	//Jaune
+			lw9.add(c41);	//Orange
+			lw9.add(c51);	//loco
+			lw9.add(c61);	//Noir
+			lw9.add(c71);	//vert
+			lw9.add(c81);	//Blouge
+			
+			pw3.setPioche(lw9);
+			pw3.preparerPiocheVisible(d3);
+			
+			System.out.println("Attendu : Orange + Jaune");
+			System.out.println("Obtenu : " + pw3.piocher(d3));
 			System.out.println("----------------------------------------------------------");
 	}
 }

@@ -21,7 +21,7 @@ public class CarteWagon {
 
 	@Override
 	public String toString() {
-		return "CarteWagon [couleur=" + couleur + "]";
+		return "CarteWagon : " + couleur;
 	}
    
     
