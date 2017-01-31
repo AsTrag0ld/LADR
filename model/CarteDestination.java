@@ -57,7 +57,7 @@ public class CarteDestination {
 
 	@Override
 	public String toString() {
-		return "CarteDestination [valeur=" + valeur + ", villeA=" + villeA + ", villeB=" + villeB + "]";
+		return "CarteDestination [valeur=" + valeur + ", villeA=" + villeA.getNom() + ", villeB=" + villeB.getNom() + "]";
 	}  
     
 

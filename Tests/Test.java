@@ -4,7 +4,7 @@ import java.awt.List;
 import java.util.LinkedList;
 
 public class Test {
-	public static void main(String args[]){
+	public static void main(String args[]) throws OutOfCardsException{
 		//Test 1 Classe : Joueur - Méthode : verificationCartesRoute() 
 		//nbCartes < taille de la route	
 			System.out.println("Classe : Joueur - Méthode : verificationCartesRoute() // nbCartes < taille de la route	");
@@ -217,7 +217,7 @@ public class Test {
 		//réponse oui
 		 	System.out.println("Classe PiocheDestination - Méthode conserverCarte() // Réponse : '1'");
 			PiocheDestination p1 = new PiocheDestination();
-			CarteDestination cd = new CarteDestination(5, null, null);
+			CarteDestination cd = new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge"));
 			System.out.println("Attendu : true");
 			System.out.println("Obtenu : " + p1.conserverCarte(cd));
 			System.out.println("----------------------------------------------------------");
@@ -228,79 +228,77 @@ public class Test {
 		//réponse non
 		 	System.out.println("Classe PiocheDestination - Méthode conserverCarte() // Réponse : '0'");
 			PiocheDestination p11 = new PiocheDestination();
-			CarteDestination cd2 = new CarteDestination(5, null, null);
+			CarteDestination cd2 = new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge"));
 			System.out.println("Attendu : false");
 			System.out.println("Obtenu : " + p11.conserverCarte(cd2));
 			System.out.println("----------------------------------------------------------");
 	
 	
-	/*
 		//Test 16 : Classe PiocheDestination - Méthode distribuer()
-		// le joueur conserve une carte
-		 	System.out.println("Classe PiocheDestination - Méthode distribuer()");
-			PiocheDestination p = new PiocheDestination();
-			LinkedList<CarteDestination> l = new LinkedList<CarteDestination>();
+		// le joueur conserve deux cartes
+		 	System.out.println("Classe PiocheDestination - Méthode distribuer() // Réponse : '1' + '0' + '1'");
+			PiocheDestination p3 = new PiocheDestination();
+			LinkedList<CarteDestination> l1 = new LinkedList<CarteDestination>();
 		
-			for(int i=0; i<5; i++){
-				CarteDestination c = new CarteDestination(5, null, null);
-				l.add(c);
-			}
-			p.setCarteDestination(l);
-			try {
-				p.piocher();
-			} catch (OutOfCardsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			l1.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
+			l1.add(new CarteDestination(25, new Ville("Bavay"), new Ville("Valenciennes")));
+			l1.add(new CarteDestination(40, new Ville("Valenciennes"), new Ville("Maubeuge")));
+			l1.add(new CarteDestination(3, new Ville("Bavay"), new Ville("Mecquignies")));
+			p3.setCarteDestination(l1);
 			
 			LinkedList<CarteDestination> r = new LinkedList<CarteDestination>();
-			r=p.distribuer();
+			r=p3.distribuer();
+			
+			System.out.println("Attendu : 'Bavay -> Maubeuge' + 'Valenciennes -> Maubeuge'" );
+			System.out.println("Obtenu : ");
+			for (int i = 0; i < r.size(); i++) {
+				System.out.println(r.get(i));
+			}
 			System.out.println("----------------------------------------------------------");
 	
+	
 		//Test 17 : Classe PiocheDestination - Méthode distribuer()
-		// le joueur conserve deux cartes
-		 	System.out.println("Classe PiocheDestination - Méthode distribuer()");
-			PiocheDestination p = new PiocheDestination();
-			LinkedList<CarteDestination> l = new LinkedList<CarteDestination>();
+		// le joueur ne conserve pas de carte
+			System.out.println("Classe PiocheDestination - Méthode distribuer() // Réponse : '0' + '0' + '1' + '1' + '0' + '1'");
+			LinkedList<CarteDestination> l2 = new LinkedList<CarteDestination>();
 		
-			for(int i=0; i<5; i++){
-				CarteDestination c = new CarteDestination(5, null, null);
-				l.add(c);
-			}
-			p.setCarteDestination(l);
-			try {
-				p.piocher();
-			} catch (OutOfCardsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			l2.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
+			l2.add(new CarteDestination(25, new Ville("Bavay"), new Ville("Valenciennes")));
+			l2.add(new CarteDestination(40, new Ville("Valenciennes"), new Ville("Maubeuge")));
+			l2.add(new CarteDestination(3, new Ville("Bavay"), new Ville("Mecquignies")));
+			p3.setCarteDestination(l2);
 			
-			LinkedList<CarteDestination> r = new LinkedList<CarteDestination>();
-			r=p.distribuer();
+			LinkedList<CarteDestination> r11 = new LinkedList<CarteDestination>();
+			r11=p3.distribuer();
+			
+			System.out.println("Attendu : 'Bavay -> Maubeuge' + 'Valenciennes -> Maubeuge'" );
+			System.out.println("Obtenu : " + r11.size());
+			for (int i = 0; i < r11.size(); i++) {
+				System.out.println(r11.get(i));
+			}
 			System.out.println("----------------------------------------------------------");
 			
 		//Test 18 : Classe PiocheDestination - Méthode distribuer()
 		// le joueur conserve trois cartes
-		 	System.out.println("Classe PiocheDestination - Méthode distribuer()");
-			PiocheDestination p = new PiocheDestination();
-			LinkedList<CarteDestination> l = new LinkedList<CarteDestination>();
+			System.out.println("Classe PiocheDestination - Méthode distribuer() // Réponse : '1' + '1' + '1'");
+			LinkedList<CarteDestination> l3 = new LinkedList<CarteDestination>();
 		
-			for(int i=0; i<5; i++){
-				CarteDestination c = new CarteDestination(5, null, null);
-				l.add(c);
-			}
-			p.setCarteDestination(l);
-			try {
-				p.piocher();
-			} catch (OutOfCardsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			l3.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
+			l3.add(new CarteDestination(25, new Ville("Bavay"), new Ville("Valenciennes")));
+			l3.add(new CarteDestination(40, new Ville("Valenciennes"), new Ville("Maubeuge")));
+			l3.add(new CarteDestination(3, new Ville("Bavay"), new Ville("Mecquignies")));
+			p3.setCarteDestination(l3);
 			
-			LinkedList<CarteDestination> r = new LinkedList<CarteDestination>();
-			r=p.distribuer();	
+			LinkedList<CarteDestination> r111 = new LinkedList<CarteDestination>();
+			r111=p3.distribuer();
+			
+			System.out.println("Attendu : 'Bavay -> Maubeuge' + 'Bavay -> Valenciennes' + 'Valenciennes -> Maubeuge'" );
+			System.out.println("Obtenu : " + r111.size());
+			for (CarteDestination c : r111) {
+				System.out.println(c);
+			}
 			System.out.println("----------------------------------------------------------");
-	*/
+	
 		//Test 19 : Classe PiocheWagon - Méthode piocher1Carte()
 		// 
 			System.out.println("Classe : PiocheWagon - Méthode : piocher1Carte()");
@@ -411,7 +409,7 @@ public class Test {
 			System.out.println("Obtenu : " + pw2.piocher(d2));
 			System.out.println("----------------------------------------------------------");
 			
-		//Test 23 : Classe : PiocheWagon - Méthode piocher()
+		//Test 24 : Classe : PiocheWagon - Méthode piocher()
 			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse à la question : '1' + '1'");
 			
 			LinkedList<CarteWagon> lw8 = new LinkedList<CarteWagon>();
@@ -433,7 +431,7 @@ public class Test {
 			System.out.println("Obtenu : " + pw3.piocher(d3));
 			System.out.println("----------------------------------------------------------");
 			
-		//Test 24 : Classe : PiocheWagon - Méthode piocher()
+		//Test 25 : Classe : PiocheWagon - Méthode piocher()
 			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse à la question : '0' + '3' + '0' + '2'");
 			
 			LinkedList<CarteWagon> lw9 = new LinkedList<CarteWagon>();
@@ -452,6 +450,92 @@ public class Test {
 			
 			System.out.println("Attendu : Orange + Jaune");
 			System.out.println("Obtenu : " + pw3.piocher(d3));
+			System.out.println("----------------------------------------------------------");
+		
+		//Test 26 : Classe PiocheDestination - Méthode distribuer()
+		// le joueur conserve deux cartes
+		 	System.out.println("Classe PiocheDestination - Méthode piocher() // Réponse : '1' + '0' + '1'");
+			PiocheDestination p31 = new PiocheDestination();
+			LinkedList<CarteDestination> l11 = new LinkedList<CarteDestination>();
+		
+			l11.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
+			l11.add(new CarteDestination(25, new Ville("Bavay"), new Ville("Valenciennes")));
+			l11.add(new CarteDestination(40, new Ville("Valenciennes"), new Ville("Maubeuge")));
+			l11.add(new CarteDestination(3, new Ville("Bavay"), new Ville("Mecquignies")));
+			p31.setCarteDestination(l11);
+			
+			LinkedList<CarteDestination> r12 = new LinkedList<CarteDestination>();
+			r12=p31.piocher();
+			
+			System.out.println("Attendu : 'Bavay -> Maubeuge' + 'Valenciennes -> Maubeuge'" );
+			System.out.println("Obtenu : ");
+			for (int i = 0; i < r12.size(); i++) {
+				System.out.println(r12.get(i));
+			}
+			System.out.println("----------------------------------------------------------");
+	
+	
+		//Test 27 : Classe PiocheDestination - Méthode distribuer()
+		// le joueur ne conserve pas de carte
+			System.out.println("Classe PiocheDestination - Méthode piocher() // Réponse : '0' + '0' + '1'");
+			LinkedList<CarteDestination> l21 = new LinkedList<CarteDestination>();
+		
+			l21.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
+			l21.add(new CarteDestination(25, new Ville("Bavay"), new Ville("Valenciennes")));
+			l21.add(new CarteDestination(40, new Ville("Valenciennes"), new Ville("Maubeuge")));
+			l21.add(new CarteDestination(3, new Ville("Bavay"), new Ville("Mecquignies")));
+			p31.setCarteDestination(l21);
+			
+			LinkedList<CarteDestination> r31 = new LinkedList<CarteDestination>();
+			r31=p31.piocher();
+			
+			System.out.println("Attendu : 'Valenciennes -> Maubeuge'" );
+			System.out.println("Obtenu : " + r31.size());
+			for (int i = 0; i < r31.size(); i++) {
+				System.out.println(r31.get(i));
+			}
+			System.out.println("----------------------------------------------------------");
+			
+		//Test 28 : Classe PiocheDestination - Méthode distribuer()
+		// le joueur ne conserve pas de carte
+			System.out.println("Classe PiocheDestination - Méthode piocher() // Réponse : '0' + '0' + '0' + '1' + '0' + '0'");
+			LinkedList<CarteDestination> l22 = new LinkedList<CarteDestination>();
+		
+			l22.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
+			l22.add(new CarteDestination(25, new Ville("Bavay"), new Ville("Valenciennes")));
+			l22.add(new CarteDestination(40, new Ville("Valenciennes"), new Ville("Maubeuge")));
+			l22.add(new CarteDestination(3, new Ville("Bavay"), new Ville("Mecquignies")));
+			p31.setCarteDestination(l22);
+			
+			LinkedList<CarteDestination> r33 = new LinkedList<CarteDestination>();
+			r33=p31.piocher();
+			
+			System.out.println("Attendu : 'Bavay -> Maubeuge'" );
+			System.out.println("Obtenu : " + r33.size());
+			for (int i = 0; i < r33.size(); i++) {
+				System.out.println(r33.get(i));
+			}
+			System.out.println("----------------------------------------------------------");
+			
+		//Test 29 : Classe PiocheDestination - Méthode distribuer()
+		// le joueur conserve trois cartes
+			System.out.println("Classe PiocheDestination - Méthode piocher() // Réponse : '1' + '1' + '1'");
+			LinkedList<CarteDestination> l31 = new LinkedList<CarteDestination>();
+		
+			l31.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
+			l31.add(new CarteDestination(25, new Ville("Bavay"), new Ville("Valenciennes")));
+			l31.add(new CarteDestination(40, new Ville("Valenciennes"), new Ville("Maubeuge")));
+			l31.add(new CarteDestination(3, new Ville("Bavay"), new Ville("Mecquignies")));
+			p31.setCarteDestination(l31);
+			
+			LinkedList<CarteDestination> r32 = new LinkedList<CarteDestination>();
+			r32=p31.piocher();
+			
+			System.out.println("Attendu : 'Bavay -> Maubeuge' + 'Bavay -> Valenciennes' + 'Valenciennes -> Maubeuge'" );
+			System.out.println("Obtenu : " + r32.size());
+			for (CarteDestination c : r32) {
+				System.out.println(c);
+			}
 			System.out.println("----------------------------------------------------------");
 	}
 }

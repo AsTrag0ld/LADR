@@ -39,28 +39,28 @@ public class PiocheDestination {
 	/*
 	 * Retire les 3 premières cartes de la pioche puis retourne celles que le joueur a choisi de conserver (au moins 1)
 	 */
-	public List<CarteDestination> piocher() throws OutOfCardsException {
-		List<CarteDestination> piochees = new ArrayList<CarteDestination>();
-		List<CarteDestination> conservees = new ArrayList<CarteDestination>();
+	public LinkedList<CarteDestination> piocher() throws OutOfCardsException {
+		LinkedList<CarteDestination> piochees = new LinkedList<CarteDestination>();
+		LinkedList<CarteDestination> conservees = new LinkedList<CarteDestination>();
 		List<CarteDestination> jetees = new ArrayList<CarteDestination>();
 		if (!(this.carteDestination.isEmpty())) {
 			for (int i = 0; i < 3; i++) {
-				piochees.add(this.carteDestination.pollFirst());						//Si la pioche n'est pas vide on tire 3 cartes du dessus du paquet
+				piochees.add(this.carteDestination.pollFirst());						//On tire 3 cartes du dessus du paquet
 			}
 			for (CarteDestination c : piochees) {										//Pour chacune de ces 3 cartes
 				if (conserverCarte(c)) {												//On demande au joueur s'il souhaite la conserver
 					conservees.add(c);													//Si oui, on l'ajoute à la liste des cartes gardées
-					System.out.println("------------> Carte conservée");
+					System.out.println(">> Carte conservée");
 				} else {
 					jetees.add(c);														//Si non, on l'ajoute à la liste des cartes jetées
 				}
 			}
-			if (conservees.size() < 1) {												//La liste des cartes gardées doit au moins contenir une carte
-				System.out.println("Vous devez conserver au moins 1 carte !");			//Si le nombre de cartes gardées n'est pas suffisant
-				for (CarteDestination c : piochees) {
-					this.carteDestination.addFirst(c);									//On remet chaque carte sur le dessus du paquet pour recommencer la méthode de pioche
+			if (conservees.size() < 1) {												//La liste des cartes gardées doit au moins contenir 2 cartes
+				System.err.println("Vous devez conserver au moins 1 carte !");			//Si le nombre de cartes gardées n'est pas suffisant
+				for (int i = piochees.size()-1; i >= 0; i--) {
+					this.carteDestination.addFirst(piochees.get(i));					//On remet chaque carte dans du paquet pour recommencer la méthode de pioche
 				}
-				piocher();																//Appel récursif 
+				conservees = distribuer();												//Appel récursif
 			} else {																	//Si le nombre de cartes gardées est > 1
 				for (CarteDestination c : jetees) {
 					this.carteDestination.addLast(c);									//On ajoute chaque carte jetée à la fin du paquet
@@ -103,17 +103,18 @@ public class PiocheDestination {
 		for (CarteDestination c : piochees) {										//Pour chacune de ces 3 cartes
 			if (conserverCarte(c)) {												//On demande au joueur s'il souhaite la conserver
 				conservees.add(c);													//Si oui, on l'ajoute à la liste des cartes gardées
-				System.out.println("------------> Carte conservée");
+				System.out.println(">> Carte conservée");
 			} else {
 				jetees.add(c);														//Si non, on l'ajoute à la liste des cartes jetées
 			}
 		}
 		if (conservees.size() < 2) {												//La liste des cartes gardées doit au moins contenir 2 cartes
-			System.out.println("Vous devez conserver au moins 2 carte !");			//Si le nombre de cartes gardées n'est pas suffisant
-			for (CarteDestination c : piochees) {									
-				this.carteDestination.addFirst(c);									//On remet chaque carte sur le dessus du paquet pour recommencer la méthode de pioche
+			System.err.println("Vous devez conserver au moins 2 cartes !");			//Si le nombre de cartes gardées n'est pas suffisant
+			conservees.removeFirst();
+			for (int i = piochees.size()-1; i >= 0; i--) {
+				this.carteDestination.addFirst(piochees.get(i));					//On remet chaque carte dans du paquet pour recommencer la méthode de pioche
 			}
-			distribuer();															//Appel récursif
+			conservees = distribuer();												//Appel récursif
 		} else {																	//Si le nombre de cartes gardées est > 1
 			for (CarteDestination c : jetees) {
 				this.carteDestination.addLast(c);									//On ajoute chaque carte jetée à la fin du paquet
