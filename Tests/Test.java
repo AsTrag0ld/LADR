@@ -212,7 +212,7 @@ public class Test {
 			System.out.println(y + " Wagons bleu / 45 Wagons");
 			System.out.println("----------------------------------------------------------");
 	
-		
+	/*	
 		//Test 14 : Classe PiocheDestination - Méthode conserverCarte()
 		//réponse oui
 		 	System.out.println("Classe PiocheDestination - Méthode conserverCarte() // Réponse : '1'");
@@ -368,7 +368,7 @@ public class Test {
 			System.out.println("Obtenu : " + pw.piocher1Carte(d));
 			System.out.println("----------------------------------------------------------");
 			
-			
+	*/	
 		//Test 22 : Classe : PiocheWagon - Méthode piocher()
 			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse aux questions : '0' + '1' + '1'");
 			
@@ -399,16 +399,19 @@ public class Test {
 			System.out.println("Attendu : Rouge + Vert");
 			System.out.println("Obtenu : " + pw2.piocher(d2));
 			System.out.println("----------------------------------------------------------");
-			
+	
 		//Test 23 : Classe : PiocheWagon - Méthode piocher()
 			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse aux questions : '0' + '0'");
 			
+			d2.ajouterCarte(new CarteWagon("blblbl"));
+			d2.ajouterCarte(new CarteWagon("blblbl2"));
+			d2.ajouterCarte(new CarteWagon("blblbl3"));
 			pw2.setPioche(lw6);
 			
 			System.out.println("Attendu : Locomotive");
 			System.out.println("Obtenu : " + pw2.piocher(d2));
 			System.out.println("----------------------------------------------------------");
-			
+	
 		//Test 24 : Classe : PiocheWagon - Méthode piocher()
 			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse à la question : '1' + '1'");
 			

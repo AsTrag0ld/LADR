@@ -51,9 +51,9 @@ public class PiocheWagon {
 		}
 		else { 																	//Si la pioche est vide
 			LinkedList<CarteWagon> nouvellePioche = defausse.getCarteWagon(); 	//On récupère les cartes de la défausse
-			defausse.vider();													//On vide la défausse actuelle
+			//defausse.vider();													//On vide la défausse actuelle
 			Collections.shuffle(nouvellePioche);
-			this.pioche = nouvellePioche;										//La pioche est maintenant l'ancienne défausse mélangée
+			this.pioche.addAll(nouvellePioche);								//La pioche est maintenant l'ancienne défausse mélangée
 			return this.piocher1Carte(defausse);								//Appel récursif de la méthode pour pouvoir piocher une carte
 		}
 	}

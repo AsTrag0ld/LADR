@@ -60,7 +60,7 @@ public class PiocheDestination {
 				for (int i = piochees.size()-1; i >= 0; i--) {
 					this.carteDestination.addFirst(piochees.get(i));					//On remet chaque carte dans du paquet pour recommencer la méthode de pioche
 				}
-				conservees = distribuer();												//Appel récursif
+				conservees = piocher();												//Appel récursif
 			} else {																	//Si le nombre de cartes gardées est > 1
 				for (CarteDestination c : jetees) {
 					this.carteDestination.addLast(c);									//On ajoute chaque carte jetée à la fin du paquet

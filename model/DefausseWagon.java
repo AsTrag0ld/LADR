@@ -36,6 +36,13 @@ public class DefausseWagon {
     	this.carteWagon.clear();
     }
     
+    /*
+     * Ajoute une carte à la défausse
+     */
+    public void ajouterCarte(CarteWagon c) {
+    	this.carteWagon.add(c);
+    }
+    
     
 
 }
