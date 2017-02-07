@@ -7,14 +7,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PiocheDestination {
+	private static PiocheDestination instance;
     private int nbCartes;
     private LinkedList<CarteDestination> carteDestination;
 
-    public PiocheDestination() {
-    	this.carteDestination = new LinkedList<CarteDestination>();
-    	this.nbCartes = this.carteDestination.size();
+    public static PiocheDestination getInstance(LinkedList<CarteDestination> cartes) {
+    	if (instance == null) {
+    		instance = new PiocheDestination(cartes);
+    	}
+    	return instance;
     }
-    
+      
     public PiocheDestination(LinkedList<CarteDestination> lesCartes) {
     	this.carteDestination = lesCartes;
     	this.nbCartes = this.carteDestination.size();

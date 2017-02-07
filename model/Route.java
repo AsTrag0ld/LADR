@@ -3,15 +3,13 @@ package model;
 import model.Ville;
 
 public class Route {
-    private boolean doubleRoute;
     private int taille;
     private String couleur;
     private boolean disponible;
     public Ville villeA;
     public Ville villeB;
 
-    public Route(boolean doubleRoute, int taille, String couleur, Ville villeA, Ville villeB) {
-    	this.doubleRoute = doubleRoute;
+    public Route(int taille, String couleur, Ville villeA, Ville villeB) {
     	this.taille = taille;
     	this.couleur = couleur;
     	this.disponible = true;
@@ -22,14 +20,6 @@ public class Route {
     public boolean estDisponible() {
     	return this.disponible;
     }
-    
-    public boolean isDoubleRoute() {
-		return doubleRoute;
-	}
-
-	public void setDoubleRoute(boolean doubleRoute) {
-		this.doubleRoute = doubleRoute;
-	}
 
 	public int getTaille() {
 		return taille;
@@ -80,7 +70,7 @@ public class Route {
 
 	@Override
 	public String toString() {
-		return villeA + "-->" + villeB + ", Couleur : " + couleur + ", Taille : " + taille;
+		return villeA.getNom() + " --> " + villeB.getNom() + ", Couleur : " + couleur + ", Taille : " + taille;
 	}
 	
 	

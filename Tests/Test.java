@@ -18,7 +18,7 @@ public class Test {
 			
 			j1.setCartesWagon(lc);
 			
-			Route r1 = new Route(false, 5, "rouge", null, null);
+			Route r1 = new Route(5, "rouge", null, null);
 			System.out.println("Attendu : false");
 			System.out.println("Obtenu : " + j1.verificationCartesRoute(r1));
 			
@@ -37,7 +37,7 @@ public class Test {
 			
 			j2.setCartesWagon(lc2);
 			
-			Route r2 = new Route(false, 5, "rouge", null, null);
+			Route r2 = new Route(5, "rouge", null, null);
 			
 			System.out.println("Attendu : true");
 			System.out.println("Obtenu : " + j2.verificationCartesRoute(r2));
@@ -56,7 +56,7 @@ public class Test {
 			
 			j3.setCartesWagon(lc3);
 			
-			Route r3 = new Route(false, 5, "rouge", null, null);
+			Route r3 = new Route(5, "rouge", null, null);
 			
 			System.out.println("Attendu : true");
 			System.out.println("Obtenu : " + j3.verificationCartesRoute(r3));
@@ -77,7 +77,7 @@ public class Test {
 			j4.setWagons(lc4);
 			j4.setNbWagons(lc4.size());
 			
-			Route r4 = new Route(false, 5, "rouge", null, null);
+			Route r4 = new Route(5, "rouge", null, null);
 			
 			System.out.println("Attendu : false");
 			System.out.println("Obtenu : " + j4.verificationWagonsRoute(r4));
@@ -99,7 +99,7 @@ public class Test {
 			j5.setWagons(lc5);
 			j5.setNbWagons(lc5.size());
 			
-			Route r5 = new Route(false, 5, "rouge", null, null);
+			Route r5 = new Route(5, "rouge", null, null);
 			
 			System.out.println("Attendu : true");
 			System.out.println("Obtenu : " + j5.verificationWagonsRoute(r5));
@@ -120,7 +120,7 @@ public class Test {
 			j6.setWagons(lc6);
 			j6.setNbWagons(lc6.size());
 			
-			Route r6 = new Route(false, 4, "rouge", null, null);
+			Route r6 = new Route(4, "rouge", null, null);
 			
 			System.out.println("Attendu : true");
 			System.out.println("Obtenu : " + j6.verificationWagonsRoute(r6));
@@ -458,14 +458,14 @@ public class Test {
 		//Test 26 : Classe PiocheDestination - Méthode distribuer()
 		// le joueur conserve deux cartes
 		 	System.out.println("Classe PiocheDestination - Méthode piocher() // Réponse : '1' + '0' + '1'");
-			PiocheDestination p31 = new PiocheDestination();
+			
 			LinkedList<CarteDestination> l11 = new LinkedList<CarteDestination>();
 		
 			l11.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
 			l11.add(new CarteDestination(25, new Ville("Bavay"), new Ville("Valenciennes")));
 			l11.add(new CarteDestination(40, new Ville("Valenciennes"), new Ville("Maubeuge")));
 			l11.add(new CarteDestination(3, new Ville("Bavay"), new Ville("Mecquignies")));
-			p31.setCarteDestination(l11);
+			PiocheDestination p31 = PiocheDestination.getInstance(l11);
 			
 			LinkedList<CarteDestination> r12 = new LinkedList<CarteDestination>();
 			r12=p31.piocher();

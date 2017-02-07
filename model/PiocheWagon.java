@@ -8,17 +8,19 @@ import java.util.Scanner;
 import java.util.concurrent.SynchronousQueue;
 
 public class PiocheWagon {
+	private static PiocheWagon instance;
     private LinkedList<CarteWagon> pioche;
     private LinkedList<CarteWagon> cartesVisibles;
-
-    public PiocheWagon() {
-    	this.pioche = new LinkedList<CarteWagon>();
-    	this.cartesVisibles = new LinkedList<CarteWagon>();
+    
+    public static PiocheWagon getInstance(LinkedList<CarteWagon> cartes) {
+    	if (instance == null) {
+    		instance = new PiocheWagon(cartes);
+    	}
+    	return instance;
     }
     
     public PiocheWagon(LinkedList<CarteWagon> cartes) {
     	this.pioche = cartes;
-    	//melanger();
     	this.cartesVisibles = new LinkedList<CarteWagon>();
     }
            

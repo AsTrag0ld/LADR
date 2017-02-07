@@ -8,8 +8,8 @@ import org.postgresql.ds.PGSimpleDataSource;
 public abstract class Service {
 	static String SERVER_NAME = "localhost";
 	static String DATABASE_NAME = "ladr";
-	static String LOGIN_BDD = "postgres";
-	static String PASSWORD_BDD = "postgres";
+	static String LOGIN_BDD = "Dorian";
+	static String PASSWORD_BDD = "orange12";
 	
 	// Connexion à la base de données sans la fermer
 		public static Connection getConnection() {

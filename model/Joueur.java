@@ -147,10 +147,10 @@ public class Joueur extends Observable {
 		this.tourDeJeu = tourDeJeu;
 	}
 
-	/* !!!!!!!!!!! PAS TERMINE !!!!!!!!!! (Il faut modéliser le placement des wagons de la couleur du joueur sur le plateau)
+	/* 
 	 * Prend possession d'une route en plaçant des wagons sur le plateau et en décrémentant le nombre de wagons du joueur
 	 */
-	public void prendreRoute(Route r) {
+	public void prendreRoute(Route r) throws OutOfCardsException {
 		if (verificationWagonsRoute(r)) {			//Si le joueur a assez de wagons pour prendre la route
 			if (verificationCartesRoute(r)) { 		//Si il a assez de cartes
 				int taille = r.getTaille();
@@ -174,7 +174,8 @@ public class Joueur extends Observable {
 				r.prendre();
 				this.routesPrises.add(r);
 			} else {
-				System.out.println("Vous n'avez pas assez de cartes" + r.getCouleur() + "pour prendre possession de cette route");
+				System.out.println("Vous n'avez pas assez de cartes '" + r.getCouleur() + "' pour prendre possession de la route : " + r);
+				throw new OutOfCardsException();
 			}
 		} else {
 			System.out.println("Vous n'avez pas assez de wagons restants pour prendre possession de cette route");
@@ -188,7 +189,7 @@ public class Joueur extends Observable {
 	boolean verificationCartesRoute(Route r) {
 		int cmp = 0;
 		for (CarteWagon c : this.cartesWagon) {
-			if ((c.getCouleur() == r.getCouleur()) || (c.getCouleur() == "Locomotive")) {
+			if ((c.getCouleur().equals(r.getCouleur())) || (c.getCouleur() == "Locomotive")) {
 				cmp++;					
 			}
 		}

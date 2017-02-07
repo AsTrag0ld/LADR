@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class Partie {
     private Map map;
     private DefausseWagon defausseWagon;
     private PiocheDestination piocheDestination;
-    private String[] couleurs = {"Blanc", "Bleu", "Jaune", "Vert", "Rouge", "Violet", "Noir", "Marron"};
+    private String[] couleurs = {"blanc", "bleu", "jaune", "vert", "rouge", "violet", "noir", "marron"};
     private boolean enCours;
     
     public Partie() {
@@ -23,9 +24,10 @@ public class Partie {
     	this.joueurs = new ArrayList<Joueur>();
     	this.piocheWagon = null;
     	this.piocheDestination = null;
-    	this.map.getInstance();
+    	this.map = Map.getInstance();
     	this.defausseWagon = new DefausseWagon();
     	this.enCours = false;
+    	initialiserPartie();
     }
     
     public Partie(ArrayList<Joueur> joueurs, PiocheWagon piocheWagon, PiocheDestination piocheDestination, DefausseWagon defausseWagon) {
@@ -33,9 +35,21 @@ public class Partie {
     	this.joueurs = joueurs;
     	this.piocheWagon = piocheWagon;
     	this.piocheDestination = piocheDestination;
-    	this.map.getInstance();
+    	this.map = Map.getInstance();
     	this.defausseWagon = defausseWagon;
     	this.enCours = false;
+    	initialiserPartie();
+    }
+    
+    public Partie(ArrayList<Joueur> joueurs) {
+    	this.vainqueur = null;
+    	this.joueurs = joueurs;
+    	this.piocheWagon = null;
+    	this.piocheDestination = null;
+    	this.map = Map.getInstance();
+    	this.defausseWagon = new DefausseWagon();
+    	this.enCours = false;
+    	initialiserPartie();
     }
       
     public Joueur getVainqueur() {
@@ -140,13 +154,14 @@ public class Partie {
 //		}
     }
     
-    /* !!!!!!!! PAS TERMINE !!!!!!!!!
+    /* 
      * Initialise toutes les composantes d'une partie
      */
     public void initialiserPartie() {
     	distribuerCartesWagon();
     	distribuerWagons();
     	distribuerCartesDestination();
+    	initialiserJoueurs();
     	initialiserMap();
     	this.enCours = true;
     }
@@ -164,17 +179,27 @@ public class Partie {
     	for (int i = 0; i < 14; i++) {										//Ensuite on crée 14 cartes locomotives
     		cartesWagon.add(new CarteWagon("Locomotive"));
     	}
-    	this.piocheWagon = new PiocheWagon(cartesWagon);
+    	this.piocheWagon = PiocheWagon.getInstance(cartesWagon);
+    	Collections.shuffle(piocheWagon.getPioche());
     	this.piocheWagon.preparerPiocheVisible(this.defausseWagon);			//On sort 5 cartes du paquets pour en faire la pioche visible
     }
     
-    /* !!!!!! PAS TERMINE !!!!! (Besoin de choisir quelle ville seront reliées par les cartes destinations)
-     * Crée les 30 cartes destination
+    /* 
+     * Récupère et crée les 30 cartes Destination depuis la base de données
      */
-    private void initialiserCartesDestination() {
+    public void initialiserCartesDestination() {
     	LinkedList<CarteDestination> cartesDestination = new LinkedList<CarteDestination>();
-    	
-    	this.piocheDestination = new PiocheDestination(cartesDestination);
+    	Connection con = Service.getConnection();
+    	try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM cartedestination")) {
+    		ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				cartesDestination.add(new CarteDestination(rs.getInt("points"), new Ville(rs.getString("villeA")), new Ville(rs.getString("villeB"))));
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Impossible de récupérer les cartes Destination");
+		}
+    	this.piocheDestination = PiocheDestination.getInstance(cartesDestination);
     }
     
     /*
@@ -209,12 +234,25 @@ public class Partie {
     }
     
     /*
+     * Initialise la pioche Wagon, la pioche Destination et la défausse Wagon pour chaque Joueur
+     */
+    public void initialiserJoueurs() {
+    	for (Joueur j : this.joueurs) {										
+    		j.setDefausseWagon(defausseWagon);
+    		j.setPiocheDestination(piocheDestination);
+    		j.setPiocheWagon(piocheWagon);
+    	}
+    }
+    
+    /*
      * Distribue à chaque joueur au moins 2 cartes destinations parmi 3
      */
     public void distribuerCartesDestination() {
+    	System.out.println("PHASE DE CHOIX DES CARTES DESTINATION");
     	initialiserCartesDestination();										//On crée les cartes Destination depuis la BDD
     	this.piocheDestination.melanger();									//On mélange le paquet
     	for (Joueur j : this.joueurs) {										//Et pour chaque joueur
+    		System.out.println(j.getNom() + " : ");
     		j.setCartesDestination(this.piocheDestination.distribuer());	//On lance la procédure de distribution (avec question conservation...)
     	}
     }
@@ -223,32 +261,45 @@ public class Partie {
      * Initialise le plateau de jeu
      */
     public void initialiserMap() {
-    	this.map.initialiserRoutes();
     	this.map.initialiserVilles();
+    	this.map.initialiserRoutes();
     }
     
     /*
      * Permet à un joueur d'effectuer son tour de jeu
      */
     public boolean jouerTourDeJeu(Joueur j) {
+    	System.out.println("C'est à " + j.getNom() + " de jouer !");
     	j.setTourDeJeu(true);
+    	System.out.println("Votre main : ");
+    	j.afficherMain();
     	System.out.println("Quelle action souhaitez-vous faire ? (0 : piocher carte wagon, 1 : piocher carte destination, 2 : prendre une route");
     	Scanner sc = new Scanner(System.in);
     	int s = sc.nextInt();
     	switch (s) {
-    		case 0 : 
+    		case 0 : try {
+				j.piocherCarteWagon();
+			} catch (OutOfCardsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     			break;
-    		case 1 :
+    		case 1 : try {
+				j.piocherCarteDestination();
+			} catch (OutOfCardsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     			break;
     		case 2 : 
     			System.out.println("Quelle route souhaitez-vous prendre ? (entrez l'indice de la route)");
     			this.map.afficherRoutesDisponibles();
     			int indice = sc.nextInt();
-    			for (int i = 0; i < this.map.getRoutes().size(); i++) {
-    				if (i == indice) {
-    					j.prendreRoute(this.map.getRoutes().get(i));
-    				}	
-    			}
+				try {
+					j.prendreRoute(this.map.getRoutes().get(indice));
+				} catch (OutOfCardsException e) {
+					jouerTourDeJeu(j);
+				}
     			break;
     		default : System.out.println("Veuillez choisir parmi '1', '2' ou '3'");
     			break;
@@ -256,6 +307,24 @@ public class Partie {
     	j.finirTour();
     	return j.isTourDeJeu();
     }
+    
+    /*
+     * Permet de faire jouer les joueurs chacun leur tour tant que cela est possible
+     */
+    public void jouerPartie() {
+    	while (this.enCours) {
+    		for (Joueur j : this.joueurs) {
+    			jouerTourDeJeu(j);
+    			if (j.getNbWagons() < 3) {
+        			this.enCours = false;
+        		}
+    		}
+    	}
+    	Joueur vainqueur = this.determinerVainqueur();
+    	System.out.println("Le vainqueur est : " + vainqueur.getNom());
+    }
+    
+    
     
 
 }
