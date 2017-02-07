@@ -20,14 +20,16 @@ score int NOT NULL CHECK(score >= 0)
 );
 
 CREATE TABLE Ville (
-nom text PRIMARY KEY,
+nom text PRIMARY KEY
 );
 
 CREATE TABLE Route (
+idRoute int AUTO_INCREMENT,
 villeA text REFERENCES Ville(nom),
 villeB text REFERENCES Ville(nom),
-double boolean NOT NULL,
-PRIMARY KEY (villeA, villeB)
+taille int NOT NULL CHECK (taille > 1),
+couleur text NOT NULL,
+PRIMARY KEY (idRoute)
 );
 
 CREATE TABLE CarteDestination (
@@ -69,7 +71,7 @@ INSERT INTO CarteDestination VALUES
 (11, 'Churchill', 'Ivujivik'),
 (11, 'Saskatoon', 'Echo Bay'),
 (11, 'Regina', 'Baker Lake'),
-(11, 'Windsor', 'Halifax')
+(11, 'Windsor', 'Halifax'),
 (12, 'Prince George', 'Thunder Bay'),
 (12, 'Thompson', 'Chibougama'),
 (13, 'Regina', 'Oshawa'),
@@ -82,11 +84,12 @@ INSERT INTO CarteDestination VALUES
 (21, 'Vancouver', 'Pond Inlet'),
 (22, 'Winnipeg', 'Millepertuis');
 
-INSERT INTO Route VALUES
-('Whitehorse', 'Fort Good Hope', true),
-('Whitehorse', 'Prince George', true),
-('Whitehorse', 'Tungstene', false),
-('Prince George', 'Victoria', false),
+INSERT INTO Route (villeA, villeB, taille, couleur) VALUES
+('Whitehorse', 'Fort Good Hope', 5, "bleu"),
+('Whitehorse', 'Prince George', 5, "rose"),
+('Whitehorse', 'Prince George', 5, "vert"),
+('Whitehorse', 'Tungstene', 2, "rouge"),
+('Prince George', 'Victoria', 4, "jaune"),
 ('Victoria', 'Calgary', false),
 ('Calgary', 'Edmonton', true),
 ('Vancouver', 'Prince George', false),
@@ -149,4 +152,4 @@ INSERT INTO Route VALUES
 ('Halifax', 'Sydney', false),
 ('Crand Sault', 'Sydney', false),
 ('Millepertuis', 'Sydney', false),
-('Crand Sault', 'Millepertuis', false),
+('Crand Sault', 'Millepertuis', false);
