@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 public class Partie {
     private Joueur vainqueur;
     private List<Joueur> joueurs;
@@ -161,7 +163,6 @@ public class Partie {
     	distribuerCartesWagon();
     	distribuerWagons();
     	distribuerCartesDestination();
-    	initialiserJoueurs();
     	initialiserMap();
     	this.enCours = true;
     }
@@ -232,18 +233,7 @@ public class Partie {
     		j.setWagons(initialiserWagons(j.getCouleur()));					//On crée et on lui distibue 45 wagons de sa couleur
     	}
     }
-    
-    /*
-     * Initialise la pioche Wagon, la pioche Destination et la défausse Wagon pour chaque Joueur
-     */
-    public void initialiserJoueurs() {
-    	for (Joueur j : this.joueurs) {										
-    		j.setDefausseWagon(defausseWagon);
-    		j.setPiocheDestination(piocheDestination);
-    		j.setPiocheWagon(piocheWagon);
-    	}
-    }
-    
+        
     /*
      * Distribue à chaque joueur au moins 2 cartes destinations parmi 3
      */
@@ -278,16 +268,14 @@ public class Partie {
     	int s = sc.nextInt();
     	switch (s) {
     		case 0 : try {
-				j.piocherCarteWagon();
+				j.piocherCarteWagon(this.piocheWagon, this.defausseWagon);
 			} catch (OutOfCardsException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     			break;
     		case 1 : try {
-				j.piocherCarteDestination();
+				j.piocherCarteDestination(this.piocheDestination);
 			} catch (OutOfCardsException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     			break;
@@ -306,6 +294,24 @@ public class Partie {
     	}
     	j.finirTour();
     	return j.isTourDeJeu();
+    }
+    
+    /*
+     * Permet d'ajouter ou de retirer les points correspondants aux cartes destinations de chaque joueur
+     */
+    public void comptabiliserPointsCartesDesination() {
+    	for (Joueur j : this.getJoueurs()) {
+    		for (CarteDestination c : j.getCartesDestination()) {
+    			boolean reussie = false;
+    			Route r = j.getRoutesPrises().getFirst();
+    			for (int i = 1; i < j.getRoutesPrises().size(); i++) {
+    				
+    			}
+    			if (reussie) {
+    				j.setScore(j.getScore() + c.getValeur());
+    			}
+    		}
+    	}
     }
     
     /*
