@@ -1,4 +1,4 @@
-package model;
+package com.example.doria.ladrandr.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +40,7 @@ public class PiocheDestination {
 	}
 
 	/*
-	 * Retire les 3 premières cartes de la pioche puis retourne celles que le joueur a choisi de conserver (au moins 1)
+	 * Retire les 3 premiï¿½res cartes de la pioche puis retourne celles que le joueur a choisi de conserver (au moins 1)
 	 */
 	public LinkedList<CarteDestination> piocher() throws OutOfCardsException {
 		LinkedList<CarteDestination> piochees = new LinkedList<CarteDestination>();
@@ -52,21 +52,21 @@ public class PiocheDestination {
 			}
 			for (CarteDestination c : piochees) {										//Pour chacune de ces 3 cartes
 				if (conserverCarte(c)) {												//On demande au joueur s'il souhaite la conserver
-					conservees.add(c);													//Si oui, on l'ajoute à la liste des cartes gardées
-					System.out.println(">> Carte conservée");
+					conservees.add(c);													//Si oui, on l'ajoute ï¿½ la liste des cartes gardï¿½es
+					System.out.println(">> Carte conservï¿½e");
 				} else {
-					jetees.add(c);														//Si non, on l'ajoute à la liste des cartes jetées
+					jetees.add(c);														//Si non, on l'ajoute ï¿½ la liste des cartes jetï¿½es
 				}
 			}
-			if (conservees.size() < 1) {												//La liste des cartes gardées doit au moins contenir 2 cartes
-				System.err.println("Vous devez conserver au moins 1 carte !");			//Si le nombre de cartes gardées n'est pas suffisant
+			if (conservees.size() < 1) {												//La liste des cartes gardï¿½es doit au moins contenir 2 cartes
+				System.err.println("Vous devez conserver au moins 1 carte !");			//Si le nombre de cartes gardï¿½es n'est pas suffisant
 				for (int i = piochees.size()-1; i >= 0; i--) {
-					this.carteDestination.addFirst(piochees.get(i));					//On remet chaque carte dans du paquet pour recommencer la méthode de pioche
+					this.carteDestination.addFirst(piochees.get(i));					//On remet chaque carte dans du paquet pour recommencer la mï¿½thode de pioche
 				}
-				conservees = piocher();												//Appel récursif
-			} else {																	//Si le nombre de cartes gardées est > 1
+				conservees = piocher();												//Appel rï¿½cursif
+			} else {																	//Si le nombre de cartes gardï¿½es est > 1
 				for (CarteDestination c : jetees) {
-					this.carteDestination.addLast(c);									//On ajoute chaque carte jetée à la fin du paquet
+					this.carteDestination.addLast(c);									//On ajoute chaque carte jetï¿½e ï¿½ la fin du paquet
 				}
 			}
 		} else {
@@ -76,7 +76,7 @@ public class PiocheDestination {
 	}
 	
 	/*
-	 * Demande au joueur pour chaque carte piochée s'il souhaite la conserver
+	 * Demande au joueur pour chaque carte piochï¿½e s'il souhaite la conserver
 	 */
 	public boolean conserverCarte(CarteDestination carte) {
 		System.out.println("Voulez-vous conserver cette carte ? (0 : non / 1 : oui)");
@@ -87,14 +87,14 @@ public class PiocheDestination {
 	}
 	
 	/*
-	 * Mélange le paquet de CarteDestination
+	 * Mï¿½lange le paquet de CarteDestination
 	 */
 	public void melanger() {
 		Collections.shuffle(this.carteDestination);
     }
 	
 	/*
-	 * Retire les 3 premières cartes de la pioche puis retourne celles que le joueur a choisi de conserver (au moins 2)
+	 * Retire les 3 premiï¿½res cartes de la pioche puis retourne celles que le joueur a choisi de conserver (au moins 2)
 	 */
 	public LinkedList<CarteDestination> distribuer()  {
 		LinkedList<CarteDestination> piochees = new LinkedList<CarteDestination>();
@@ -105,22 +105,22 @@ public class PiocheDestination {
 		}
 		for (CarteDestination c : piochees) {										//Pour chacune de ces 3 cartes
 			if (conserverCarte(c)) {												//On demande au joueur s'il souhaite la conserver
-				conservees.add(c);													//Si oui, on l'ajoute à la liste des cartes gardées
-				System.out.println(">> Carte conservée");
+				conservees.add(c);													//Si oui, on l'ajoute ï¿½ la liste des cartes gardï¿½es
+				System.out.println(">> Carte conservï¿½e");
 			} else {
-				jetees.add(c);														//Si non, on l'ajoute à la liste des cartes jetées
+				jetees.add(c);														//Si non, on l'ajoute ï¿½ la liste des cartes jetï¿½es
 			}
 		}
-		if (conservees.size() < 2) {												//La liste des cartes gardées doit au moins contenir 2 cartes
-			System.err.println("Vous devez conserver au moins 2 cartes !");			//Si le nombre de cartes gardées n'est pas suffisant
+		if (conservees.size() < 2) {												//La liste des cartes gardï¿½es doit au moins contenir 2 cartes
+			System.err.println("Vous devez conserver au moins 2 cartes !");			//Si le nombre de cartes gardï¿½es n'est pas suffisant
 			conservees.removeFirst();
 			for (int i = piochees.size()-1; i >= 0; i--) {
-				this.carteDestination.addFirst(piochees.get(i));					//On remet chaque carte dans du paquet pour recommencer la méthode de pioche
+				this.carteDestination.addFirst(piochees.get(i));					//On remet chaque carte dans du paquet pour recommencer la mï¿½thode de pioche
 			}
-			conservees = distribuer();												//Appel récursif
-		} else {																	//Si le nombre de cartes gardées est > 1
+			conservees = distribuer();												//Appel rï¿½cursif
+		} else {																	//Si le nombre de cartes gardï¿½es est > 1
 			for (CarteDestination c : jetees) {
-				this.carteDestination.addLast(c);									//On ajoute chaque carte jetée à la fin du paquet
+				this.carteDestination.addLast(c);									//On ajoute chaque carte jetï¿½e ï¿½ la fin du paquet
 			}
 		}
 		return conservees;	

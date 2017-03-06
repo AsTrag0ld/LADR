@@ -1,4 +1,4 @@
-package model;
+package com.example.doria.ladrandr.model;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class Main {
 		System.out.println("CW : " + j2.getCartesWagon());
 		System.out.println("CD : " + j2.getCartesDestination());
 	}
-*/
+
 
 	
 	public static void main(String[] args) {
@@ -38,5 +38,5 @@ public class Main {
 		partie.jouerPartie();
 	}
 	
-	
+*/
 }

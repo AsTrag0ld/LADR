@@ -1,9 +1,9 @@
-package model;
+package com.example.doria.ladrandr.model;
 
-import model.Ville;
+import com.example.doria.ladrandr.model.*;
 
 /*
- * Nombre de cartes par rapport à leurs points :
+ * Nombre de cartes par rapport ï¿½ leurs points :
  * 4 : 1
  * 5 : 1
  * 6 : 1

@@ -1,6 +1,6 @@
-package model;
+package com.example.doria.ladrandr.model;
 
-import model.Ville;
+import com.example.doria.ladrandr.model.Ville;
 
 public class Route {
     private int taille;
@@ -62,7 +62,7 @@ public class Route {
 	}
 
 	/*
-	 * Prend la route pour un joueur c'est-à-dire change sa disponibilité
+	 * Prend la route pour un joueur c'est-ï¿½-dire change sa disponibilitï¿½
 	 */
 	public void prendre() {
     	this.setDisponible(false);

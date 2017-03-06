@@ -1,4 +1,8 @@
-package model;
+package com.example.doria.ladrandr.model;
+
+import android.content.Context;
+
+import com.example.doria.ladrandr.controller.DatabaseHandler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +12,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class Partie {
     private Joueur vainqueur;
@@ -21,7 +23,7 @@ public class Partie {
     private String[] couleurs = {"blanc", "bleu", "jaune", "vert", "rouge", "violet", "noir", "marron"};
     private boolean enCours;
     
-    public Partie() {
+    public Partie(Context context) {
     	this.vainqueur = null;
     	this.joueurs = new ArrayList<Joueur>();
     	this.piocheWagon = null;
@@ -29,10 +31,10 @@ public class Partie {
     	this.map = Map.getInstance();
     	this.defausseWagon = new DefausseWagon();
     	this.enCours = false;
-    	initialiserPartie();
+    	initialiserPartie(context);
     }
     
-    public Partie(ArrayList<Joueur> joueurs, PiocheWagon piocheWagon, PiocheDestination piocheDestination, DefausseWagon defausseWagon) {
+    public Partie(ArrayList<Joueur> joueurs, PiocheWagon piocheWagon, PiocheDestination piocheDestination, DefausseWagon defausseWagon, Context context) {
     	this.vainqueur = null;
     	this.joueurs = joueurs;
     	this.piocheWagon = piocheWagon;
@@ -40,10 +42,10 @@ public class Partie {
     	this.map = Map.getInstance();
     	this.defausseWagon = defausseWagon;
     	this.enCours = false;
-    	initialiserPartie();
+    	initialiserPartie(context);
     }
     
-    public Partie(ArrayList<Joueur> joueurs) {
+    public Partie(ArrayList<Joueur> joueurs, Context context) {
     	this.vainqueur = null;
     	this.joueurs = joueurs;
     	this.piocheWagon = null;
@@ -51,7 +53,7 @@ public class Partie {
     	this.map = Map.getInstance();
     	this.defausseWagon = new DefausseWagon();
     	this.enCours = false;
-    	initialiserPartie();
+    	initialiserPartie(context);
     }
       
     public Joueur getVainqueur() {
@@ -127,13 +129,13 @@ public class Partie {
 //    		stmt.setInt(1, this.joueurs.size());
 //			stmt.execute();
 //		} catch (Exception e) {
-//			throw new RuntimeException("Impossible de créer une nouvelle partie");
+//			throw new RuntimeException("Impossible de crï¿½er une nouvelle partie");
 //		}
 //    	try (PreparedStatement stmt = con.prepareStatement("SELECT idPartie FROM Partie GROUP BY idPartie DESC LIMIT 1")) {
 //			ResultSet rs = stmt.executeQuery();
 //			int idPartie = rs.getInt("idPartie");
 //		} catch (Exception e) {
-//			throw new RuntimeException("Impossible de créer une nouvelle partie");
+//			throw new RuntimeException("Impossible de crï¿½er une nouvelle partie");
 //		}
 //    	try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Classement VALUES (?, ?, 0)")) {
 //    		for (Joueur j : this.joueurs) {
@@ -142,7 +144,7 @@ public class Partie {
 //    		}
 //    		
 //		} catch (Exception e) {
-//			throw new RuntimeException("Impossible de créer une nouvelle partie");
+//			throw new RuntimeException("Impossible de crï¿½er une nouvelle partie");
 //		}
     }
     
@@ -152,32 +154,32 @@ public class Partie {
 //    		stmt.setInt(1, this.joueurs.size());
 //			stmt.execute();
 //		} catch (Exception e) {
-//			throw new RuntimeException("Impossible de créer une nouvelle partie");
+//			throw new RuntimeException("Impossible de crï¿½er une nouvelle partie");
 //		}
     }
     
     /* 
      * Initialise toutes les composantes d'une partie
      */
-    public void initialiserPartie() {
+    public void initialiserPartie(Context context) {
     	distribuerCartesWagon();
     	distribuerWagons();
-    	distribuerCartesDestination();
-    	initialiserMap();
+    	distribuerCartesDestination(context);
+    	initialiserMap(context);
     	this.enCours = true;
     }
         
     /*
-     * Crée les 110 cartes wagons (12 par couleur + 14 locomotives)
+     * Crï¿½e les 110 cartes wagons (12 par couleur + 14 locomotives)
      */
     private void initialiserCartesWagon(String[] couleurs) {
     	LinkedList<CarteWagon> cartesWagon = new LinkedList<CarteWagon>();
-    	for (String s : couleurs) {											//Pour chaque couleur présente dans le jeu
+    	for (String s : couleurs) {											//Pour chaque couleur prï¿½sente dans le jeu
     		for (int j = 0; j < 12; j++) {
-    			cartesWagon.add(new CarteWagon(s));							//On crée 12 cartes wagon de cette couleur
+    			cartesWagon.add(new CarteWagon(s));							//On crï¿½e 12 cartes wagon de cette couleur
     		}
     	}
-    	for (int i = 0; i < 14; i++) {										//Ensuite on crée 14 cartes locomotives
+    	for (int i = 0; i < 14; i++) {										//Ensuite on crï¿½e 14 cartes locomotives
     		cartesWagon.add(new CarteWagon("Locomotive"));
     	}
     	this.piocheWagon = PiocheWagon.getInstance(cartesWagon);
@@ -186,25 +188,17 @@ public class Partie {
     }
     
     /* 
-     * Récupère et crée les 30 cartes Destination depuis la base de données
+     * Rï¿½cupï¿½re et crï¿½e les 30 cartes Destination depuis la base de donnï¿½es
      */
-    public void initialiserCartesDestination() {
+    public void initialiserCartesDestination(Context context) {
     	LinkedList<CarteDestination> cartesDestination = new LinkedList<CarteDestination>();
-    	Connection con = Service.getConnection();
-    	try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM cartedestination")) {
-    		ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				cartesDestination.add(new CarteDestination(rs.getInt("points"), new Ville(rs.getString("villeA")), new Ville(rs.getString("villeB"))));
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("Impossible de récupérer les cartes Destination");
-		}
+		DatabaseHandler db = new DatabaseHandler(context);
+		cartesDestination = db.getAllCartesDestination();
     	this.piocheDestination = PiocheDestination.getInstance(cartesDestination);
     }
     
     /*
-     * Crée 45 wagons pour la couleur passée en argument
+     * Crï¿½e 45 wagons pour la couleur passï¿½e en argument
      */
     LinkedList<Wagon> initialiserWagons(String couleur) {
     	LinkedList<Wagon> lesWagons = new LinkedList<Wagon>();
@@ -215,7 +209,7 @@ public class Partie {
     }
     
     /*
-     * Distribue 4 cartes wagon à chaque joueur après avoir mélanger le paquet
+     * Distribue 4 cartes wagon ï¿½ chaque joueur aprï¿½s avoir mï¿½langer le paquet
      */
     public void distribuerCartesWagon() {
     	initialiserCartesWagon(this.couleurs);
@@ -226,40 +220,40 @@ public class Partie {
     }
     
     /*
-     * Distribue à chaque joueur les wagons correspondants à sa couleur
+     * Distribue ï¿½ chaque joueur les wagons correspondants ï¿½ sa couleur
      */
     public void distribuerWagons() {
     	for (Joueur j : this.joueurs) {										//Pour chaque joueur
-    		j.setWagons(initialiserWagons(j.getCouleur()));					//On crée et on lui distibue 45 wagons de sa couleur
+    		j.setWagons(initialiserWagons(j.getCouleur()));					//On crï¿½e et on lui distibue 45 wagons de sa couleur
     	}
     }
         
     /*
-     * Distribue à chaque joueur au moins 2 cartes destinations parmi 3
+     * Distribue ï¿½ chaque joueur au moins 2 cartes destinations parmi 3
      */
-    public void distribuerCartesDestination() {
+    public void distribuerCartesDestination(Context context) {
     	System.out.println("PHASE DE CHOIX DES CARTES DESTINATION");
-    	initialiserCartesDestination();										//On crée les cartes Destination depuis la BDD
-    	this.piocheDestination.melanger();									//On mélange le paquet
+    	initialiserCartesDestination(context);										//On crï¿½e les cartes Destination depuis la BDD
+    	this.piocheDestination.melanger();									//On mï¿½lange le paquet
     	for (Joueur j : this.joueurs) {										//Et pour chaque joueur
     		System.out.println(j.getNom() + " : ");
-    		j.setCartesDestination(this.piocheDestination.distribuer());	//On lance la procédure de distribution (avec question conservation...)
+    		j.setCartesDestination(this.piocheDestination.distribuer());	//On lance la procï¿½dure de distribution (avec question conservation...)
     	}
     }
     
     /*
      * Initialise le plateau de jeu
      */
-    public void initialiserMap() {
-    	this.map.initialiserVilles();
-    	this.map.initialiserRoutes();
+    public void initialiserMap(Context context) {
+    	this.map.initialiserVilles(context);
+    	this.map.initialiserRoutes(context);
     }
     
     /*
-     * Permet à un joueur d'effectuer son tour de jeu
+     * Permet ï¿½ un joueur d'effectuer son tour de jeu
      */
     public boolean jouerTourDeJeu(Joueur j) {
-    	System.out.println("C'est à " + j.getNom() + " de jouer !");
+    	System.out.println("C'est ï¿½ " + j.getNom() + " de jouer !");
     	j.setTourDeJeu(true);
     	System.out.println("Votre main : ");
     	j.afficherMain();

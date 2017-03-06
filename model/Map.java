@@ -1,4 +1,8 @@
-package model;
+package com.example.doria.ladrandr.model;
+
+import android.content.Context;
+
+import com.example.doria.ladrandr.controller.DatabaseHandler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,43 +54,25 @@ public class Map extends Observable {
 	}
 	
 	/*
-	 * Crée toutes les villes du plateau de jeu
+	 * Crï¿½e toutes les villes du plateau de jeu
 	 */
-	public void initialiserVilles() {
+	public void initialiserVilles(Context context) {
 		LinkedList<Ville> lesVilles = new LinkedList<Ville>();
-		Connection con = Service.getConnection();
-    	try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM ville")) {
-    		ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				lesVilles.add(new Ville(rs.getString("nom")));
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("Impossible de récupérer les villes");
-		}
-		this.villes = lesVilles;
+		DatabaseHandler db = new DatabaseHandler(context);
+		this.villes = db.getAllVilles();
 	}
 	
 	/*
-	 * Crée toutes les routes du plateau de jeu
+	 * Crï¿½e toutes les routes du plateau de jeu
 	 */
-	public void initialiserRoutes() {
+	public void initialiserRoutes(Context context) {
 		LinkedList<Route> lesRoutes = new LinkedList<Route>();
-		Connection con = Service.getConnection();
-    	try (PreparedStatement stmt = con.prepareStatement("SELECT * FROM route")) {
-    		ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				lesRoutes.add(new Route(rs.getInt("taille"), rs.getString("couleur"), new Ville(rs.getString("villeA")), new Ville(rs.getString("villeB"))));
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("Impossible de récupérer les routes");
-		}
-		this.routes = lesRoutes;
+		DatabaseHandler db = new DatabaseHandler(context);
+		this.routes = db.getAllRoutes();
 	}
 	
 	/*
-	 * Affiche les routes qui peuvent être prise par les joueurs
+	 * Affiche les routes qui peuvent ï¿½tre prise par les joueurs
 	 */
 	public void afficherRoutesDisponibles() {
 		for (int i = 0; i < this.routes.size(); i++) {

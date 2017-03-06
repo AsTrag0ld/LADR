@@ -1,4 +1,4 @@
-package model;
+package com.example.doria.ladrandr.model;
 
 
 public class Ville {
