@@ -1,4 +1,4 @@
-package com.example.doria.ladrandr.model;
+package model;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class DefausseWagon {
 	}
 	
 	/*
-     * Supprime tous les ï¿½lï¿½ments contenus dans la dï¿½fausse
+     * Supprime tous les éléments contenus dans la défausse
      */
     public void vider() {
     	this.nbCartes = 0;
@@ -37,7 +37,7 @@ public class DefausseWagon {
     }
     
     /*
-     * Ajoute une carte ï¿½ la dï¿½fausse
+     * Ajoute une carte à la défausse
      */
     public void ajouterCarte(CarteWagon c) {
     	this.carteWagon.add(c);

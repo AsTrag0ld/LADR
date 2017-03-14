@@ -1,14 +1,13 @@
-package com.example.doria.ladrandr.model;
+package model;
 
-
+import java.awt.List;
 import java.util.LinkedList;
 
 public class Test {
-	/*
 	public static void main(String args[]) throws OutOfCardsException{
-		//Test 1 Classe : Joueur - Mï¿½thode : verificationCartesRoute() 
+		//Test 1 Classe : Joueur - Méthode : verificationCartesRoute() 
 		//nbCartes < taille de la route	
-			System.out.println("Classe : Joueur - Mï¿½thode : verificationCartesRoute() // nbCartes < taille de la route	");
+			System.out.println("Classe : Joueur - Méthode : verificationCartesRoute() // nbCartes < taille de la route	");
 		 	Joueur j1=new Joueur();
 			LinkedList<CarteWagon> lc = new LinkedList<CarteWagon>();
 			
@@ -25,9 +24,9 @@ public class Test {
 			
 			System.out.println("----------------------------------------------------------");
 		
-		//Test 2 Classe : Joueur - Mï¿½thode : verificationCartesRoute() 
+		//Test 2 Classe : Joueur - Méthode : verificationCartesRoute() 
 		//nbCartes = taille de la route
-			System.out.println("Classe : Joueur - Mï¿½thode : verificationCartesRoute() // nbCartes = taille de la route");
+			System.out.println("Classe : Joueur - Méthode : verificationCartesRoute() // nbCartes = taille de la route");
 			Joueur j2=new Joueur();
 			LinkedList<CarteWagon> lc2 = new LinkedList<CarteWagon>();
 			
@@ -44,9 +43,9 @@ public class Test {
 			System.out.println("Obtenu : " + j2.verificationCartesRoute(r2));
 			System.out.println("----------------------------------------------------------");
 	
-		//Test 3 Classe : Joueur - Mï¿½thode : verificationCartesRoute() 
+		//Test 3 Classe : Joueur - Méthode : verificationCartesRoute() 
 		//nbCartes > taille de la route
-			System.out.println("Classe : Joueur - Mï¿½thode : verificationCartesRoute() // nbCartes > taille de la route");
+			System.out.println("Classe : Joueur - Méthode : verificationCartesRoute() // nbCartes > taille de la route");
 			Joueur j3=new Joueur();
 			LinkedList<CarteWagon> lc3 = new LinkedList<CarteWagon>();
 			
@@ -64,9 +63,9 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 		
 	
-		//Test 4 : Classe Joueur - Mï¿½thode : vï¿½rificationWagonRoute() 
+		//Test 4 : Classe Joueur - Méthode : vérificationWagonRoute() 
 		//nbWagon < taille route
-			System.out.println("Classe Joueur - Mï¿½thode : vï¿½rificationWagonRoute() // nbWagon < taille route");
+			System.out.println("Classe Joueur - Méthode : vérificationWagonRoute() // nbWagon < taille route");
 			Joueur j4=new Joueur();
 			LinkedList<Wagon> lc4 = new LinkedList<Wagon>();
 			
@@ -86,9 +85,9 @@ public class Test {
 		
 		
 	
-		//Test 5 : Classe Joueur - Mï¿½thode : vï¿½rificationWagonRoute() 
+		//Test 5 : Classe Joueur - Méthode : vérificationWagonRoute() 
 		//nbWagon = taille route
-			System.out.println("Classe Joueur - Mï¿½thode : vï¿½rificationWagonRoute() // nbWagon = taille route");
+			System.out.println("Classe Joueur - Méthode : vérificationWagonRoute() // nbWagon = taille route");
 			Joueur j5=new Joueur();
 			LinkedList<Wagon> lc5 = new LinkedList<Wagon>();
 			
@@ -107,9 +106,9 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 				
 		
-		//Test 6 : Classe Joueur - Mï¿½thode : vï¿½rificationWagonRoute() 
+		//Test 6 : Classe Joueur - Méthode : vérificationWagonRoute() 
 		//nbWagon > taille route
-			System.out.println("Classe Joueur - Mï¿½thode : vï¿½rificationWagonRoute() // nbWagon > taille route");		
+			System.out.println("Classe Joueur - Méthode : vérificationWagonRoute() // nbWagon > taille route");		
 			Joueur j6=new Joueur();
 			LinkedList<Wagon> lc6 = new LinkedList<Wagon>();
 			
@@ -128,10 +127,10 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 				
 	
-		//Test 7 : Classe Partie - Mï¿½thode determinerVainqueur()
+		//Test 7 : Classe Partie - Méthode determinerVainqueur()
 		//J1 = 20 et J2 = 40
 			
-			System.out.println("Classe Partie - Mï¿½thode determinerVainqueur() // J1 = 20 et J2 = 40");	
+			System.out.println("Classe Partie - Méthode determinerVainqueur() // J1 = 20 et J2 = 40");	
 			Partie p = new Partie();
 			Joueur j7 = new Joueur();
 			j7.setNom("Georis");
@@ -150,10 +149,10 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 				
 				
-		//Test 8 : Classe Partie - Mï¿½thode determinerVainqueur()
+		//Test 8 : Classe Partie - Méthode determinerVainqueur()
 		//J1 = 40 et J2 = 40
 			
-			System.out.println("Classe Partie - Mï¿½thode determinerVainqueur() // J1 = 40 et J2 = 40");
+			System.out.println("Classe Partie - Méthode determinerVainqueur() // J1 = 40 et J2 = 40");
 			j7.setScore(40);
 			j8.setScore(40);
 					
@@ -162,10 +161,10 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 	
 	
-		//Test 9 : Classe Partie - Mï¿½thode determinerVainqueur()
+		//Test 9 : Classe Partie - Méthode determinerVainqueur()
 		//J1 = 60 et J2 = 40
 			
-			System.out.println("Classe Partie - Mï¿½thode determinerVainqueur() // J1 = 60 et J2 = 40");
+			System.out.println("Classe Partie - Méthode determinerVainqueur() // J1 = 60 et J2 = 40");
 			j1.setScore(60);
 			j2.setScore(40);
 						
@@ -175,10 +174,10 @@ public class Test {
 	
 				
 			
-		//Test 10 : Classe Partie - Mï¿½thode initialiserWagons()
+		//Test 10 : Classe Partie - Méthode initialiserWagons()
 		//Couleur = rouge
 			
-			System.out.println("Classe Partie - Mï¿½thode initialiserWagons() // Couleur = rouge");
+			System.out.println("Classe Partie - Méthode initialiserWagons() // Couleur = rouge");
 			Partie p2 = new Partie();
 			LinkedList<Wagon> lw = new LinkedList<Wagon>();
 			lw=p2.initialiserWagons("rouge");
@@ -195,10 +194,10 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 		
 		
-		//Test 11 : Classe Partie - Mï¿½thode initialiserWagons()
+		//Test 11 : Classe Partie - Méthode initialiserWagons()
 		//Couleur = bleu
 			
-			System.out.println("Classe Partie - Mï¿½thode initialiserWagons() // Couleur = bleu");
+			System.out.println("Classe Partie - Méthode initialiserWagons() // Couleur = bleu");
 			LinkedList<Wagon> lw2 = new LinkedList<Wagon>();
 			lw2=p.initialiserWagons("bleu");
 			
@@ -212,10 +211,11 @@ public class Test {
 			System.out.println("45 Wagons bleu / 45 Wagons");
 			System.out.println(y + " Wagons bleu / 45 Wagons");
 			System.out.println("----------------------------------------------------------");
-
-		//Test 14 : Classe PiocheDestination - Mï¿½thode conserverCarte()
-		//rï¿½ponse oui
-		 	System.out.println("Classe PiocheDestination - Mï¿½thode conserverCarte() // Rï¿½ponse : '1'");
+	
+	/*	
+		//Test 14 : Classe PiocheDestination - Méthode conserverCarte()
+		//réponse oui
+		 	System.out.println("Classe PiocheDestination - Méthode conserverCarte() // Réponse : '1'");
 			PiocheDestination p1 = new PiocheDestination();
 			CarteDestination cd = new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge"));
 			System.out.println("Attendu : true");
@@ -224,9 +224,9 @@ public class Test {
 	
 		
 		
-		//Test 15 : Classe PiocheDestination - Mï¿½thode conserverCarte()
-		//rï¿½ponse non
-		 	System.out.println("Classe PiocheDestination - Mï¿½thode conserverCarte() // Rï¿½ponse : '0'");
+		//Test 15 : Classe PiocheDestination - Méthode conserverCarte()
+		//réponse non
+		 	System.out.println("Classe PiocheDestination - Méthode conserverCarte() // Réponse : '0'");
 			PiocheDestination p11 = new PiocheDestination();
 			CarteDestination cd2 = new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge"));
 			System.out.println("Attendu : false");
@@ -234,9 +234,9 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 	
 	
-		//Test 16 : Classe PiocheDestination - Mï¿½thode distribuer()
+		//Test 16 : Classe PiocheDestination - Méthode distribuer()
 		// le joueur conserve deux cartes
-		 	System.out.println("Classe PiocheDestination - Mï¿½thode distribuer() // Rï¿½ponse : '1' + '0' + '1'");
+		 	System.out.println("Classe PiocheDestination - Méthode distribuer() // Réponse : '1' + '0' + '1'");
 			PiocheDestination p3 = new PiocheDestination();
 			LinkedList<CarteDestination> l1 = new LinkedList<CarteDestination>();
 		
@@ -257,9 +257,9 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 	
 	
-		//Test 17 : Classe PiocheDestination - Mï¿½thode distribuer()
+		//Test 17 : Classe PiocheDestination - Méthode distribuer()
 		// le joueur ne conserve pas de carte
-			System.out.println("Classe PiocheDestination - Mï¿½thode distribuer() // Rï¿½ponse : '0' + '0' + '1' + '1' + '0' + '1'");
+			System.out.println("Classe PiocheDestination - Méthode distribuer() // Réponse : '0' + '0' + '1' + '1' + '0' + '1'");
 			LinkedList<CarteDestination> l2 = new LinkedList<CarteDestination>();
 		
 			l2.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
@@ -278,9 +278,9 @@ public class Test {
 			}
 			System.out.println("----------------------------------------------------------");
 			
-		//Test 18 : Classe PiocheDestination - Mï¿½thode distribuer()
+		//Test 18 : Classe PiocheDestination - Méthode distribuer()
 		// le joueur conserve trois cartes
-			System.out.println("Classe PiocheDestination - Mï¿½thode distribuer() // Rï¿½ponse : '1' + '1' + '1'");
+			System.out.println("Classe PiocheDestination - Méthode distribuer() // Réponse : '1' + '1' + '1'");
 			LinkedList<CarteDestination> l3 = new LinkedList<CarteDestination>();
 		
 			l3.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
@@ -299,9 +299,9 @@ public class Test {
 			}
 			System.out.println("----------------------------------------------------------");
 	
-		//Test 19 : Classe PiocheWagon - Mï¿½thode piocher1Carte()
+		//Test 19 : Classe PiocheWagon - Méthode piocher1Carte()
 		// 
-			System.out.println("Classe : PiocheWagon - Mï¿½thode : piocher1Carte()");
+			System.out.println("Classe : PiocheWagon - Méthode : piocher1Carte()");
 			PiocheWagon pw = new PiocheWagon();
 			DefausseWagon d = new DefausseWagon();
 			LinkedList<CarteWagon> lw3 = new LinkedList<CarteWagon>();
@@ -329,8 +329,8 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 			
 			
-		//Test 20 : Classe : PiocheWagon - Mï¿½thode : piocher1Carte()
-			System.out.println("Classe : PiocheWagon - Mï¿½thode : piocher1Carte()");
+		//Test 20 : Classe : PiocheWagon - Méthode : piocher1Carte()
+			System.out.println("Classe : PiocheWagon - Méthode : piocher1Carte()");
 			LinkedList<CarteWagon> lw4 = new LinkedList<CarteWagon>();
 			
 			
@@ -349,8 +349,8 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 			
 			
-		//Test 21 : Classe : PiocheWagon - Mï¿½thode : piocher1Carte()
-			System.out.println("Classe : PiocheWagon - Mï¿½thode : piocher1Carte()");
+		//Test 21 : Classe : PiocheWagon - Méthode : piocher1Carte()
+			System.out.println("Classe : PiocheWagon - Méthode : piocher1Carte()");
 			LinkedList<CarteWagon> lw5 = new LinkedList<CarteWagon>();
 			
 			
@@ -367,9 +367,10 @@ public class Test {
 			System.out.println("Attendu : locomotive");
 			System.out.println("Obtenu : " + pw.piocher1Carte(d));
 			System.out.println("----------------------------------------------------------");
-
-		//Test 22 : Classe : PiocheWagon - Mï¿½thode piocher()
-			System.out.println("Classe : PiocheWagon - Mï¿½thode piocher() // Rï¿½ponse aux questions : '0' + '1' + '1'");
+			
+	*/	
+		//Test 22 : Classe : PiocheWagon - Méthode piocher()
+			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse aux questions : '0' + '1' + '1'");
 			
 			LinkedList<CarteWagon> lw6 = new LinkedList<CarteWagon>();
 			
@@ -399,8 +400,8 @@ public class Test {
 			System.out.println("Obtenu : " + pw2.piocher(d2));
 			System.out.println("----------------------------------------------------------");
 	
-		//Test 23 : Classe : PiocheWagon - Mï¿½thode piocher()
-			System.out.println("Classe : PiocheWagon - Mï¿½thode piocher() // Rï¿½ponse aux questions : '0' + '0'");
+		//Test 23 : Classe : PiocheWagon - Méthode piocher()
+			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse aux questions : '0' + '0'");
 			
 			d2.ajouterCarte(new CarteWagon("blblbl"));
 			d2.ajouterCarte(new CarteWagon("blblbl2"));
@@ -411,8 +412,8 @@ public class Test {
 			System.out.println("Obtenu : " + pw2.piocher(d2));
 			System.out.println("----------------------------------------------------------");
 	
-		//Test 24 : Classe : PiocheWagon - Mï¿½thode piocher()
-			System.out.println("Classe : PiocheWagon - Mï¿½thode piocher() // Rï¿½ponse ï¿½ la question : '1' + '1'");
+		//Test 24 : Classe : PiocheWagon - Méthode piocher()
+			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse à la question : '1' + '1'");
 			
 			LinkedList<CarteWagon> lw8 = new LinkedList<CarteWagon>();
 			
@@ -433,8 +434,8 @@ public class Test {
 			System.out.println("Obtenu : " + pw3.piocher(d3));
 			System.out.println("----------------------------------------------------------");
 			
-		//Test 25 : Classe : PiocheWagon - Mï¿½thode piocher()
-			System.out.println("Classe : PiocheWagon - Mï¿½thode piocher() // Rï¿½ponse ï¿½ la question : '0' + '3' + '0' + '2'");
+		//Test 25 : Classe : PiocheWagon - Méthode piocher()
+			System.out.println("Classe : PiocheWagon - Méthode piocher() // Réponse à la question : '0' + '3' + '0' + '2'");
 			
 			LinkedList<CarteWagon> lw9 = new LinkedList<CarteWagon>();
 			
@@ -454,9 +455,9 @@ public class Test {
 			System.out.println("Obtenu : " + pw3.piocher(d3));
 			System.out.println("----------------------------------------------------------");
 		
-		//Test 26 : Classe PiocheDestination - Mï¿½thode distribuer()
+		//Test 26 : Classe PiocheDestination - Méthode distribuer()
 		// le joueur conserve deux cartes
-		 	System.out.println("Classe PiocheDestination - Mï¿½thode piocher() // Rï¿½ponse : '1' + '0' + '1'");
+		 	System.out.println("Classe PiocheDestination - Méthode piocher() // Réponse : '1' + '0' + '1'");
 			
 			LinkedList<CarteDestination> l11 = new LinkedList<CarteDestination>();
 		
@@ -477,9 +478,9 @@ public class Test {
 			System.out.println("----------------------------------------------------------");
 	
 	
-		//Test 27 : Classe PiocheDestination - Mï¿½thode distribuer()
+		//Test 27 : Classe PiocheDestination - Méthode distribuer()
 		// le joueur ne conserve pas de carte
-			System.out.println("Classe PiocheDestination - Mï¿½thode piocher() // Rï¿½ponse : '0' + '0' + '1'");
+			System.out.println("Classe PiocheDestination - Méthode piocher() // Réponse : '0' + '0' + '1'");
 			LinkedList<CarteDestination> l21 = new LinkedList<CarteDestination>();
 		
 			l21.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
@@ -498,9 +499,9 @@ public class Test {
 			}
 			System.out.println("----------------------------------------------------------");
 			
-		//Test 28 : Classe PiocheDestination - Mï¿½thode distribuer()
+		//Test 28 : Classe PiocheDestination - Méthode distribuer()
 		// le joueur ne conserve pas de carte
-			System.out.println("Classe PiocheDestination - Mï¿½thode piocher() // Rï¿½ponse : '0' + '0' + '0' + '1' + '0' + '0'");
+			System.out.println("Classe PiocheDestination - Méthode piocher() // Réponse : '0' + '0' + '0' + '1' + '0' + '0'");
 			LinkedList<CarteDestination> l22 = new LinkedList<CarteDestination>();
 		
 			l22.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
@@ -519,9 +520,9 @@ public class Test {
 			}
 			System.out.println("----------------------------------------------------------");
 			
-		//Test 29 : Classe PiocheDestination - Mï¿½thode distribuer()
+		//Test 29 : Classe PiocheDestination - Méthode distribuer()
 		// le joueur conserve trois cartes
-			System.out.println("Classe PiocheDestination - Mï¿½thode piocher() // Rï¿½ponse : '1' + '1' + '1'");
+			System.out.println("Classe PiocheDestination - Méthode piocher() // Réponse : '1' + '1' + '1'");
 			LinkedList<CarteDestination> l31 = new LinkedList<CarteDestination>();
 		
 			l31.add(new CarteDestination(15, new Ville("Bavay"), new Ville("Maubeuge")));
@@ -540,5 +541,4 @@ public class Test {
 			}
 			System.out.println("----------------------------------------------------------");
 	}
-	*/
 }

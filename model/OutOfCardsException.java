@@ -1,4 +1,4 @@
-package com.example.doria.ladrandr.model;
+package model;
 
 public class OutOfCardsException extends Exception {
 

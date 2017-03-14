@@ -1,4 +1,5 @@
-package com.example.doria.ladrandr.model;
+package model;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -116,7 +117,7 @@ public class Joueur extends Observable {
 	}
 
 	/* 
-	 * Prend possession d'une route en plaï¿½ant des wagons sur le plateau et en dï¿½crï¿½mentant le nombre de wagons du joueur
+	 * Prend possession d'une route en plaçant des wagons sur le plateau et en décrémentant le nombre de wagons du joueur
 	 */
 	public void prendreRoute(Route r) throws OutOfCardsException {
 		if (verificationWagonsRoute(r)) {			//Si le joueur a assez de wagons pour prendre la route
@@ -152,7 +153,7 @@ public class Joueur extends Observable {
     }
 	
 	/*
-	 * Vï¿½rifie si le joueur a suffisament de carte de la mï¿½me couleur que la route en main
+	 * Vérifie si le joueur a suffisament de carte de la même couleur que la route en main
 	 */
 	boolean verificationCartesRoute(Route r) {
 		int cmp = 0;
@@ -165,7 +166,7 @@ public class Joueur extends Observable {
 	}
 	
 	/*
-	 * Vï¿½rifie si le joueur a suffisament de wagons pour prendre possession de la route
+	 * Vérifie si le joueur a suffisament de wagons pour prendre possession de la route
 	 */
 	boolean verificationWagonsRoute(Route r) {
 		return (this.getNbWagons() >= r.getTaille());
@@ -178,7 +179,7 @@ public class Joueur extends Observable {
     }
 
     /*
-     * Ajoute dans la main la premiï¿½re carte de la pioche de CarteWagon (la retire de la pioche)
+     * Ajoute dans la main la première carte de la pioche de CarteWagon (la retire de la pioche)
      */
     public void piocherCarteWagon(PiocheWagon pioche, DefausseWagon defausse) throws OutOfCardsException {
     	this.cartesWagon.addAll(pioche.piocher(defausse));
