@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="3"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/stats_nomJoueur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="4dp"
+            android:textColor="@android:color/background_light"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/stats_nbVictoire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="4dp"
+            android:textColor="@android:color/background_light"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/stats_nbPoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="4dp"
+            android:textColor="@android:color/background_light"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
