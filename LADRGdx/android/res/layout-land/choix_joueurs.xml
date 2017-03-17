@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/train_hiver">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="CONFIGURATION PARTIE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:padding="15dp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Sélectionner le nombre de joueurs : "
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
+            android:textColor="@android:color/background_light" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupJoueur"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/linearlayout_bg">
+
+            <RadioButton
+                android:id="@+id/radioBtn2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="2"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:buttonTint="@android:color/white" />
+
+            <RadioButton
+                android:id="@+id/radioBtn3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="3"
+                android:buttonTint="@android:color/white"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/radioBtn4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="4"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:buttonTint="@android:color/white" />
+            <RadioButton
+                android:id="@+id/radioBtn5"
+                android:text="5"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:buttonTint="@android:color/white" />
+        </RadioGroup>
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:stretchColumns="0"
+            android:layout_height="wrap_content"
+            android:id="@+id/idTable"
+            android:padding="10dp">
+        </TableLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnCreerProfil"
+            android:text="Nouveau joueur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btnValiderJoueurs"
+            android:text="Valider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
