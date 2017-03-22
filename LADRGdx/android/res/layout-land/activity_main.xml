@@ -9,6 +9,7 @@
     android:background="@drawable/background">
 
     <TextView
+        android:id="@+id/tvTitre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -25,9 +26,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/linearlayout_bg"
         android:padding="10dp"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="12dp">
+        android:layout_below="@id/tvTitre">
 
         <Button
             android:id="@+id/btnCommencerPartie"

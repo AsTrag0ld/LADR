@@ -60,9 +60,6 @@ public class ControlerPartie extends Activity {
         Button btnPiocheAveugle = (Button) findViewById(R.id.btnPiocheAveugle);
         Button btnPiocheDestination = (Button) findViewById(R.id.btnPiocheDestination);
 
-
-        temps = (TextView) findViewById(R.id.textView3);
-
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
             infosJoueurs = extra.getStringArrayList("lesJoueurs");
@@ -72,11 +69,12 @@ public class ControlerPartie extends Activity {
             joueurs.add(new Joueur(infosJoueurs.get(i), infosJoueurs.get(i+1)));
         }
         partie = new Partie(joueurs);
+
         listItems = new String[3];
         checkedItems = new boolean[3];
-
         initialiserPartie();
         joueurTour = partie.getJoueurs().get(0);
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -87,20 +85,20 @@ public class ControlerPartie extends Activity {
         btnPiocheVisible.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nbCartes < 2) {
-                    try {
-                        Log.d("Main avant : " , ""+joueurTour.getCartesWagon());
-                        joueurTour.piocherWagonVisible(1, partie.getPiocheWagon(), partie.getDefausseWagon());
-                        Log.d("Main apres : " , ""+joueurTour.getCartesWagon());
-                        nbCartes++;
-                        if (nbCartes == 2) {
-                            nbCartes = 0;
-                            changerTour();
-                        }
-                    } catch (OutOfCardsException e) {
-                        e.printStackTrace();
+            if (nbCartes < 2) {
+                try {
+                    Log.d("Main avant : " , ""+joueurTour.getCartesWagon());
+                    joueurTour.piocherWagonVisible(1, partie.getPiocheWagon(), partie.getDefausseWagon());
+                    Log.d("Main apres : " , ""+joueurTour.getCartesWagon());
+                    nbCartes++;
+                    if (nbCartes == 2) {
+                        nbCartes = 0;
+                        changerTour();
                     }
+                } catch (OutOfCardsException e) {
+                    e.printStackTrace();
                 }
+            }
             }
         });
 
@@ -108,20 +106,20 @@ public class ControlerPartie extends Activity {
         btnPiocheAveugle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nbCartes < 2) {
-                    try {
-                        Log.d("Main avant : " , ""+joueurTour.getCartesWagon());
-                        joueurTour.piocherWagonAveugle(partie.getPiocheWagon(), partie.getDefausseWagon());
-                        Log.d("Main apres : " , ""+joueurTour.getCartesWagon());
-                        nbCartes++;
-                        if (nbCartes == 2) {
-                            nbCartes = 0;
-                            changerTour();
-                        }
-                    } catch (OutOfCardsException e) {
-                        e.printStackTrace();
+            if (nbCartes < 2) {
+                try {
+                    Log.d("Main avant : " , ""+joueurTour.getCartesWagon());
+                    joueurTour.piocherWagonAveugle(partie.getPiocheWagon(), partie.getDefausseWagon());
+                    Log.d("Main apres : " , ""+joueurTour.getCartesWagon());
+                    nbCartes++;
+                    if (nbCartes == 2) {
+                        nbCartes = 0;
+                        changerTour();
                     }
+                } catch (OutOfCardsException e) {
+                    e.printStackTrace();
                 }
+            }
             }
         });
 
@@ -134,42 +132,38 @@ public class ControlerPartie extends Activity {
         });
 
 
-        LinearLayout routes = (LinearLayout) findViewById(R.id.llRoutes);
-        RouteAdapter adapter = new RouteAdapter(getApplicationContext());
-        adapter.setRoutesList(partie.getMap().getRoutesDisponibles());
-        ListView listView = (ListView) this.findViewById(R.id.lvRoutes);
-        listView.setAdapter(adapter);
+        ListView routesDisponibles = afficherRoutesDisponibles();
 
         AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View container, int position, long id) {
-                Log.d("mydebug","clic sur id:"+id);
-                Route route = (Route) parent.getItemAtPosition(position);
-                boolean flag = true;
-                try {
-                    joueurTour.prendreRoute(route);
-                } catch (OutOfCardsException e) {
-                    flag = false;
-                    new AlertDialog.Builder(ControlerPartie.this)
-                            .setTitle("Informations")
-                            .setMessage("Vous n'avez pas assez de cartes " + route.getCouleur() + " pour prendre cette route")
-                            .setCancelable(true)
-                            .setNegativeButton(
-                                    "OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-                }
-                if (flag) {
-                    changerTour();
-                }
+            Route route = (Route) parent.getItemAtPosition(position);
+            boolean flag = true;
+            try {
+                joueurTour.prendreRoute(route);
+            } catch (OutOfCardsException e) {
+                flag = false;
+                new AlertDialog.Builder(ControlerPartie.this)
+                        .setTitle("Informations")
+                        .setMessage("Vous n'avez pas assez de cartes " + route.getCouleur() + " pour prendre cette route")
+                        .setCancelable(true)
+                        .setNegativeButton(
+                                "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+            if (flag) {
+                afficherRoutesDisponibles();
+                changerTour();
+            }
             }
         };
-        listView.setOnItemClickListener(itemClickListener);
+        routesDisponibles.setOnItemClickListener(itemClickListener);
 
     }
 
@@ -310,5 +304,14 @@ public class ControlerPartie extends Activity {
                         })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public ListView afficherRoutesDisponibles() {
+        LinearLayout routes = (LinearLayout) findViewById(R.id.llRoutes);
+        RouteAdapter adapter = new RouteAdapter(getApplicationContext());
+        adapter.setRoutesList(partie.getMap().getRoutesDisponibles());
+        ListView listView = (ListView) findViewById(R.id.lvRoutes);
+        listView.setAdapter(adapter);
+        return listView;
     }
 }
