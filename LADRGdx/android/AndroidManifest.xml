@@ -9,30 +9,34 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
             <activity
-                android:name=".controller.MainActivity">
+                android:name=".controler.MainActivity">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.LAUNCHER" />
                 </intent-filter>
             </activity>
             <activity
-                android:name=".controller.Statistiques"
+                android:name=".controler.Statistiques"
                 android:theme="@style/AppTheme">
             </activity>
             <activity
-                android:name=".controller.ChoixJoueurs"
+                android:name=".controler.ChoixJoueurs"
                 android:theme="@style/AppTheme">
             </activity>
             <activity
-                android:name=".controller.NouveauJoueur"
+                android:name=".controler.NouveauJoueur"
                 android:theme="@style/AppTheme">
             </activity>
             <activity
-                android:name=".controller.ConsulterRegles"
+                android:name=".controler.ConsulterRegles"
                 android:theme="@style/AppTheme">
             </activity>
             <activity
-                android:name=".controller.InitialisationPartie"
+                android:name=".controler.ControlerPartie"
+                android:theme="@style/AppTheme">
+            </activity>
+            <activity
+                android:name=".controler.Options"
                 android:theme="@style/AppTheme">
             </activity>
             <activity

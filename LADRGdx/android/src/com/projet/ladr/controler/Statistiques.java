@@ -1,4 +1,4 @@
-package com.projet.ladr.controller;
+package com.projet.ladr.controler;
 
 
 import android.app.Activity;

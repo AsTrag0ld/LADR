@@ -1,4 +1,4 @@
-package com.projet.ladr.controller;
+package com.projet.ladr.controler;
 
 
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
             button3.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, ConsulterRegles.class);
+                    MainActivity.this.startActivity(intent);
+                }
+            });
+
+            Button button4 = (Button) this.findViewById(R.id.btnOptions);
+            button4.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, Options.class);
                     MainActivity.this.startActivity(intent);
                 }
             });

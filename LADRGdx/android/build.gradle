@@ -19,7 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "com.projet.ladr"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 21
     }
 }

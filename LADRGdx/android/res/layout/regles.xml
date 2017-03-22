@@ -17,7 +17,7 @@
                 android:layout_height="wrap_content"
                 android:text="But du jeu"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/rouge"/>
 
             <TextView
                 android:layout_width="match_parent"

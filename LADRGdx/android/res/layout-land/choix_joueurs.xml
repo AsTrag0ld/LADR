@@ -17,7 +17,7 @@
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:padding="15dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/rouge"
             android:textStyle="normal|bold" />
 
         <TextView
@@ -26,7 +26,6 @@
             android:padding="5dp"
             android:text="Sélectionner le nombre de joueurs : "
             android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
-            android:textColor="@android:color/background_light" />
 
         <RadioGroup
             android:id="@+id/radioGroupJoueur"
@@ -45,7 +44,7 @@
                 android:text="2"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold"
-                android:buttonTint="@android:color/white" />
+                android:buttonTint="@color/rouge" />
 
             <RadioButton
                 android:id="@+id/radioBtn3"
@@ -54,7 +53,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="3"
-                android:buttonTint="@android:color/white"
+                android:buttonTint="@color/rouge"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
 
@@ -68,7 +67,7 @@
                 android:text="4"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold"
-                android:buttonTint="@android:color/white" />
+                android:buttonTint="@color/rouge" />
             <RadioButton
                 android:id="@+id/radioBtn5"
                 android:text="5"
@@ -78,18 +77,19 @@
                 android:layout_height="match_parent"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold"
-                android:buttonTint="@android:color/white" />
+                android:buttonTint="@color/rouge" />
         </RadioGroup>
 
-        <TableLayout
-            android:layout_width="fill_parent"
-            android:stretchColumns="0"
-            android:layout_height="wrap_content"
-            android:id="@+id/idTable"
-            android:padding="10dp">
-        </TableLayout>
-
     </LinearLayout>
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:stretchColumns="0"
+        android:layout_height="wrap_content"
+        android:id="@+id/idTable"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentBottom="true">
+    </TableLayout>
 
 
 
@@ -105,7 +105,9 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@color/rouge"
+            android:textColor="#FFFFFF"/>
         <Button
             android:id="@+id/btnValiderJoueurs"
             android:text="Valider"
@@ -113,8 +115,9 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_margin="5dp"
-            android:layout_weight="1"/>
-
+            android:layout_weight="1"
+            android:background="@color/rouge"
+            android:textColor="#FFFFFF"/>
     </LinearLayout>
 
 

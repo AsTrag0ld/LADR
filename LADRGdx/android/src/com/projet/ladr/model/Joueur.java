@@ -170,18 +170,19 @@ public class Joueur extends Observable {
 	boolean verificationWagonsRoute(Route r) {
 		return (this.getNbWagons() >= r.getTaille());
 	}
-	
-    public void modifierOptions() {
-    }
 
-    public void consulterRegles() {
+    /*
+     * Ajoute dans la main la premi�re carte de la pioche de CarteWagon (la retire de la pioche)
+     */
+    public void piocherWagonVisible(int indice, PiocheWagon pioche, DefausseWagon defausse) throws OutOfCardsException {
+    	this.cartesWagon.add(pioche.piocherVisible(indice, defausse));
     }
 
     /*
      * Ajoute dans la main la premi�re carte de la pioche de CarteWagon (la retire de la pioche)
      */
-    public void piocherCarteWagon(PiocheWagon pioche, DefausseWagon defausse) throws OutOfCardsException {
-    	this.cartesWagon.addAll(pioche.piocher(defausse));
+    public void piocherWagonAveugle(PiocheWagon pioche, DefausseWagon defausse) throws OutOfCardsException {
+        this.cartesWagon.add(pioche.piocherAveugle(defausse));
     }
     
     /*

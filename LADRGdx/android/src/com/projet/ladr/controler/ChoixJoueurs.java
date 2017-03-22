@@ -1,4 +1,4 @@
-package com.projet.ladr.controller;
+package com.projet.ladr.controler;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -102,7 +102,7 @@ public class ChoixJoueurs extends Activity implements RadioGroup.OnCheckedChange
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
                 } else if (flagJ && flagC) {
-                    Intent myIntent = new Intent(ChoixJoueurs.this, InitialisationPartie.class);
+                    Intent myIntent = new Intent(ChoixJoueurs.this, ControlerPartie.class);
                     myIntent.putStringArrayListExtra("lesJoueurs", infosJoueur);
                     ChoixJoueurs.this.startActivity(myIntent);
                 }
@@ -252,6 +252,7 @@ public class ChoixJoueurs extends Activity implements RadioGroup.OnCheckedChange
                     tv1.setText(col1[i]);
                     tv1.setGravity(Gravity.CENTER);
                     tv1.setTextSize(20);
+                    tv1.setTextColor(getResources().getColor(R.color.rouge));
                     tv1.setLayoutParams( new TableRow.LayoutParams( 0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1 ) );
 
                     spinJ = new Spinner(this);

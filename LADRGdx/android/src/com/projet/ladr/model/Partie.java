@@ -1,15 +1,12 @@
 package com.projet.ladr.model;
 
-import android.content.Context;
-
-import com.projet.ladr.controller.DatabaseHandler;
+import com.projet.ladr.controler.DatabaseHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-
 public class Partie {
     private Joueur vainqueur;
     private List<Joueur> joueurs;
@@ -93,6 +90,8 @@ public class Partie {
 		this.piocheDestination = piocheDestination;
 	}
 
+	public boolean isEnCours() { return this.enCours;}
+
 	public void setEnCours(boolean b) {
 		this.enCours = b;
 	}
@@ -110,66 +109,55 @@ public class Partie {
     	return vainqueur;
     }
 
-    public void selectionnerProfil() {
-    }
-
-    public void selectionnerNbJoueurs() {
-    }
-    
-    public void nouvellePartieBDD() {
-
-    }
-    
-    public void updateClassementPartie() {
-
-    }
-    
-
-        
-
-
-    
-    /*
-     * Permet � un joueur d'effectuer son tour de jeu
+	/*
+     * Cr�e les 110 cartes wagons (12 par couleur + 14 locomotives)
      */
-    public boolean jouerTourDeJeu(Joueur j) {
-    	System.out.println("C'est � " + j.getNom() + " de jouer !");
-    	j.setTourDeJeu(true);
-    	System.out.println("Votre main : ");
-    	j.afficherMain();
-    	System.out.println("Quelle action souhaitez-vous faire ? (0 : piocher carte wagon, 1 : piocher carte destination, 2 : prendre une route");
-    	Scanner sc = new Scanner(System.in);
-    	int s = sc.nextInt();
-    	switch (s) {
-    		case 0 : try {
-				j.piocherCarteWagon(this.piocheWagon, this.defausseWagon);
-			} catch (OutOfCardsException e) {
-				e.printStackTrace();
+	private void initialiserCartesWagon(String[] couleurs) {
+		LinkedList<CarteWagon> cartesWagon = new LinkedList<CarteWagon>();
+		for (String s : couleurs) {											//Pour chaque couleur pr�sente dans le jeu
+			for (int j = 0; j < 12; j++) {
+				cartesWagon.add(new CarteWagon(s));							//On cr�e 12 cartes wagon de cette couleur
 			}
-    			break;
-    		case 1 : try {
-				j.piocherCarteDestination(this.piocheDestination);
-			} catch (OutOfCardsException e) {
-				e.printStackTrace();
-			}
-    			break;
-    		case 2 : 
-    			System.out.println("Quelle route souhaitez-vous prendre ? (entrez l'indice de la route)");
-    			this.map.afficherRoutesDisponibles();
-    			int indice = sc.nextInt();
-				try {
-					j.prendreRoute(this.map.getRoutes().get(indice));
-				} catch (OutOfCardsException e) {
-					jouerTourDeJeu(j);
-				}
-    			break;
-    		default : System.out.println("Veuillez choisir parmi '1', '2' ou '3'");
-    			break;
-    	}
-    	j.finirTour();
-    	return j.isTourDeJeu();
-    }
-    
+		}
+		for (int i = 0; i < 14; i++) {										//Ensuite on cr�e 14 cartes locomotives
+			cartesWagon.add(new CarteWagon("Locomotive"));
+		}
+		this.setPiocheWagon(PiocheWagon.getInstance(cartesWagon));
+		Collections.shuffle(this.getPiocheWagon().getPioche());
+		this.getPiocheWagon().preparerPiocheVisible(this.getDefausseWagon());			//On sort 5 cartes du paquets pour en faire la pioche visible
+	}
+
+	/*
+     * Cr�e 45 wagons pour la couleur pass�e en argument
+     */
+	LinkedList<Wagon> initialiserWagons(String couleur) {
+		LinkedList<Wagon> lesWagons = new LinkedList<Wagon>();
+		for (int j = 0; j < 45; j++) {
+			lesWagons.add(new Wagon(couleur));
+		}
+		return lesWagons;
+	}
+
+	/*
+     * Distribue 4 cartes wagon � chaque joueur apr�s avoir m�langer le paquet
+     */
+	public void distribuerCartesWagon() {
+		initialiserCartesWagon(this.getCouleurs());
+		this.getPiocheWagon().melanger();
+		for (Joueur j : this.getJoueurs()) {
+			j.setCartesWagon(this.getPiocheWagon().distribuer());
+		}
+	}
+
+	/*
+     * Distribue � chaque joueur les wagons correspondants � sa couleur
+     */
+	public void distribuerWagons() {
+		for (Joueur j : this.getJoueurs()) {										//Pour chaque joueur
+			j.setWagons(initialiserWagons(j.getCouleur()));					//On cr�e et on lui distibue 45 wagons de sa couleur
+		}
+	}
+
     /*
      * Permet d'ajouter ou de retirer les points correspondants aux cartes destinations de chaque joueur
      */
@@ -187,24 +175,4 @@ public class Partie {
     		}
     	}
     }
-    
-    /*
-     * Permet de faire jouer les joueurs chacun leur tour tant que cela est possible
-     */
-    public void jouerPartie() {
-    	while (this.enCours) {
-    		for (Joueur j : this.joueurs) {
-    			jouerTourDeJeu(j);
-    			if (j.getNbWagons() < 3) {
-        			this.enCours = false;
-        		}
-    		}
-    	}
-    	Joueur vainqueur = this.determinerVainqueur();
-    	System.out.println("Le vainqueur est : " + vainqueur.getNom());
-    }
-    
-    
-    
-
 }

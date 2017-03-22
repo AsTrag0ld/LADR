@@ -2,7 +2,7 @@ package com.projet.ladr.model;
 
 import android.content.Context;
 
-import com.projet.ladr.controller.DatabaseHandler;
+import com.projet.ladr.controler.DatabaseHandler;
 
 import java.util.LinkedList;
 import java.util.List;

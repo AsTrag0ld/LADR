@@ -1,4 +1,4 @@
-package com.projet.ladr.controller;
+package com.projet.ladr.controler;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,11 +9,7 @@ import com.projet.ladr.model.CarteDestination;
 import com.projet.ladr.model.Route;
 import com.projet.ladr.model.Ville;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-
-
 
 
 public class DatabaseHandler extends SQLiteOpenHelper {

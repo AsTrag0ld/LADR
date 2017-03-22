@@ -11,7 +11,7 @@
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:padding="15dp"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/rouge"
         android:textStyle="normal|bold"
         android:id="@+id/textView" />
 

@@ -103,19 +103,11 @@ public class PiocheWagon {
 	/*
 	 * Retourne et retire une carte de la pioche visible
 	 */
-	public CarteWagon piocherVisible(DefausseWagon defausse) {
+	public CarteWagon piocherVisible(int indice, DefausseWagon defausse) {
 		int cmpLoco = 0;
-		int i = 0;
-		System.out.println("-->Choisissez une carte");
-		for (CarteWagon c : this.cartesVisibles) {
-			System.out.println("---->" + i + " : " + c);
-			i++;
-		}
-		Scanner sc = new Scanner(System.in);
-		int indiceCarteChoisie = sc.nextInt();
-		CarteWagon tmp = this.cartesVisibles.get(indiceCarteChoisie);				//On prend la carte que le joueur a choisi
-		this.cartesVisibles.remove(indiceCarteChoisie);								//On la retire de la pioche visible
-		this.cartesVisibles.add(indiceCarteChoisie, this.piocher1Carte(defausse));	//Et on la remplace par une autre carte que l'on pioche sur le dessus du paquet
+		CarteWagon tmp = this.cartesVisibles.get(indice);				//On prend la carte que le joueur a choisi
+		this.cartesVisibles.remove(indice);								//On la retire de la pioche visible
+		this.cartesVisibles.add(indice, this.piocher1Carte(defausse));	//Et on la remplace par une autre carte que l'on pioche sur le dessus du paquet
 		for (CarteWagon c : this.cartesVisibles) {
 			if (c.getCouleur() == "Locomotive") {
 				cmpLoco++;															//Si la carte tir�e est une locomotive, on incr�mente le compteur
@@ -134,26 +126,7 @@ public class PiocheWagon {
 	/*
 	 * Effectue le tour de pioche d'un joueur selon les r�gles du jeu
 	 */
-	public List<CarteWagon> piocher(DefausseWagon defausse) {
-		LinkedList<CarteWagon> piochees = new LinkedList<CarteWagon>();
-		int nbCartes = 0;
-		while (nbCartes < 2) {													//La m�thode s'arr�te quand le joueur a tir� 2 cartes (sauf cas loco)
-			System.out.println("Pioche visible ou pioche aveugle ? (Visible = 0 / Aveugle = 1)");
-			Scanner sc = new Scanner(System.in);
-			int i = sc.nextInt();
-			if (i == 0) {														//Si le joueur a choisi de tirer dans la pioche visible
-				CarteWagon r = piocherVisible(defausse);						//Il prend une carte
-				piochees.add(r);												//On l'ajoute aux cartes pioch�es
-				nbCartes++;														//Et on incr�mente le compteur
-				if (r.getCouleur() == "Locomotive") {							//Si la carte est une locomotive, la m�thode se termine
-					return piochees;
-				}
-			} else {															//Si le joueur a choisi de tirer dans la pioche aveugle
-				CarteWagon c = piocher1Carte(defausse);							//Il prend une carte
-				piochees.add(c);												//On l'ajoute � ses cartes pioch�es
-				nbCartes++;														//Et on incr�mente le compteur
-			}
-		}
-		return piochees;
+	public CarteWagon piocherAveugle(DefausseWagon defausse) {
+			return piocher1Carte(defausse);
 	}
 }
