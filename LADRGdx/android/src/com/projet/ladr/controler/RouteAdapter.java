@@ -28,7 +28,7 @@ public class RouteAdapter extends BaseAdapter {
 
     }
 
-    public void setContactList(ArrayList<Route> list) {
+    public void setRoutesList(ArrayList<Route> list) {
         this.routesList = list;
     }
 
@@ -61,11 +61,11 @@ public class RouteAdapter extends BaseAdapter {
         TextView couleur = (TextView) layoutItem.findViewById(R.id.tvCouleurRoute);
         couleur.setText(this.routesList.get(arg0).getCouleur());
         TextView taille = (TextView) layoutItem.findViewById(R.id.tvTailleRoute);
-        taille.setText(this.routesList.get(arg0).getTaille());
+        taille.setText(Integer.toString(this.routesList.get(arg0).getTaille()));
         TextView villeA = (TextView) layoutItem.findViewById(R.id.tvVilleARoute);
-        villeA.setText(this.routesList.get(arg0).getCouleur());
+        villeA.setText(this.routesList.get(arg0).getVilleA().getNom());
         TextView villeB = (TextView) layoutItem.findViewById(R.id.tvVilleBRoute);
-        villeB.setText(this.routesList.get(arg0).getTaille());
+        villeB.setText(this.routesList.get(arg0).getVilleB().getNom());
         return layoutItem;
     }
 }

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -137,6 +138,8 @@ public class ChoixJoueurs extends Activity implements RadioGroup.OnCheckedChange
                     tv1 = new TextView(this);
                     tv1.setText(col1[i]);
                     tv1.setTextSize(20);
+                    tv1.setTextColor(getResources().getColor(R.color.rouge));
+                    tv1.setTypeface(null, Typeface.BOLD);
                     tv1.setGravity(Gravity.CENTER);
                     tv1.setLayoutParams( new TableRow.LayoutParams( 0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1 ) );
 
@@ -177,6 +180,8 @@ public class ChoixJoueurs extends Activity implements RadioGroup.OnCheckedChange
                     tv1.setText(col1[i]);
                     tv1.setGravity(Gravity.CENTER);
                     tv1.setTextSize(20);
+                    tv1.setTextColor(getResources().getColor(R.color.rouge));
+                    tv1.setTypeface(null, Typeface.BOLD);
                     tv1.setLayoutParams( new TableRow.LayoutParams( 0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1 ) );
 
                     spinJ = new Spinner(this);
@@ -214,6 +219,8 @@ public class ChoixJoueurs extends Activity implements RadioGroup.OnCheckedChange
                     tv1.setText(col1[i]);
                     tv1.setGravity(Gravity.CENTER);
                     tv1.setTextSize(20);
+                    tv1.setTextColor(getResources().getColor(R.color.rouge));
+                    tv1.setTypeface(null, Typeface.BOLD);
                     tv1.setLayoutParams( new TableRow.LayoutParams( 0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1 ) );
 
 
@@ -253,6 +260,7 @@ public class ChoixJoueurs extends Activity implements RadioGroup.OnCheckedChange
                     tv1.setGravity(Gravity.CENTER);
                     tv1.setTextSize(20);
                     tv1.setTextColor(getResources().getColor(R.color.rouge));
+                    tv1.setTypeface(null, Typeface.BOLD);
                     tv1.setLayoutParams( new TableRow.LayoutParams( 0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1 ) );
 
                     spinJ = new Spinner(this);

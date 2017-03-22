@@ -37,7 +37,7 @@
             android:layout_height="match_parent"
             android:textColor="@android:color/background_light"
             android:textStyle="bold"
-            android:buttonTint="@android:color/white"/>
+            android:buttonTint="@color/rouge"/>
         <RadioButton
             android:id="@+id/radioBtnPoint"
             android:text="Points"
@@ -47,8 +47,54 @@
             android:layout_height="match_parent"
             android:textColor="@android:color/background_light"
             android:textStyle="bold"
-            android:buttonTint="@android:color/white"/>
+            android:buttonTint="@color/rouge"/>
     </RadioGroup>
+    <LinearLayout
+        android:id="@+id/llHeadStats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:paddingTop="10dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nom"
+            android:textColor="@android:color/background_light"
+            android:background="@color/rouge"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:textAlignment="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Victoires"
+            android:textColor="@android:color/background_light"
+            android:background="@color/rouge"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:textAlignment="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total points"
+            android:textColor="@android:color/background_light"
+            android:background="@color/rouge"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:textAlignment="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Parties jouées"
+            android:textColor="@android:color/background_light"
+            android:background="@color/rouge"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:textAlignment="center"/>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listStats"

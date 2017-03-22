@@ -10,11 +10,14 @@ import android.os.CountDownTimer;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.projet.ladr.R;
 import com.projet.ladr.model.CarteDestination;
 import com.projet.ladr.model.CarteWagon;
@@ -23,6 +26,7 @@ import com.projet.ladr.model.OutOfCardsException;
 import com.projet.ladr.model.Partie;
 import com.projet.ladr.model.PiocheDestination;
 import com.projet.ladr.model.PiocheWagon;
+import com.projet.ladr.model.Route;
 import com.projet.ladr.model.Ville;
 import com.projet.ladr.model.Wagon;
 
@@ -45,11 +49,17 @@ public class ControlerPartie extends Activity {
     ArrayList<CarteDestination> cartesPiochees = new ArrayList<>();
     TextView temps;
     Joueur joueurTour;
+    int nbCartes;
 
     @Override
     public void onCreate(Bundle b) {
         super.onCreate(b);
         setContentView(R.layout.partie);
+
+        Button btnPiocheVisible = (Button) findViewById(R.id.btnPiocheVisible);
+        Button btnPiocheAveugle = (Button) findViewById(R.id.btnPiocheAveugle);
+        Button btnPiocheDestination = (Button) findViewById(R.id.btnPiocheDestination);
+
 
         temps = (TextView) findViewById(R.id.textView3);
 
@@ -67,10 +77,14 @@ public class ControlerPartie extends Activity {
 
         initialiserPartie();
         joueurTour = partie.getJoueurs().get(0);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        Button btnPiocheVisible = (Button) findViewById(R.id.btnPiocheVisible);
+
         btnPiocheVisible.setOnClickListener(new View.OnClickListener() {
-            int nbCartes = 0;
             @Override
             public void onClick(View v) {
                 if (nbCartes < 2) {
@@ -90,9 +104,8 @@ public class ControlerPartie extends Activity {
             }
         });
 
-        Button btnPiocheAveugle = (Button) findViewById(R.id.btnPiocheAveugle);
+
         btnPiocheAveugle.setOnClickListener(new View.OnClickListener() {
-            int nbCartes = 0;
             @Override
             public void onClick(View v) {
                 if (nbCartes < 2) {
@@ -112,7 +125,7 @@ public class ControlerPartie extends Activity {
             }
         });
 
-        Button btnPiocheDestination = (Button) findViewById(R.id.btnPiocheDestination);
+
         btnPiocheDestination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +133,43 @@ public class ControlerPartie extends Activity {
             }
         });
 
+
         LinearLayout routes = (LinearLayout) findViewById(R.id.llRoutes);
+        RouteAdapter adapter = new RouteAdapter(getApplicationContext());
+        adapter.setRoutesList(partie.getMap().getRoutesDisponibles());
+        ListView listView = (ListView) this.findViewById(R.id.lvRoutes);
+        listView.setAdapter(adapter);
+
+        AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View container, int position, long id) {
+                Log.d("mydebug","clic sur id:"+id);
+                Route route = (Route) parent.getItemAtPosition(position);
+                boolean flag = true;
+                try {
+                    joueurTour.prendreRoute(route);
+                } catch (OutOfCardsException e) {
+                    flag = false;
+                    new AlertDialog.Builder(ControlerPartie.this)
+                            .setTitle("Informations")
+                            .setMessage("Vous n'avez pas assez de cartes " + route.getCouleur() + " pour prendre cette route")
+                            .setCancelable(true)
+                            .setNegativeButton(
+                                    "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+                if (flag) {
+                    changerTour();
+                }
+            }
+        };
+        listView.setOnItemClickListener(itemClickListener);
 
     }
 
@@ -240,6 +289,7 @@ public class ControlerPartie extends Activity {
     }
 
     public void changerTour() {
+        this.nbCartes = 0;
         int i = partie.getJoueurs().indexOf(joueurTour);
         if (i != partie.getJoueurs().size()-1) {
             Joueur j = partie.getJoueurs().get(i+1);

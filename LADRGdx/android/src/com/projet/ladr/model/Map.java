@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.projet.ladr.controler.DatabaseHandler;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -71,12 +72,14 @@ public class Map extends Observable {
 	/*
 	 * Affiche les routes qui peuvent �tre prise par les joueurs
 	 */
-	public void afficherRoutesDisponibles() {
+	public ArrayList<Route> getRoutesDisponibles() {
+		ArrayList<Route> res = new ArrayList<>();
 		for (int i = 0; i < this.routes.size(); i++) {
 			if (this.routes.get(i).isDisponible()) {
-				System.out.println("Route " + i + " : " + this.routes.get(i));
+				res.add(this.routes.get(i));
 			}	
 		}
+		return res;
 	}
     
 }

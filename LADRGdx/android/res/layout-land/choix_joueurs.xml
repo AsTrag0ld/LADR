@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:padding="15dp"
+            android:padding="15sp"
             android:textColor="@color/rouge"
             android:textStyle="normal|bold" />
 
@@ -80,16 +80,17 @@
                 android:buttonTint="@color/rouge" />
         </RadioGroup>
 
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:stretchColumns="0"
+            android:layout_height="wrap_content"
+            android:id="@+id/idTable"
+            android:padding="20dp">
+        </TableLayout>
+
     </LinearLayout>
 
-    <TableLayout
-        android:layout_width="fill_parent"
-        android:stretchColumns="0"
-        android:layout_height="wrap_content"
-        android:id="@+id/idTable"
-        android:layout_marginBottom="100dp"
-        android:layout_alignParentBottom="true">
-    </TableLayout>
+
 
 
 

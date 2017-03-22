@@ -8,10 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="29dp"
-        android:layout_marginRight="29dp"
         android:layout_marginTop="33dp"
         android:text="Visible" />
 
@@ -19,7 +17,6 @@
         android:id="@+id/btnPiocheAveugle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnPiocheVisible"
         android:layout_alignStart="@+id/btnPiocheVisible"
         android:layout_below="@+id/btnPiocheVisible"
         android:layout_marginTop="49dp"
@@ -30,7 +27,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/btnPiocheAveugle"
-        android:layout_alignRight="@+id/btnPiocheAveugle"
         android:layout_below="@+id/btnPiocheAveugle"
         android:layout_marginTop="62dp"
         android:text="Destinations" />
@@ -46,9 +42,9 @@
         android:layout_marginBottom="37dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="400dp"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:id="@+id/llRoutes">
 
@@ -94,5 +90,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
         </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvRoutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        </ListView>
     </LinearLayout>
 </RelativeLayout>
