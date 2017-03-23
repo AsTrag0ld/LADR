@@ -1,14 +1,10 @@
 package com.projet.ladr.controler;
 
-import com.badlogic.gdx.maps.MapLayer;
+import com.projet.ladr.model.Partie;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
-/**
- * Created by Rapto on 22/03/2017.
- */
 
 public class TiledMapStage extends Stage {
 

@@ -3,9 +3,6 @@ package com.projet.ladr.controler;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-/**
- * Created by Rapto on 22/03/2017.
- */
 
 public class TiledMapActor extends Actor {
 

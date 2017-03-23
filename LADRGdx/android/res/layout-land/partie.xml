@@ -91,11 +91,9 @@
                 android:layout_weight="1"/>
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/lvRoutes"
+        <FrameLayout
+            android:id="@+id/flMap"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
-        </ListView>
+            android:layout_height="wrap_content"></FrameLayout>
     </LinearLayout>
 </RelativeLayout>

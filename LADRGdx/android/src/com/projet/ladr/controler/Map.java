@@ -1,6 +1,7 @@
 package com.projet.ladr.controler;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,12 +13,13 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.projet.ladr.R;
+import com.projet.ladr.model.Partie;
 
 /**
  * Created by Rapto on 22/03/2017.
  */
 
-public class Map extends ApplicationAdapter{
+public class Map extends Game {
     TiledMap map;
     OrthogonalTiledMapRenderer mapRenderer;
     OrthographicCamera camera;

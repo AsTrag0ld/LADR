@@ -1,46 +1,30 @@
 package com.projet.ladr.controler;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.media.Image;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Looper;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.projet.ladr.R;
 import com.projet.ladr.model.CarteDestination;
-import com.projet.ladr.model.CarteWagon;
 import com.projet.ladr.model.Joueur;
 import com.projet.ladr.model.OutOfCardsException;
 import com.projet.ladr.model.Partie;
 import com.projet.ladr.model.PiocheDestination;
-import com.projet.ladr.model.PiocheWagon;
 import com.projet.ladr.model.Route;
 import com.projet.ladr.model.Ville;
-import com.projet.ladr.model.Wagon;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Scanner;
 
 
-public class ControlerPartie extends Activity {
+
+public class ControlerPartie extends FragmentActivity implements AndroidFragmentApplication.Callbacks {
     ArrayList<String> infosJoueurs;
     Partie partie;
     String [] listItems;
@@ -56,9 +40,11 @@ public class ControlerPartie extends Activity {
         super.onCreate(b);
         setContentView(R.layout.partie);
 
+        /*
         Button btnPiocheVisible = (Button) findViewById(R.id.btnPiocheVisible);
         Button btnPiocheAveugle = (Button) findViewById(R.id.btnPiocheAveugle);
         Button btnPiocheDestination = (Button) findViewById(R.id.btnPiocheDestination);
+        */
 
         Bundle extra = getIntent().getExtras();
         if (extra != null) {
@@ -75,6 +61,12 @@ public class ControlerPartie extends Activity {
         initialiserPartie();
         joueurTour = partie.getJoueurs().get(0);
 
+        MapLauncher fragment = new MapLauncher();
+        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+        trans.replace(R.id.flMap, fragment);
+        trans.commit();
+
+        /*
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -164,6 +156,7 @@ public class ControlerPartie extends Activity {
             }
         };
         routesDisponibles.setOnItemClickListener(itemClickListener);
+        */
 
     }
 
@@ -273,15 +266,6 @@ public class ControlerPartie extends Activity {
         partie.getMap().initialiserRoutes(this);
     }
 
-    public void piocherCartesDestination(Joueur j, int limite) {
-        fenetreDistribution(j, limite);
-        try {
-            Looper.getMainLooper().loop();
-        } catch (RuntimeException e2) {
-            changerTour();
-        }
-    }
-
     public void changerTour() {
         this.nbCartes = 0;
         int i = partie.getJoueurs().indexOf(joueurTour);
@@ -306,6 +290,7 @@ public class ControlerPartie extends Activity {
                 .show();
     }
 
+    /*
     public ListView afficherRoutesDisponibles() {
         LinearLayout routes = (LinearLayout) findViewById(R.id.llRoutes);
         RouteAdapter adapter = new RouteAdapter(getApplicationContext());
@@ -313,5 +298,35 @@ public class ControlerPartie extends Activity {
         ListView listView = (ListView) findViewById(R.id.lvRoutes);
         listView.setAdapter(adapter);
         return listView;
+    }
+    */
+
+    public void prendreRoute(Route r) {
+        boolean flag = true;
+        try {
+            joueurTour.prendreRoute(r);
+        } catch (OutOfCardsException e) {
+            flag = false;
+            new AlertDialog.Builder(ControlerPartie.this)
+                    .setTitle("Informations")
+                    .setMessage("Vous n'avez pas assez de cartes " + r.getCouleur() + " pour prendre cette route")
+                    .setCancelable(true)
+                    .setNegativeButton(
+                            "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+        if (flag) {
+            changerTour();
+        }
+    }
+    @Override
+    public void exit() {
+
     }
 }
