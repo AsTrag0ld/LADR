@@ -2,12 +2,15 @@ package com.projet.ladr.controler;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -119,7 +122,7 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
             listItems[i] = cartesPiochees.get(i).toString();
         }
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-        mBuilder.setTitle("Choix des cartes destination pour " + joueur.getNom());
+        mBuilder.setTitle("Choix des cartes destination pour " + joueur.getNom() + " (au moins " + limite + ")");
         mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -141,9 +144,10 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
                     String item = "";
                     item += listItems[mUserItems.get(i)];
                     String[] parts = item.split("-");
-                    mCartes.add(new CarteDestination(Integer.parseInt(parts[0]), new Ville(parts[1]), new Ville(parts[2])));
+                    CarteDestination c = new CarteDestination(Integer.parseInt(parts[0]), new Ville(parts[1]), new Ville(parts[2]));
+                    mCartes.add(c);
                 }
-                if (mCartes.size() > limite) {
+                if (mCartes.size() >= limite) {
                     for (CarteDestination c : cartesPiochees) {
                         if (!mCartes.contains(c)) {
                             partie.getPiocheDestination().getCarteDestination().addLast(c);
@@ -175,6 +179,9 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
     }
 
     public void changerTour() {
+        if (joueurTour.getNbWagons() < 3) {
+            terminerPartie();
+        }
         this.nbCartes = 0;
         int i = partie.getJoueurs().indexOf(joueurTour);
         if (i != partie.getJoueurs().size()-1) {
@@ -198,6 +205,7 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
                 .show();
         refreshFragmentGauche();
         refreshMain();
+        System.out.println("LES CARTES : " + joueurTour.getCartesDestination());
     }
 
     private void refreshFragmentGauche() {
@@ -444,35 +452,146 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
     }
 
     public void piocherCarteDestination() {
-        try {
-            fenetreDistribution(joueurTour, 1);
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            changerTour();
-        }
+        if (nbCartes != 0) {
+            new AlertDialog.Builder(ControlerPartie.this)
+                    .setTitle("Informations")
+                    .setMessage("Vous ne pouvez pas piocher de carte Destination après avoir piocher une carte Wagon")
+                    .setCancelable(true)
+                    .setNegativeButton(
+                            "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        } else {
+            cartesPiochees = partie.getPiocheDestination().retirerTroisPremieres();
+            for (int i = 0; i < 3; i++) {
+                listItems[i] = cartesPiochees.get(i).toString();
+            }
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+            mBuilder.setTitle("Choix des cartes destination pour " + joueurTour.getNom() + " (au moins 1)");
+            mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                    if (isChecked) {
+                        if (!mUserItems.contains(which)) {
+                            mUserItems.add(which);
+                        }
+                    } else if (mUserItems.contains(which)) {
+                        mUserItems.remove(which);
+                    }
+                }
+            });
+            mBuilder.setCancelable(false);
+            mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    LinkedList<CarteDestination> mCartes = new LinkedList<CarteDestination>();
+                    for (int i = 0; i < mUserItems.size(); i++) {
+                        String item = "";
+                        item += listItems[mUserItems.get(i)];
+                        String[] parts = item.split("-");
+                        CarteDestination c = new CarteDestination(Integer.parseInt(parts[0]), new Ville(parts[1]), new Ville(parts[2]));
+                        mCartes.add(c);
+                    }
+                    if (mCartes.size() >= 1) {
+                        for (CarteDestination c : cartesPiochees) {
+                            if (!mCartes.contains(c)) {
+                                partie.getPiocheDestination().getCarteDestination().addLast(c);
+                            }
+                        }
+                        joueurTour.getCartesDestination().addAll(mCartes);
+                        cartesPiochees = new ArrayList<CarteDestination>();
+                    }
 
+                    listItems = new String[3];
+                    checkedItems = new boolean[3];
+                    mUserItems = new ArrayList<Integer>();
+
+                    if (mCartes.size() < 1) {
+                        for (int i = cartesPiochees.size() - 1; i >= 0; i--) {
+                            partie.getPiocheDestination().getCarteDestination().addFirst(cartesPiochees.get(i));                    //On remet chaque carte dans du paquet pour recommencer la méthode de pioche
+                        }
+                        cartesPiochees = new ArrayList<CarteDestination>();
+                        piocherCarteDestination();
+                    } else {
+                        throw new RuntimeException();
+                    }
+
+                }
+            });
+
+            AlertDialog mDialog = mBuilder.create();
+            mDialog.show();
+            try {
+                Looper.getMainLooper().loop();
+            } catch (RuntimeException e2) {
+                changerTour();
+            }
+        }
     }
 
     public void afficherRoutesPossedees() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ControlerPartie.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View convertView = (View) inflater.inflate(R.layout.liste_routes, null);
+        alertDialog.setView(convertView);
+        alertDialog.setTitle("Vos routes");
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+        alertDialog.setCancelable(true);
+        alertDialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }});
+        ListView lv = (ListView) convertView.findViewById(R.id.lvRoutes);
         RouteAdapter adapter = new RouteAdapter(getApplicationContext());
         adapter.setRoutesList(joueurTour.getRoutesPrises());
-        ListView listView = (ListView) findViewById(R.id.lvRoutes);
-        listView.setAdapter(adapter);
+        lv.setAdapter(adapter);
+        alertDialog.show();
+    }
 
+    public void afficherCartesDestination() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ControlerPartie.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View convertView = (View) inflater.inflate(R.layout.liste_cartes_destination, null);
+        alertDialog.setView(convertView);
+        alertDialog.setTitle("Vos cartes");
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+        alertDialog.setCancelable(true);
+        alertDialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }});
+        ListView lv = (ListView) convertView.findViewById(R.id.lvCartesDestination);
+        CarteDestinationAdapter adapter = new CarteDestinationAdapter(getApplicationContext());
+        adapter.setCartesList(joueurTour.getCartesDestination());
+        lv.setAdapter(adapter);
+        alertDialog.show();
+    }
+
+    public void terminerPartie() {
+        Joueur j = partie.determinerVainqueur();
         new AlertDialog.Builder(ControlerPartie.this)
-                .setTitle("Vos routes")
-                .setView(R.layout.liste_routes)
-                .setCancelable(true)
+                .setTitle("Informations")
+                .setMessage(j.getNom() + " a gagné !")
+                .setCancelable(false)
                 .setNegativeButton(
                         "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
+                                Intent intent = new Intent(ControlerPartie.this, MainActivity.class);
+                                ControlerPartie.this.startActivity(intent);
                             }
                         })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+
     }
+
     @Override
     public void exit() {
 

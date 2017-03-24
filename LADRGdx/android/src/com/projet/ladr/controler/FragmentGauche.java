@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.projet.ladr.R;
 
@@ -24,12 +25,21 @@ public class FragmentGauche extends Fragment {
             }
         });
 
-        Button button2 = (Button) myView.findViewById(R.id.btnPasserTour);
+        Button button2 = (Button) myView.findViewById(R.id.btnRoutesPossedees);
         button2.setOnClickListener(new View.OnClickListener() {
             ControlerPartie cont = (ControlerPartie) getActivity();
             @Override
             public void onClick(View v) {
                 cont.afficherRoutesPossedees();
+            }
+        });
+
+        ImageView imageView = (ImageView) myView.findViewById(R.id.imgCarteDestination);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            ControlerPartie cont = (ControlerPartie) getActivity();
+            @Override
+            public void onClick(View v) {
+                cont.afficherCartesDestination();
             }
         });
         return myView;

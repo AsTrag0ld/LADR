@@ -10,38 +10,39 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.projet.ladr.R;
+import com.projet.ladr.model.CarteDestination;
 import com.projet.ladr.model.Route;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class RouteAdapter extends BaseAdapter {
+public class CarteDestinationAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
-    private LinkedList<Route> routesList = null;
+    private LinkedList<CarteDestination> cartesList = null;
 
-    public RouteAdapter(Context aContext) {
+    public CarteDestinationAdapter(Context aContext) {
         super();
 
         context = aContext;
         inflater = LayoutInflater.from(context);
-        routesList = new LinkedList<Route>();
+        cartesList = new LinkedList<CarteDestination>();
 
     }
 
-    public void setRoutesList(LinkedList<Route> list) {
-        this.routesList = list;
+    public void setCartesList(LinkedList<CarteDestination> list) {
+        this.cartesList = list;
     }
 
     @Override
     public int getCount() {
-        return routesList.size();
+        return cartesList.size();
     }
 
     @Override
     public Object getItem(int arg0) {
-        return routesList.get(arg0);
+        return cartesList.get(arg0);
     }
 
     @Override
@@ -55,22 +56,19 @@ public class RouteAdapter extends BaseAdapter {
 
         if (convertView == null) {
             layoutItem = (RelativeLayout) inflater.inflate(
-                    R.layout.row_route, parent, false);
+                    R.layout.row_carte_destination, parent, false);
         } else {
             layoutItem = (RelativeLayout) convertView;
         }
 
-        TextView couleur = (TextView) layoutItem.findViewById(R.id.tvCouleurRoute);
-        couleur.setText(this.routesList.get(arg0).getCouleur());
-        couleur.setTextColor(Color.BLACK);
-        TextView taille = (TextView) layoutItem.findViewById(R.id.tvTailleRoute);
-        taille.setText(Integer.toString(this.routesList.get(arg0).getTaille()));
+        TextView taille = (TextView) layoutItem.findViewById(R.id.tvValeurCarte);
+        taille.setText(Integer.toString(this.cartesList.get(arg0).getValeur()));
         taille.setTextColor(Color.BLACK);
-        TextView villeA = (TextView) layoutItem.findViewById(R.id.tvVilleARoute);
-        villeA.setText(this.routesList.get(arg0).getVilleA().getNom());
+        TextView villeA = (TextView) layoutItem.findViewById(R.id.tvVilleACarte);
+        villeA.setText(this.cartesList.get(arg0).getVilleA().getNom());
         villeA.setTextColor(Color.BLACK);
-        TextView villeB = (TextView) layoutItem.findViewById(R.id.tvVilleBRoute);
-        villeB.setText(this.routesList.get(arg0).getVilleB().getNom());
+        TextView villeB = (TextView) layoutItem.findViewById(R.id.tvVilleBCarte);
+        villeB.setText(this.cartesList.get(arg0).getVilleB().getNom());
         villeB.setTextColor(Color.BLACK);
         return layoutItem;
     }
