@@ -14,7 +14,7 @@ import java.util.LinkedList;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
     private static String DB_NAME = "LADR";
-    private static final int DB_VERSION = 11;
+    private static final int DB_VERSION = 12;
     private SQLiteDatabase db;
 
     private static String TABLE_JOUEUR = "Joueur";
@@ -111,11 +111,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static String INSERT_ALL_ROUTES = "INSERT INTO Route (villeA, villeB, taille, couleur) VALUES\n" +
             "('Whitehorse', 'Fort Good Hope', 5, 'bleu')," +
             "('Whitehorse', 'Fort Good Hope', 5, 'gris')," +
-            "('Whitehorse', 'Prince George', 5, 'rose')," +
+            "('Whitehorse', 'Prince George', 5, 'violet')," +
             "('Whitehorse', 'Prince George', 5, 'vert')," +
             "('Whitehorse', 'Tungstene', 2, 'rouge')," +
             "('Prince George', 'Victoria', 4, 'jaune')," +
-            "('Victoria', 'Calgary', 4, 'rose')," +
+            "('Victoria', 'Calgary', 4, 'violet')," +
             "('Calgary', 'Edmonton', 1,'gris')," +
             "('Calgary', 'Edmonton', 1,'gris')," +
             "('Vancouver', 'Prince George', 3,'blanc')," +
@@ -131,7 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "('Yellowknife', 'Fort Smith', 2,'noir')," +
             "('Fort Smith', 'Fort Vermilion', 1,'gris')," +
             "('Fort Smith', 'Fort Vermilion', 1,'gris')," +
-            "('Fort Vermilion', 'Fort Saint-Jean', 2,'rose')," +
+            "('Fort Vermilion', 'Fort Saint-Jean', 2,'violet')," +
             "('Prince George', 'Calgary', 4,'rouge')," +
             "('Fort Saint-Jean', 'Edmonton', 3,'gris')," +
             "('Fort Vermilion', 'Edmonton', 3,'vert')," +
@@ -156,9 +156,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "('Baker Lake', 'Churchill', 5,'gris')," +
             "('Resolute', 'Pond Inlet', 3,'noir')," +
             "('Resolute', 'Pond Inlet', 4,'bleu')," +
-            "('Pond Inlet', 'Baker Lake', 6,'rose')," +
+            "('Pond Inlet', 'Baker Lake', 6,'violet')," +
             "('Winnipeg', 'Thunder Bay', 2,'orange')," +
-            "('Thompson', 'Thunder Bay', 6,'rose')," +
+            "('Thompson', 'Thunder Bay', 6,'violet')," +
             "('Pond Inlet', 'Ivujivik', 6,'gris')," +
             "('Baker Lake', 'Ivujivik', 6,'noir')," +
             "('Thompson', 'Hearst', 6,'vert')," +
@@ -175,7 +175,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "('Eastmain', 'Chibougama', 2,'vert')," +
             "('Sudbury', 'Amos', 2,'rose')," +
             "('Amos', 'Chibougama', 2,'gris')," +
-            "('Windsor', 'Oshawa', 3,'rose')," +
+            "('Windsor', 'Oshawa', 3,'violet')," +
             "('Sudbury', 'Ottawa', 2,'vert')," +
             "('Amos', 'Ottawa', 1,'gris')," +
             "('Ottawa', 'Chibougama', 3,'noir')," +
@@ -192,7 +192,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             "('Millepertuis', 'Sydney', 4,'gris')," +
             "('Grand Sault', 'Millepertuis', 2,'bleu');";
 
-    private static String INSERT_JOUEURS_TEST = "INSERT INTO Joueur (nom, nbVictoires) VALUES ('Dorian', 5), ('Test', 3), ('Ying', 1),  ('Anthony', 2), ('Sai', 0), ('Valentin', 0);";
+    private static String INSERT_JOUEURS_TEST = "INSERT INTO Joueur (nom, nbVictoires) VALUES ('Dorian', 5), ('Ying', 1),  ('Anthony', 2), ('Sai', 0), ('Valentin', 0);";
     private static String INSERT_PARTIES_TEST = "INSERT INTO Partie (nbJoueurs, duree) VALUES (2, 12.42), (3, 14.45);";
     private static String INSERT_CLASSEMENT_TEST = "INSERT INTO Classement VALUES (1, 1, 56), (2, 1, 50), (1, 2, 44), (2, 2, 40), (3, 2, 60);";
 

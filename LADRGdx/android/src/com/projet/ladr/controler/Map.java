@@ -34,11 +34,10 @@ public class Map extends Game {
 
     @Override
     public void render () {
-        //stage.act();
-        float unitScale = 1 / 10f;
+        float unitScale = 1 / 13f;
         mapRenderer = new OrthogonalTiledMapRenderer(map, unitScale);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 205, 132);
+        camera.setToOrtho(false, 155, 102);
         mapRenderer.setView(camera);
         mapRenderer.render();
     }

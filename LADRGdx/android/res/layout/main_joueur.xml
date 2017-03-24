@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rouge">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_weight="9">
+
+        <TextView
+            android:id="@+id/tvCarteBlanche"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textColor="#F803D4"
+            android:layout_margin="10dp"
+            android:background="@drawable/carte_wagon_blanc"
+            android:text="x2"/>
+
+        <TextView
+            android:id="@+id/tvCarteJaune"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textColor="#F803D4"
+            android:layout_margin="10dp"
+            android:background="@drawable/carte_wagon_jaune"
+            android:text="x2"/>
+
+        <TextView
+            android:id="@+id/tvCarteViolette"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textColor="#F803D4"
+            android:layout_margin="10dp"
+            android:background="@drawable/carte_wagon_violet"
+            android:text="x2"/>
+
+        <TextView
+            android:id="@+id/tvCarteOrange"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textColor="#F803D4"
+            android:layout_margin="10dp"
+            android:background="@drawable/carte_wagon_orange"
+            android:text="x2"/>
+
+        <TextView
+            android:id="@+id/tvCarteRouge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textColor="#F803D4"
+            android:layout_margin="10dp"
+            android:background="@drawable/carte_wagon_rouge"
+            android:text="x2"/>
+
+        <TextView
+            android:id="@+id/tvCarteBleue"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textColor="#F803D4"
+            android:layout_margin="10dp"
+            android:background="@drawable/carte_wagon_bleu"
+            android:text="x2"/>
+
+        <TextView
+            android:id="@+id/tvCarteNoire"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textColor="#F803D4"
+            android:layout_margin="10dp"
+            android:background="@drawable/carte_wagon_noir"
+            android:text="x2"/>
+
+        <TextView
+            android:id="@+id/tvCarteVerte"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:layout_margin="10dp"
+            android:textColor="#F803D4"
+            android:background="@drawable/carte_wagon_vert"
+            android:text="x2"/>
+
+        <TextView
+            android:id="@+id/tvCarteLoco"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:layout_margin="10dp"
+            android:textColor="#F803D4"
+            android:background="@drawable/carte_wagon_loco"
+            android:text="x2"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

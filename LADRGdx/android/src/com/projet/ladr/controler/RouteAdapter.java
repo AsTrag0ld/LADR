@@ -12,23 +12,24 @@ import com.projet.ladr.R;
 import com.projet.ladr.model.Route;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class RouteAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<Route> routesList = null;
+    private LinkedList<Route> routesList = null;
 
     public RouteAdapter(Context aContext) {
         super();
 
         context = aContext;
         inflater = LayoutInflater.from(context);
-        routesList = new ArrayList<Route>();
+        routesList = new LinkedList<Route>();
 
     }
 
-    public void setRoutesList(ArrayList<Route> list) {
+    public void setRoutesList(LinkedList<Route> list) {
         this.routesList = list;
     }
 

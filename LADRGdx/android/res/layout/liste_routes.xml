@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/listStats"
+        android:id="@+id/lvRoutes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp">

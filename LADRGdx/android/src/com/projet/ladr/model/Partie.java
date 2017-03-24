@@ -14,7 +14,7 @@ public class Partie {
     private Map map;
     private DefausseWagon defausseWagon;
     private PiocheDestination piocheDestination;
-    private String[] couleurs = {"blanc", "bleu", "jaune", "vert", "rouge", "violet", "noir", "marron"};
+    private String[] couleurs = {"blanc", "bleu", "jaune", "vert", "rouge", "violet", "noir", "orange"};
     private boolean enCours;
 
 	public Partie(ArrayList<Joueur> joueurs) {
@@ -120,7 +120,7 @@ public class Partie {
 			}
 		}
 		for (int i = 0; i < 14; i++) {										//Ensuite on cr�e 14 cartes locomotives
-			cartesWagon.add(new CarteWagon("Locomotive"));
+			cartesWagon.add(new CarteWagon("locomotive"));
 		}
 		this.setPiocheWagon(PiocheWagon.getInstance(cartesWagon));
 		Collections.shuffle(this.getPiocheWagon().getPioche());
