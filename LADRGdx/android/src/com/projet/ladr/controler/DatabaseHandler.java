@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.projet.ladr.model.CarteDestination;
+import com.projet.ladr.model.Joueur;
+import com.projet.ladr.model.Partie;
 import com.projet.ladr.model.Route;
 import com.projet.ladr.model.Ville;
 
@@ -280,4 +282,40 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
+    private int getIdJoueur(String nom) {
+        String query = "SELECT idJoueur FROM Joueur WHERE nom = " + nom + ";";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+
+        if (c.moveToFirst()) {
+            int id = c.getInt(c.getColumnIndex("idJoueur"));
+            return id;
+        }
+        return 0;
+    }
+
+    private int getLastPartie() {
+        String query = "SELECT max(idPartie) as maxId FROM Partie;";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+
+        if (c.moveToFirst()) {
+            int id = c.getInt(c.getColumnIndex("maxId"));
+            return id;
+        }
+        return 0;
+    }
+
+    public void finDePartie(Partie p) {
+        int nbJoueurs = p.getJoueurs().size();
+        int idPartie = getLastPartie();
+        String query = "INSERT INTO Partie (nbJoueurs) VALUES " + nbJoueurs;
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(query);
+        for (Joueur j : p.getJoueurs()) {
+            int idJoueur = getIdJoueur(j.getNom());
+            String query2 = "INSERT INTO Classement VALUES (" + idJoueur + ", " + idPartie + ", " + j.getScore() + ");";
+            db.execSQL(query2);
+        }
+    }
 }

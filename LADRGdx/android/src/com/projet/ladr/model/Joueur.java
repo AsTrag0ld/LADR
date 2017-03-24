@@ -118,7 +118,7 @@ public class Joueur extends Observable {
 	/* 
 	 * Prend possession d'une route en pla�ant des wagons sur le plateau et en d�cr�mentant le nombre de wagons du joueur
 	 */
-	public void prendreRoute(Route r) throws OutOfCardsException {
+	public void prendreRoute(Route r) throws OutOfCardsException, OutOfWagonsException {
 		if (verificationWagonsRoute(r)) {			//Si le joueur a assez de wagons pour prendre la route
 			if (verificationCartesRoute(r)) { 		//Si il a assez de cartes
 				int taille = r.getTaille();
@@ -139,17 +139,55 @@ public class Joueur extends Observable {
 						break;
 				}
 				this.nbWagons -= r.getTaille();
+				this.setCartesWagon(retirerCartes(r));
 				r.prendre();
 				this.routesPrises.add(r);
 			} else {
-				System.out.println("Vous n'avez pas assez de cartes '" + r.getCouleur() + "' pour prendre possession de la route : " + r);
 				throw new OutOfCardsException();
 			}
 		} else {
-			System.out.println("Vous n'avez pas assez de wagons restants pour prendre possession de cette route");
+			throw new OutOfWagonsException();
 		}
-		
     }
+
+	private LinkedList<CarteWagon> retirerCartes(Route r) {
+		int cmp = 0;
+		LinkedList<CarteWagon> newList = new LinkedList<CarteWagon>();
+		for (CarteWagon c : this.getCartesWagon()) {
+			if (c.getCouleur().equals(r.getCouleur())) {
+				cmp++;
+			}
+		}
+
+		int compteurCartesRetirees = 0;
+		for (CarteWagon c : this.getCartesWagon()) {
+			if (!(c.getCouleur().equals(r.getCouleur()))) {
+				newList.add(c);
+			} else {
+				if (compteurCartesRetirees >= r.getTaille()) {
+					newList.add(c);
+				} else {
+					compteurCartesRetirees++;
+				}
+			}
+		}
+
+        LinkedList<CarteWagon> res = new LinkedList<CarteWagon>();
+        if (compteurCartesRetirees < r.getTaille()) {
+            for (CarteWagon c : newList) {
+                if (!(c.getCouleur().equals("locomotive"))) {
+                    res.add(c);
+                } else {
+                    if (compteurCartesRetirees >= r.getTaille()) {
+                        res.add(c);
+                    } else {
+                        compteurCartesRetirees++;
+                    }
+                }
+            }
+        }
+		return res;
+	}
 	
 	/*
 	 * V�rifie si le joueur a suffisament de carte de la m�me couleur que la route en main
@@ -157,7 +195,7 @@ public class Joueur extends Observable {
 	boolean verificationCartesRoute(Route r) {
 		int cmp = 0;
 		for (CarteWagon c : this.cartesWagon) {
-			if ((c.getCouleur().equals(r.getCouleur())) || (c.getCouleur() == "Locomotive")) {
+			if ((c.getCouleur().equals(r.getCouleur())) || (c.getCouleur() == "locomotive")) {
 				cmp++;					
 			}
 		}
@@ -184,14 +222,14 @@ public class Joueur extends Observable {
     public void piocherWagonAveugle(PiocheWagon pioche, DefausseWagon defausse) throws OutOfCardsException {
         this.cartesWagon.add(pioche.piocherAveugle(defausse));
     }
-    
+
     /*
      * Ajoute aux CarteDestination du joueur les cartes qu'il a choisi de garder de la pioche de CarteDestination (les retire de la pioche)
      */
     public void piocherCarteDestination(PiocheDestination pioche) throws OutOfCardsException {
     	this.cartesDestination.addAll(pioche.piocher());
     }
-    
+
     /*
      * Affiche toutes les cartes wagon du joueur
      */
@@ -200,7 +238,7 @@ public class Joueur extends Observable {
     		System.out.println(c);
     	}
     }
-    
+
     /*
      * Affiche toutes les cartes destination du joueur
      */
@@ -208,15 +246,15 @@ public class Joueur extends Observable {
     	for (CarteDestination c : this.cartesDestination) {
     		System.out.println(c);
     	}
-    }  
-    
+    }
+
     /*
      * Commence le tour de jeu de ce joueur
      */
     public void commencerTour() {
     	this.tourDeJeu = true;
     }
-    
+
     /*
      * Met fin au tour du joueur
      */

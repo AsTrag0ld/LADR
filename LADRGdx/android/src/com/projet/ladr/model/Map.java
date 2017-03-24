@@ -72,8 +72,8 @@ public class Map extends Observable {
 	/*
 	 * Affiche les routes qui peuvent �tre prise par les joueurs
 	 */
-	public ArrayList<Route> getRoutesDisponibles() {
-		ArrayList<Route> res = new ArrayList<>();
+	public LinkedList<Route> getRoutesDisponibles() {
+		LinkedList<Route> res = new LinkedList<>();
 		for (int i = 0; i < this.routes.size(); i++) {
 			if (this.routes.get(i).isDisponible()) {
 				res.add(this.routes.get(i));

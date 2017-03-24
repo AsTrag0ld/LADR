@@ -20,7 +20,7 @@ public class TiledMapStage extends Stage {
 
     private void createActorsForLayer(TiledMapTileLayer tiledLayer) {
         for (int x = 0; x < tiledLayer.getWidth(); x++) {
-            for (int y = 0; y < tiledLayer.getHeight(); y++) {
+            for (int y = tiledLayer.getHeight(); y > 0; y--) {
                 TiledMapTileLayer.Cell cell = tiledLayer.getCell(x, y);
                 TiledMapActor actor = new TiledMapActor(tiledMap, tiledLayer, cell);
                 actor.setBounds(x * tiledLayer.getTileWidth(), y * tiledLayer.getTileHeight(), tiledLayer.getTileWidth(),

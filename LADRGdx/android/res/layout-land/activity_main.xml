@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/linearlayout_bg"
         android:padding="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/tvTitre">
 

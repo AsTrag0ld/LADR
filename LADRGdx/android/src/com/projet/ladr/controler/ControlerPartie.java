@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.projet.ladr.R;
@@ -20,6 +21,7 @@ import com.projet.ladr.model.CarteDestination;
 import com.projet.ladr.model.CarteWagon;
 import com.projet.ladr.model.Joueur;
 import com.projet.ladr.model.OutOfCardsException;
+import com.projet.ladr.model.OutOfWagonsException;
 import com.projet.ladr.model.Partie;
 import com.projet.ladr.model.PiocheDestination;
 import com.projet.ladr.model.Route;
@@ -37,21 +39,22 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
     boolean [] checkedItems;
     ArrayList<Integer> mUserItems = new ArrayList<>();
     ArrayList<CarteDestination> cartesPiochees = new ArrayList<>();
-    TextView temps;
     Joueur joueurTour;
     int nbCartes;
+    GestionRoute fragment;
 
     @Override
     public void onCreate(Bundle b) {
         super.onCreate(b);
         initialiserActivity();
         setContentView(R.layout.partie_bis);
-        changerTour();
 
-        MapLauncher fragment = new MapLauncher();
+        fragment = new GestionRoute();
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         trans.replace(R.id.flMap, fragment);
         trans.commit();
+
+        lancerPremierTour();
     }
 
     private void initialiserActivity() {
@@ -205,7 +208,33 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
                 .show();
         refreshFragmentGauche();
         refreshMain();
-        System.out.println("LES CARTES : " + joueurTour.getCartesDestination());
+        fragment.resetFragment();
+    }
+
+    private void lancerPremierTour() {
+        this.nbCartes = 0;
+        int i = partie.getJoueurs().indexOf(joueurTour);
+        if (i != partie.getJoueurs().size()-1) {
+            Joueur j = partie.getJoueurs().get(i+1);
+            joueurTour = j;
+        } else {
+            joueurTour = partie.getJoueurs().get(0);
+        }
+        refreshFragmentGauche();
+        refreshMain();
+        new AlertDialog.Builder(ControlerPartie.this)
+                .setTitle("Informations")
+                .setMessage("C'est à " + joueurTour.getNom() + " de jouer !")
+                .setCancelable(true)
+                .setNegativeButton(
+                        "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private void refreshFragmentGauche() {
@@ -378,17 +407,6 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
         }
     }
 
-    /*
-    public ListView afficherRoutesDisponibles() {
-        LinearLayout routes = (LinearLayout) findViewById(R.id.llRoutes);
-        RouteAdapter adapter = new RouteAdapter(getApplicationContext());
-        adapter.setRoutesList(partie.getMap().getRoutesDisponibles());
-        ListView listView = (ListView) findViewById(R.id.lvRoutes);
-        listView.setAdapter(adapter);
-        return listView;
-    }
-    */
-
     public void prendreRoute(Route r) {
         boolean flag = true;
         try {
@@ -398,6 +416,21 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
             new AlertDialog.Builder(ControlerPartie.this)
                     .setTitle("Informations")
                     .setMessage("Vous n'avez pas assez de cartes " + r.getCouleur() + " pour prendre cette route")
+                    .setCancelable(true)
+                    .setNegativeButton(
+                            "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        } catch (OutOfWagonsException e2) {
+            flag = false;
+            new AlertDialog.Builder(ControlerPartie.this)
+                    .setTitle("Informations")
+                    .setMessage("Vous n'avez pas assez de wagons pour prendre cette route")
                     .setCancelable(true)
                     .setNegativeButton(
                             "OK",
@@ -430,7 +463,19 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
                     changerTour();
                 }
             } catch (OutOfCardsException e) {
-                e.printStackTrace();
+                new AlertDialog.Builder(ControlerPartie.this)
+                        .setTitle("Informations")
+                        .setMessage("La pioche est vide")
+                        .setCancelable(true)
+                        .setNegativeButton(
+                                "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         }
     }
@@ -446,7 +491,19 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
                     changerTour();
                 }
             } catch (OutOfCardsException e) {
-                e.printStackTrace();
+                new AlertDialog.Builder(ControlerPartie.this)
+                        .setTitle("Informations")
+                        .setMessage("La pioche est vide")
+                        .setCancelable(true)
+                        .setNegativeButton(
+                                "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         }
     }
@@ -574,6 +631,8 @@ public class ControlerPartie extends FragmentActivity implements AndroidFragment
 
     public void terminerPartie() {
         Joueur j = partie.determinerVainqueur();
+        DatabaseHandler dbh = new DatabaseHandler(this);
+        dbh.finDePartie(partie);
         new AlertDialog.Builder(ControlerPartie.this)
                 .setTitle("Informations")
                 .setMessage(j.getNom() + " a gagné !")

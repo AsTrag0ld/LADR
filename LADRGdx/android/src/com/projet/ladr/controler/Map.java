@@ -28,18 +28,20 @@ public class Map extends Game {
     @Override
     public void create () {
         map = new TmxMapLoader().load("map.tmx");
-		stage = new TiledMapStage(map);
-		Gdx.input.setInputProcessor(stage);
+        float unitScale = 1 / 13f;
+        mapRenderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(true, 155, 102);
+        stage = new TiledMapStage(map);
+        Gdx.input.setInputProcessor(stage);
+        mapRenderer.setView(camera);
     }
 
     @Override
     public void render () {
-        float unitScale = 1 / 13f;
-        mapRenderer = new OrthogonalTiledMapRenderer(map, unitScale);
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 155, 102);
-        mapRenderer.setView(camera);
         mapRenderer.render();
+        stage.getViewport().setCamera(camera);
+        stage.act();
     }
 
     @Override

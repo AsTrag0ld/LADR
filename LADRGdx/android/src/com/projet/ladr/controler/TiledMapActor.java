@@ -8,13 +8,14 @@ public class TiledMapActor extends Actor {
 
     private TiledMap tiledMap;
 
-    private TiledMapTileLayer tiledLayer;
+     TiledMapTileLayer tiledLayer;
 
     private TiledMapTileLayer.Cell cell;
 
     public TiledMapTileLayer.Cell getCell() {
         return cell;
     }
+
     public TiledMapActor(TiledMap tiledMap, TiledMapTileLayer tiledLayer, TiledMapTileLayer.Cell cell) {
         this.tiledMap = tiledMap;
         this.tiledLayer = tiledLayer;
