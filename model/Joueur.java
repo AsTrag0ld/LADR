@@ -12,10 +12,7 @@ public class Joueur extends Observable {
     private List<Wagon> wagons;
     private LinkedList<CarteWagon> cartesWagon;
     private LinkedList<CarteDestination> cartesDestination;
-    private PiocheWagon piocheWagon;
-    private PiocheDestination piocheDestination;
-    private DefausseWagon defausseWagon;
-    private List<Route> routesPrises;
+    private LinkedList<Route> routesPrises;
     private boolean tourDeJeu;
 
     public Joueur() {
@@ -36,17 +33,13 @@ public class Joueur extends Observable {
     	this.routesPrises = new LinkedList<Route>();
     }
     
-    public Joueur(String nom, String couleur, int score, LinkedList<Wagon> wagons, LinkedList<CarteWagon> cartesWagon, LinkedList<CarteDestination> cartesDestination,
-    		PiocheWagon piocheWagon, PiocheDestination piocheDestination, DefausseWagon defausseWagon) {
+    public Joueur(String nom, String couleur, int score, LinkedList<Wagon> wagons, LinkedList<CarteWagon> cartesWagon, LinkedList<CarteDestination> cartesDestination) {
     	this.nom = nom;
     	this.couleur = couleur;
     	this.score = score;
     	this.wagons = wagons;
     	this.cartesWagon = cartesWagon;
     	this.cartesDestination = cartesDestination;
-    	this.piocheWagon = piocheWagon;
-    	this.piocheDestination = piocheDestination;
-    	this.defausseWagon = defausseWagon;
     	this.routesPrises = new LinkedList<Route>();
     	this.tourDeJeu = false;
     }
@@ -106,36 +99,12 @@ public class Joueur extends Observable {
 	public void setWagons(List<Wagon> wagon) {
 		this.wagons = wagon;
 	}
-
-	public PiocheWagon getPiocheWagon() {
-		return piocheWagon;
-	}
-
-	public void setPiocheWagon(PiocheWagon piocheWagon) {
-		this.piocheWagon = piocheWagon;
-	}
-
-	public PiocheDestination getPiocheDestination() {
-		return piocheDestination;
-	}
-
-	public void setPiocheDestination(PiocheDestination piocheDestination) {
-		this.piocheDestination = piocheDestination;
-	}
-
-	public DefausseWagon getDefausseWagon() {
-		return defausseWagon;
-	}
-
-	public void setDefausseWagon(DefausseWagon defausseWagon) {
-		this.defausseWagon = defausseWagon;
-	}
 	
-	public List<Route> getRoutesPrises() {
+	public LinkedList<Route> getRoutesPrises() {
 		return routesPrises;
 	}
 
-	public void setRoutesPrises(List<Route> routesPrises) {
+	public void setRoutesPrises(LinkedList<Route> routesPrises) {
 		this.routesPrises = routesPrises;
 	}
 
@@ -212,15 +181,15 @@ public class Joueur extends Observable {
     /*
      * Ajoute dans la main la première carte de la pioche de CarteWagon (la retire de la pioche)
      */
-    public void piocherCarteWagon() throws OutOfCardsException {
-    	this.cartesWagon.addAll(this.piocheWagon.piocher(this.defausseWagon));
+    public void piocherCarteWagon(PiocheWagon pioche, DefausseWagon defausse) throws OutOfCardsException {
+    	this.cartesWagon.addAll(pioche.piocher(defausse));
     }
     
     /*
      * Ajoute aux CarteDestination du joueur les cartes qu'il a choisi de garder de la pioche de CarteDestination (les retire de la pioche)
      */
-    public void piocherCarteDestination() throws OutOfCardsException {
-    	this.cartesDestination.addAll(this.piocheDestination.piocher());
+    public void piocherCarteDestination(PiocheDestination pioche) throws OutOfCardsException {
+    	this.cartesDestination.addAll(pioche.piocher());
     }
     
     /*

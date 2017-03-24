@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 public class Partie {
     private Joueur vainqueur;
     private List<Joueur> joueurs;
@@ -113,47 +115,6 @@ public class Partie {
     	return vainqueur;
     }
 
-    public void selectionnerProfil() {
-    }
-
-    public void selectionnerNbJoueurs() {
-    }
-    
-    public void nouvellePartieBDD() {
-//    	Connection con = Service.getConnection();
-//    	try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Partie(nbJoueurs) VALUES (?)")) {
-//    		stmt.setInt(1, this.joueurs.size());
-//			stmt.execute();
-//		} catch (Exception e) {
-//			throw new RuntimeException("Impossible de créer une nouvelle partie");
-//		}
-//    	try (PreparedStatement stmt = con.prepareStatement("SELECT idPartie FROM Partie GROUP BY idPartie DESC LIMIT 1")) {
-//			ResultSet rs = stmt.executeQuery();
-//			int idPartie = rs.getInt("idPartie");
-//		} catch (Exception e) {
-//			throw new RuntimeException("Impossible de créer une nouvelle partie");
-//		}
-//    	try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Classement VALUES (?, ?, 0)")) {
-//    		for (Joueur j : this.joueurs) {
-//    			stmt.setInt(1, this.joueurs.size());
-//    			stmt.execute();
-//    		}
-//    		
-//		} catch (Exception e) {
-//			throw new RuntimeException("Impossible de créer une nouvelle partie");
-//		}
-    }
-    
-    public void updateClassementPartie() {
-//    	Connection con = Service.getConnection();
-//    	try (PreparedStatement stmt = con.prepareStatement("INSERT INTO Classement(nbJoueurs) VALUES (?)")) {
-//    		stmt.setInt(1, this.joueurs.size());
-//			stmt.execute();
-//		} catch (Exception e) {
-//			throw new RuntimeException("Impossible de créer une nouvelle partie");
-//		}
-    }
-    
     /* 
      * Initialise toutes les composantes d'une partie
      */
@@ -161,7 +122,6 @@ public class Partie {
     	distribuerCartesWagon();
     	distribuerWagons();
     	distribuerCartesDestination();
-    	initialiserJoueurs();
     	initialiserMap();
     	this.enCours = true;
     }
@@ -232,18 +192,7 @@ public class Partie {
     		j.setWagons(initialiserWagons(j.getCouleur()));					//On crée et on lui distibue 45 wagons de sa couleur
     	}
     }
-    
-    /*
-     * Initialise la pioche Wagon, la pioche Destination et la défausse Wagon pour chaque Joueur
-     */
-    public void initialiserJoueurs() {
-    	for (Joueur j : this.joueurs) {										
-    		j.setDefausseWagon(defausseWagon);
-    		j.setPiocheDestination(piocheDestination);
-    		j.setPiocheWagon(piocheWagon);
-    	}
-    }
-    
+        
     /*
      * Distribue à chaque joueur au moins 2 cartes destinations parmi 3
      */
@@ -278,16 +227,14 @@ public class Partie {
     	int s = sc.nextInt();
     	switch (s) {
     		case 0 : try {
-				j.piocherCarteWagon();
+				j.piocherCarteWagon(this.piocheWagon, this.defausseWagon);
 			} catch (OutOfCardsException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     			break;
     		case 1 : try {
-				j.piocherCarteDestination();
+				j.piocherCarteDestination(this.piocheDestination);
 			} catch (OutOfCardsException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     			break;
@@ -309,6 +256,24 @@ public class Partie {
     }
     
     /*
+     * Permet d'ajouter ou de retirer les points correspondants aux cartes destinations de chaque joueur
+     */
+    public void comptabiliserPointsCartesDesination() {
+    	for (Joueur j : this.getJoueurs()) {
+    		for (CarteDestination c : j.getCartesDestination()) {
+    			boolean reussie = false;
+    			Route r = j.getRoutesPrises().getFirst();
+    			for (int i = 1; i < j.getRoutesPrises().size(); i++) {
+    				
+    			}
+    			if (reussie) {
+    				j.setScore(j.getScore() + c.getValeur());
+    			}
+    		}
+    	}
+    }
+    
+    /*
      * Permet de faire jouer les joueurs chacun leur tour tant que cela est possible
      */
     public void jouerPartie() {
@@ -322,8 +287,7 @@ public class Partie {
     	}
     	Joueur vainqueur = this.determinerVainqueur();
     	System.out.println("Le vainqueur est : " + vainqueur.getNom());
-    }
-    
+    } 
     
     
 

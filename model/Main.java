@@ -34,6 +34,7 @@ public class Main {
 		ArrayList<Joueur> lesJoueurs = new ArrayList<Joueur>();
 		lesJoueurs.add(new Joueur("Dorian", "Bleu"));
 		lesJoueurs.add(new Joueur("Valentin", "Rouge"));
+		//lesJoueurs.add(new Joueur("Ying", "Vert"));
 		Partie partie = new Partie(lesJoueurs);
 		partie.jouerPartie();
 	}

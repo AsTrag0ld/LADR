@@ -113,7 +113,9 @@ public class PiocheDestination {
 		}
 		if (conservees.size() < 2) {												//La liste des cartes gardées doit au moins contenir 2 cartes
 			System.err.println("Vous devez conserver au moins 2 cartes !");			//Si le nombre de cartes gardées n'est pas suffisant
-			conservees.removeFirst();
+			if (conservees.size() != 0) {
+				conservees.removeFirst();
+			}
 			for (int i = piochees.size()-1; i >= 0; i--) {
 				this.carteDestination.addFirst(piochees.get(i));					//On remet chaque carte dans du paquet pour recommencer la méthode de pioche
 			}

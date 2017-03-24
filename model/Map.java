@@ -3,6 +3,8 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -11,10 +13,12 @@ public class Map extends Observable {
     private static Map instance;
     private LinkedList<Ville> villes;
     private LinkedList<Route> routes;
+    private Hashtable voisins;
 
     private Map() {
     	this.villes = new LinkedList<Ville>();
     	this.routes = new LinkedList<Route>();
+    	this.voisins = new Hashtable();
     }
 
     public static Map getInstance() {
@@ -94,6 +98,54 @@ public class Map extends Observable {
 				System.out.println("Route " + i + " : " + this.routes.get(i));
 			}	
 		}
+	}
+	
+	public void initialiserVoisins() {
+		ArrayList<String> tmp = new ArrayList<String>();
+		tmp.add("Sydney");
+		tmp.add("Quebec");
+		this.voisins.put("Halifax", tmp);
+		tmp = new ArrayList<String>();
+		tmp.add("Halifax");
+		tmp.add("Chibougama");
+		tmp.add("Ottawa");
+		tmp.add("Labrador City");
+		this.voisins.put("Quebec", tmp);
+		tmp = new ArrayList<String>();
+		tmp.add("Quebec");
+		tmp.add("Inukjuak");
+		tmp.add("Sydney");
+		tmp.add("Grand Sault");
+		this.voisins.put("Labrador City", tmp);
+		tmp = new ArrayList<String>();
+		tmp.add("Labrador City");
+		tmp.add("Halifax");
+		tmp.add("Millepertui");
+		tmp.add("Grand Sault");
+		this.voisins.put("Sydney", tmp);
+		tmp = new ArrayList<String>();
+		tmp.add("Quebec");
+		tmp.add("Ottawa");
+		this.voisins.put("Chibougama", tmp);
+		tmp = new ArrayList<String>();
+		tmp.add("Quebec");
+		tmp.add("Chibougama");
+		this.voisins.put("Ottawa", tmp);
+		tmp = new ArrayList<String>();
+		tmp.add("Labrador City");
+		this.voisins.put("Inukjuak", tmp);
+		tmp = new ArrayList<String>();
+		tmp.add("Millepertui");
+		tmp.add("Sydney");
+		this.voisins.put("Grand Sault", tmp);
+		tmp = new ArrayList<String>();
+		tmp.add("Grand Sault");
+		tmp.add("Sydney");
+		this.voisins.put("Millepertui", tmp);
+	}
+	
+	public ArrayList<String> getVoisins(String ville) {
+		return (ArrayList<String>) this.voisins.get(ville);
 	}
     
 }
